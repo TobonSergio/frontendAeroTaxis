@@ -1,0 +1,50 @@
+.features {
+  padding: 80px 20px;
+  text-align: center;
+  background: #1e1e1e;
+  color: #fff;
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #e63946;
+}
+
+/* Tarjetas */
+.feature-card {
+  background: #2c2c2c;
+  padding: 30px 25px;
+  border-radius: 16px;
+  text-align: left; /* mejora la lectura del título y párrafo */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* Título dentro de la tarjeta */
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: #e63946;
+}
+
+/* Párrafo dentro de la tarjeta */
+.feature-card p {
+  color: #ccc;
+  font-size: 1rem;
+}
+
+/* Hover */
+.feature-card:hover {
+  transform: translateY(-8px);
+  background: #e63946;
+  color: #fff;
+}
+
+.feature-card:hover h3,
+.feature-card:hover p {
+  color: #fff;
+}

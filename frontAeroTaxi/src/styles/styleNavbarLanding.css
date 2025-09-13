@@ -1,0 +1,101 @@
+/* Navbar general */
+.navbar-landing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #1a1a1a;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box; /* 👈 evita que el padding rompa el ancho */
+  z-index: 1000;
+}
+
+
+/* Logo */
+.navbar-landing h2 {
+  margin: 0;
+}
+
+.style-logo {
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.style-logo:hover {
+  transform: scale(1.1);
+}
+
+/* Contenedor de links */
+.div-navbar-links-landing {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links-landing {
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-items: center;
+}
+
+/* Links internos */
+.navbar-links-landing a {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-links-landing a:hover {
+  color: #e63946; /* resalta al pasar mouse */
+}
+
+/* Botón de iniciar sesión */
+.btn-inciar-sesion {
+  background: #e63946;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-inciar-sesion:hover {
+  background: #d62828;
+  transform: translateY(-2px);
+}
+
+.logo-link {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover {
+  transform: scale(1);
+}
+
+
+/* Responsive básico */
+@media (max-width: 768px) {
+  .navbar-landing {
+    flex-direction: column;
+    padding: 10px 20px;
+  }
+
+  .navbar-links-landing {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+  }
+}

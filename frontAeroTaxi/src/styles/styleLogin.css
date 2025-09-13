@@ -1,0 +1,237 @@
+/* Página de login */
+.login-page {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  color: #fff;
+  background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
+  background-size: 300% 300%;
+  animation: gradientBG 12s ease infinite;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Animación del fondo */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Contenedor del formulario */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    background: rgba(30, 30, 30, 0.9);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease forwards;
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.login-title {
+  margin-bottom: 25px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ff4d6d;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Inputs */
+.login-form .form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #ccc;
+}
+/* Inputs del login */
+.login-form input {
+  width: 400px;              /* ocupa todo el ancho del form */
+  max-width: 500px;         /* límite para que no sea exagerado */
+  padding: 15px 18px;       /* más alto y más ancho */
+  border-radius: 12px;      /* esquinas más suaves */
+  border: 2px solid transparent;
+  outline: none;
+  font-size: 1.05rem;       /* letra un poquito más grande */
+  background: #2b2b3c;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;   /* evita que el padding rompa el ancho */
+}
+
+
+.login-form input:focus {
+  border: 2px solid #ff4d6d;
+  box-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
+}
+
+/* Botones */
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn-login, .btn-google {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-login {
+  background: linear-gradient(135deg, #ff4d6d, #d62828);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+}
+
+.btn-login:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 77, 109, 0.6);
+}
+
+.btn-google {
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.4);
+}
+
+.btn-google:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(66, 133, 244, 0.6);
+}
+
+/* Links */
+.login-links {
+  margin-top: 25px;
+  font-size: 0.9rem;
+}
+
+.login-links a {
+  color: #ff4d6d;
+  text-decoration: none;
+  margin: 0 5px;
+  transition: color 0.3s ease;
+}
+
+.login-links a:hover {
+  color: #fff;
+}
+
+.login-links span {
+  color: #aaa;
+}
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* espacio entre icono y texto */
+  background: #fff;
+  color: #444;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-google:hover {
+  background: #f5f5f5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Formulario de registro en grid */
+.register-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Cada input ocupa solo su celda */
+.register-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botones ocupan las 2 columnas */
+.register-actions {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Links también ocupan 2 columnas */
+.register-form .login-links {
+  grid-column: span 2;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Estilo de los inputs en register */
+.register-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #444;   /* un borde sutil */
+  background: #2b2b2b;      /* gris oscuro para integrar con el fondo */
+  color: #fff;              /* texto blanco */
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Cuando escribes */
+.register-form input:focus {
+  border-color: #e63946;     /* mismo color del botón */
+  outline: none;
+  background: #333;          /* un poquito más claro al enfocar */
+  box-shadow: 0 0 6px rgba(230, 57, 70, 0.6); /* efecto glow */
+}
+
+/* Labels */
+.register-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ccc;
+}
+
+/* Responsive en móviles */
+@media (max-width: 768px) {
+  .register-form {
+    grid-template-columns: 1fr;
+  }
+}

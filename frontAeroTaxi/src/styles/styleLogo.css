@@ -1,0 +1,11 @@
+.style-logo {
+  width: 70px;
+  height: auto;
+  cursor: pointer;
+  margin-left: 30px;
+  border-radius: 10px;
+}
+
+.style-logo:hover {
+  opacity: 0.8;
+}
