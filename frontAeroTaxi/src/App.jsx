@@ -6,7 +6,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import OAuthCallback from './pages/OAuthCallback'; 
-import Verify from "./pages/verify"; // 👈 importa tu componente Verify
+import Verify from "./pages/Verify"; // 
 
 function App() {
   return (
