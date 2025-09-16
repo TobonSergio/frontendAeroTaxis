@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "../api/axiosConfig";
 import NavbarLanding from "../components/NavbarLanding";
 import "../styles/styleRegister.css";
+import authService from "../services/authService"; // ✅ usamos el service
 
 function Register() {
   const [name, setName] = useState("");
@@ -19,7 +19,7 @@ function Register() {
     setSuccess("");
 
     try {
-      const response = await axios.post("/api/auth/register", {
+      await authService.register({
         name,
         lastName,
         email,

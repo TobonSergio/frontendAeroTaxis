@@ -1,0 +1,149 @@
+/* Layout general */
+.profile-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  background: #f5f7fa;
+  color: #333;
+}
+
+.profile-main {
+  flex: 1;
+  padding: 40px;
+}
+
+/* Header con avatar */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.avatar {
+  color: #0077ff;
+}
+
+.user-info h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.user-info p {
+  margin: 4px 0 0 0;
+  color: #666;
+}
+
+/* Secciones */
+.profile-section {
+  margin-bottom: 40px;
+}
+
+.profile-section h2 {
+  margin-bottom: 20px;
+  color: #0077ff;
+}
+
+/* Info cards */
+.info-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.info-card {
+  flex: 1 1 200px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.info-card h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.info-card p {
+  margin: 0;
+  color: #555;
+}
+
+/* Formulario de edición */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.profile-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #333;
+}
+
+.profile-form input {
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+.profile-form input:focus {
+  border-color: #0077ff;
+  outline: none;
+}
+
+.btn-save {
+  padding: 12px;
+  background: #0077ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-save:hover {
+  background: #005fcc;
+}
+
+/* Stats cards */
+.stats-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1 1 200px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin-bottom: 10px;
+  color: #0077ff;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

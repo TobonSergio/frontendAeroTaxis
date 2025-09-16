@@ -9,3 +9,31 @@
 .style-logo:hover {
   opacity: 0.8;
 }
+
+/* ==============================
+   LOGO RESPONSIVE
+============================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .style-logo {
+    width: 60px;
+    margin-left: 20px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .style-logo {
+    width: 50px;
+    margin-left: 15px;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .style-logo {
+    width: 40px;
+    margin-left: 10px;
+  }
+}

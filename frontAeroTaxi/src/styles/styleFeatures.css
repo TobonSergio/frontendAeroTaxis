@@ -48,3 +48,42 @@
 .feature-card:hover p {
   color: #fff;
 }
+
+/* Estilos responsivos para móviles */
+@media (max-width: 768px) {
+  .about-us {
+    padding: 50px 15px; /* menos espacio vertical y horizontal */
+  }
+
+  .about-title {
+    font-size: 2rem; /* un poco más pequeño para pantallas pequeñas */
+  }
+
+  .about-text {
+    font-size: 1rem; 
+    margin-bottom: 30px;
+  }
+
+  .about-container {
+    padding: 0 10px;
+  }
+
+  /* Si las tarjetas están en fila, mejor apilarlas */
+  .cards-wrapper {
+    display: flex;
+    flex-direction: column; /* apila las tarjetas */
+    gap: 20px; /* espacio entre ellas */
+  }
+
+  .card {
+    padding: 20px; /* menos padding en móviles */
+  }
+
+  .card h3 {
+    font-size: 1.4rem;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+  }
+}

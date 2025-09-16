@@ -1,0 +1,34 @@
+/* src/styles/styleSidebar.css */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background-color: #20232a;
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin: 15px 0;
+}
+
+.sidebar nav ul li a {
+  text-decoration: none;
+  color: #ddd;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+  color: #fff;
+}

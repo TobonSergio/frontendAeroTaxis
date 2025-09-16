@@ -128,3 +128,133 @@
   background: #ffe7e7;
   color: #dc3545;
 }
+
+/* ==============================
+   DASHBOARD RESPONSIVE
+============================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 180px;
+    padding: 15px;
+  }
+
+  .sidebar .logo {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .sidebar nav ul li a {
+    font-size: 0.95rem;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .cards {
+    gap: 15px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+  }
+
+  .sidebar nav {
+    display: none; /* opcional: se puede reemplazar con un menú hamburguesa */
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .table-section {
+    padding: 15px;
+  }
+
+  .table-section table,
+  .table-section th,
+  .table-section td {
+    font-size: 0.85rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 8px 10px;
+  }
+
+  .sidebar .logo {
+    font-size: 1.2rem;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.85rem;
+  }
+
+  .cards {
+    gap: 10px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .table-section {
+    padding: 10px;
+  }
+
+  .table-section table,
+  .table-section th,
+  .table-section td {
+    font-size: 0.8rem;
+  }
+}

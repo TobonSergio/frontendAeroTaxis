@@ -1,21 +1,11 @@
 import "../styles/styleDashboard.css";
+import Sidebar from "../components/Sidebar";
 
 function Dashboard() {
   return (
     <div className="dashboard">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2 className="logo">AeroTaxi</h2>
-        <nav>
-          <ul>
-            <li><a href="/dashboard">🏠 Inicio</a></li>
-            <li><a href="/dashboard/reservas">📅 Reservas</a></li>
-            <li><a href="/dashboard/perfil">👤 Perfil</a></li>
-            <li><a href="/dashboard/ajustes">⚙️ Ajustes</a></li>
-            <li><a href="/logout">🚪 Cerrar sesión</a></li>
-          </ul>
-        </nav>
-      </aside>
+      {/* Sidebar reutilizable */}
+      <Sidebar />
 
       {/* Contenido principal */}
       <main className="main-content">

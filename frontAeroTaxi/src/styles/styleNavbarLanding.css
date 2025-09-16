@@ -10,16 +10,17 @@
   top: 0;
   left: 0;
   width: 100%;
-  box-sizing: border-box; /* 👈 evita que el padding rompa el ancho */
+  box-sizing: border-box;
   z-index: 1000;
 }
-
 
 /* Logo */
 .navbar-landing h2 {
   margin: 0;
 }
 
+
+/* Logo */
 .style-logo {
   height: 50px;
   width: auto;
@@ -85,17 +86,126 @@
   transform: scale(1);
 }
 
+/* Botón hamburguesa */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 28px;
+  height: 22px;
+  cursor: pointer;
+  z-index: 1100;
+  margin-left: auto;
+  
+}
 
-/* Responsive básico */
+.hamburger div {
+  width: 100%;
+  height: 3px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Móviles (pantallas <= 768px) */
 @media (max-width: 768px) {
+  /* Navbar: columna, centrado */
   .navbar-landing {
+    display: flex;
     flex-direction: column;
-    padding: 10px 20px;
+    justify-content: center; /* centra verticalmente */
+    align-items: center;     /* centra horizontalmente */
+    padding: 20px 20px;
   }
 
+  /* Logo centrado */
+  .style-logo {
+    height: 40px;
+    margin-bottom: 8px;
+  }
+
+  /* Botón hamburguesa */
+  .hamburger {
+    display: flex;
+    margin-bottom: 10px; /* separación entre logo y links */
+  }
+
+  /* Contenedor de links centrado */
+  .div-navbar-links-landing {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Links del menú */
   .navbar-links-landing {
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     margin-top: 10px;
+    width: 100%;
+    display: none; /* oculto por defecto */
+    align-items: center; /* centra los links */
+  }
+
+  .navbar-links-landing.active {
+    display: flex; /* se muestra cuando está activo */
+  }
+
+  .navbar-links-landing a {
+    font-size: 0.9rem;
+    text-align: center; /* centra texto de links */
+  }
+
+  /* Botón iniciar sesión */
+  .btn-inciar-sesion {
+    width: auto; /* no ocupa todo el ancho */
+    text-align: center;
+    padding: 10px 20px;
   }
 }
+
+/* ==============================
+   NAVBAR RESPONSIVE
+============================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .navbar-landing {
+    padding: 12px 30px;
+  }
+
+  .navbar-links-landing a {
+    font-size: 0.95rem;
+  }
+
+  .btn-inciar-sesion {
+    padding: 8px 18px;
+    font-size: 0.9rem;
+  }
+
+  .style-logo {
+    height: 45px;
+  }
+}
+
+/* Móviles muy pequeños / pantalla < 480px */
+@media (max-width: 480px) {
+  .navbar-landing {
+    padding: 8px 15px;
+  }
+
+  .navbar-links-landing a {
+    font-size: 0.85rem;
+  }
+
+  .btn-inciar-sesion {
+    font-size: 0.85rem;
+    padding: 8px 0;
+  }
+
+  .style-logo {
+    height: 35px;
+  }
+}
+

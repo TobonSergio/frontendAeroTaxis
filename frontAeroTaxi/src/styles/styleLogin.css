@@ -235,3 +235,93 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ==============================
+   LOGIN PAGE RESPONSIVE
+============================== */
+@media (max-width: 1024px) {
+  .login-container {
+    padding: 40px 30px;
+    margin-top: 50px;
+  }
+
+  .login-title {
+    font-size: 2rem;
+  }
+
+  .login-form input {
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  .btn-login, .btn-google {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-page {
+    padding: 20px;
+  }
+
+  .login-container {
+    padding: 35px 25px;
+    margin-top: 40px;
+  }
+
+  .login-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .login-form input {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .btn-login, .btn-google {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .register-form {
+    grid-template-columns: 1fr; /* apila los inputs */
+  }
+
+  .register-actions {
+    grid-column: span 1;
+  }
+
+  .register-form .login-links {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 25px 20px;
+    margin-top: 30px;
+  }
+
+  .login-title {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+
+  .login-form input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .btn-login, .btn-google {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .login-links {
+    font-size: 0.8rem;
+  }
+}

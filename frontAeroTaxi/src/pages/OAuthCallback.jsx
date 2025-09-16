@@ -1,4 +1,4 @@
-// Archivo: src/pages/OAuthCallback.js
+// src/pages/OAuthCallback.js
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -7,25 +7,18 @@ const OAuthCallback = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Obtiene el token de los parámetros de la URL
     const params = new URLSearchParams(location.search);
     const token = params.get('token'); 
     
     if (token) {
-      // Si hay un token, lo guarda y redirige
-      localStorage.setItem('jwtToken', token);
-      navigate('/dashboard'); // O la ruta a tu página de inicio
+      localStorage.setItem('token', token); // ✅ nombre correcto
+      navigate('/dashboard');
     } else {
-      // Si no hay token, hay un error. Redirige al login.
-      navigate('/login'); 
+      navigate('/login');
     }
   }, [navigate, location]);
 
-  return (
-    <div>
-      <p>Iniciando sesión con Google...</p>
-    </div>
-  );
+  return <p>Iniciando sesión con Google...</p>;
 };
 
 export default OAuthCallback;

@@ -5,3 +5,24 @@
   max-width: 1100px;
   margin: 0 auto;
 }
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .grid-container {
+    gap: 25px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .grid-container {
+    gap: 20px;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .grid-container {
+    gap: 15px;
+  }
+}

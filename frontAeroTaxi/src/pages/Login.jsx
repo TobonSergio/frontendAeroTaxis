@@ -3,8 +3,8 @@ import "../styles/styleNavbarLanding.css";
 import NavbarLanding from "../components/NavbarLanding";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-import axios from "../api/axiosConfig";
 import { useAuth } from "../hooks/useAuth"; // tu custom hook
+import authService from "../services/authService"; // ✅ usamos el service
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -17,13 +17,13 @@ function Login() {
     setError("");
 
     try {
-      const response = await axios.post("/api/auth/login", { username, password });
+      const response = await authService.login({ username, password });
       const token = response.data.token;
 
       login(token); // guarda en context y localStorage
       window.location.href = "/dashboard"; // redirige
     } catch (err) {
-      setError("Usuario o contraseña incorrectos");
+      setError("❌ Usuario o contraseña incorrectos");
     }
   };
 
@@ -80,3 +80,4 @@ function Login() {
 }
 
 export default Login;
+

@@ -150,3 +150,82 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ==============================
+   REGISTER PAGE RESPONSIVE
+============================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .register-container {
+    padding: 25px 25px;
+  }
+
+  .register-title {
+    font-size: 1.8rem;
+  }
+
+  .form-group input {
+    padding: 11px 12px;
+    font-size: 0.95rem;
+  }
+
+  .btn-register, .btn-google {
+    padding: 11px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 20px 20px;
+    margin-top: 60px;
+  }
+
+  .register-title {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+  }
+
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .btn-register, .btn-google {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .register-links {
+    font-size: 0.85rem;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+  .register-container {
+    padding: 15px 15px;
+    margin-top: 40px;
+  }
+
+  .register-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .form-group input {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .btn-register, .btn-google {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .register-links {
+    font-size: 0.8rem;
+  }
+}
