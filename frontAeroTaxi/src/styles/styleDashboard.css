@@ -1,47 +1,18 @@
-/* Layout general */
+/* ==============================
+   LAYOUT GENERAL
+============================== */
 .dashboard {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   font-family: "Segoe UI", sans-serif;
-  background: #f5f7fa;
+  background: #f9f9f9; /* Blanco suave */
+  color: #222; /* Texto negro */
 }
 
-/* Sidebar */
-.sidebar {
-  width: 220px;
-  background: linear-gradient(135deg, #b60000, #ef9090);
-  color: white;
-  padding: 20px;
-}
-
-.sidebar .logo {
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-
-.sidebar nav ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar nav ul li {
-  margin: 15px 0;
-}
-
-.sidebar nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: 0.3s;
-}
-
-.sidebar nav ul li a:hover {
-  color: #ffdede;
-  padding-left: 8px;
-}
-
-/* Main content */
+/* ==============================
+   MAIN CONTENT
+============================== */
 .main-content {
   flex: 1;
   padding: 30px;
@@ -50,14 +21,17 @@
 .dashboard-header h1 {
   font-size: 2rem;
   margin-bottom: 5px;
+  color: #b60000; /* Rojo */
 }
 
 .dashboard-header p {
-  color: #666;
+  color: #555;
   margin-bottom: 30px;
 }
 
-/* Cards */
+/* ==============================
+   CARDS
+============================== */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -67,27 +41,44 @@
 
 .card {
   background: white;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 14px;
+  padding: 22px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  border-left: 6px solid #ffcc00; /* Amarillo */
   transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  border-left-color: #b60000; /* Rojo al hover */
 }
 
-/* Tabla */
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #111; /* Negro */
+}
+
+.card p {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #b60000;
+}
+
+/* ==============================
+   TABLA
+============================== */
 .table-section {
   background: white;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
 .table-section h2 {
   margin-bottom: 15px;
+  color: #111;
 }
 
 .table-section table {
@@ -103,13 +94,15 @@
 }
 
 .table-section th {
-  background: #fafafa;
+  background: #ffeda5; /* Amarillo */
+  color: #111;
+  font-weight: bold;
 }
 
 /* Estados */
 .status {
-  padding: 4px 10px;
-  border-radius: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 0.85rem;
   font-weight: bold;
 }
@@ -130,23 +123,18 @@
 }
 
 /* ==============================
-   DASHBOARD RESPONSIVE
+   RESPONSIVE
 ============================== */
 
 /* Tablets */
 @media (max-width: 1024px) {
   .sidebar {
-    width: 180px;
+    width: 200px;
     padding: 15px;
   }
 
   .sidebar .logo {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-  }
-
-  .sidebar nav ul li a {
-    font-size: 0.95rem;
+    font-size: 1.5rem;
   }
 
   .main-content {
@@ -155,10 +143,6 @@
 
   .dashboard-header h1 {
     font-size: 1.8rem;
-  }
-
-  .cards {
-    gap: 15px;
   }
 
   .card {
@@ -174,15 +158,14 @@
 
   .sidebar {
     width: 100%;
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
+    padding: 12px 18px;
   }
 
   .sidebar nav {
-    display: none; /* opcional: se puede reemplazar con un menú hamburguesa */
+    display: none; /* Aquí luego podrías meter un menú hamburguesa */
   }
 
   .main-content {
@@ -193,68 +176,40 @@
     font-size: 1.6rem;
   }
 
-  .dashboard-header p {
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-  }
-
   .cards {
     grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  .card {
-    padding: 15px;
-  }
-
-  .table-section {
-    padding: 15px;
-  }
-
-  .table-section table,
-  .table-section th,
-  .table-section td {
-    font-size: 0.85rem;
   }
 }
 
 /* Móviles pequeños */
 @media (max-width: 480px) {
   .sidebar {
-    padding: 8px 10px;
+    padding: 10px 14px;
   }
 
   .sidebar .logo {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .main-content {
-    padding: 10px;
+    padding: 12px;
   }
 
   .dashboard-header h1 {
     font-size: 1.4rem;
   }
 
-  .dashboard-header p {
-    font-size: 0.85rem;
-  }
-
-  .cards {
-    gap: 10px;
-  }
-
   .card {
-    padding: 12px;
+    padding: 14px;
   }
 
   .table-section {
-    padding: 10px;
+    padding: 12px;
   }
 
   .table-section table,
   .table-section th,
   .table-section td {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }

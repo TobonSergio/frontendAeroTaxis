@@ -107,67 +107,70 @@
   transition: all 0.3s ease;
 }
 
+/* ==============================
+   NAVBAR RESPONSIVE
+============================== */
+
 /* Móviles (pantallas <= 768px) */
 @media (max-width: 768px) {
-  /* Navbar: columna, centrado */
+  /* Navbar sigue en fila (logo a la izquierda y hamburguesa a la derecha) */
   .navbar-landing {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* centra verticalmente */
-    align-items: center;     /* centra horizontalmente */
-    padding: 20px 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
   }
 
-  /* Logo centrado */
+  /* Logo un poco más pequeño */
   .style-logo {
     height: 40px;
-    margin-bottom: 8px;
   }
 
-  /* Botón hamburguesa */
+  /* Botón hamburguesa visible */
   .hamburger {
     display: flex;
-    margin-bottom: 10px; /* separación entre logo y links */
+    margin: 0; /* quita margen raro */
   }
 
-  /* Contenedor de links centrado */
+  /* Contenedor de links ocupa todo el ancho, oculto por defecto */
   .div-navbar-links-landing {
+    position: absolute;
+    top: 100%; /* justo debajo de la navbar */
+    left: 0;
     width: 100%;
-    display: flex;
+    background-color: #1a1a1a;
+  }
+
+  /* Links en columna centrados */
+  .navbar-links-landing {
     flex-direction: column;
+    gap: 15px;
+    margin: 0;
+    padding: 15px 0;
+    width: 100%;
+    display: none; /* oculto */
     align-items: center;
   }
 
-  /* Links del menú */
-  .navbar-links-landing {
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 10px;
-    width: 100%;
-    display: none; /* oculto por defecto */
-    align-items: center; /* centra los links */
-  }
-
+  /* Cuando se activa el menú */
   .navbar-links-landing.active {
-    display: flex; /* se muestra cuando está activo */
+    display: flex;
   }
 
+  /* Ajuste de tipografía */
   .navbar-links-landing a {
-    font-size: 0.9rem;
-    text-align: center; /* centra texto de links */
+    font-size: 0.95rem;
+    text-align: center;
   }
 
   /* Botón iniciar sesión */
   .btn-inciar-sesion {
-    width: auto; /* no ocupa todo el ancho */
-    text-align: center;
     padding: 10px 20px;
+    font-size: 0.9rem;
   }
 }
 
-/* ==============================
-   NAVBAR RESPONSIVE
-============================== */
+
 
 /* Tablets */
 @media (max-width: 1024px) {

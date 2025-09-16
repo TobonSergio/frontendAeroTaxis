@@ -1,34 +1,64 @@
-/* src/styles/styleSidebar.css */
-.sidebar {
-  width: 240px;
-  height: 100vh;
-  background-color: #20232a;
-  color: #fff;
-  padding: 20px;
+/* Fondo degradado Rojo → Amarillo */
+.custom-navbar {
+  background: linear-gradient(90deg, #696969, #202020);
+  padding: 10px 20px;
 }
 
-.sidebar .logo {
-  font-size: 1.5rem;
+/* Logo */
+.custom-navbar .navbar-brand {
   font-weight: bold;
-  margin-bottom: 20px;
+  font-size: 1.3rem;
+  color: white !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.sidebar nav ul {
-  list-style: none;
-  padding: 0;
+/* Links */
+.custom-navbar .nav-link {
+  color: white !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-.sidebar nav ul li {
-  margin: 15px 0;
+.custom-navbar .nav-link:hover {
+  color: #000 !important; /* Negro al pasar */
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 6px 10px;
 }
 
-.sidebar nav ul li a {
-  text-decoration: none;
-  color: #ddd;
-  font-size: 1.1rem;
-  transition: color 0.3s;
+/* Botón hamburguesa */
+.custom-navbar .navbar-toggler {
+  border: none;
 }
 
-.sidebar nav ul li a:hover {
-  color: #fff;
+.custom-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Buscador */
+.custom-navbar .form-control {
+  border-radius: 8px;
+  border: 1px solid #fff;
+}
+
+.custom-navbar .form-control:focus {
+  box-shadow: none;
+  border: 1px solid #000;
+}
+
+/* Botón buscar */
+.custom-navbar .custom-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  transition: 0.3s;
+}
+
+.custom-navbar .custom-btn:hover {
+  background-color: white;
+  color: #b60000; /* Rojo */
+  border: 1px solid #b60000;
 }
