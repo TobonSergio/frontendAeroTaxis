@@ -37,10 +37,13 @@ function Navbar() {
               <Link className="nav-link" to="/dashboard">🏠 Inicio</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard/reservas">📅 Reservas</Link>
+              <Link className="nav-link" to="/dashboard/reservations">📅 Reservas</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/dashboard/profile">👤 Perfil</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/dashboard/users">👤 Usuarios</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/dashboard/ajustes">⚙️ Ajustes</Link>

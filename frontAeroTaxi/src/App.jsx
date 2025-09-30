@@ -6,6 +6,8 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Profile from "./pages/Profile.jsx";
+import Users from "./pages/Users.jsx";
+import Reservations from "./pages/Reservations.jsx";
 import OAuthCallback from "./pages/OAuthCallback"; 
 import Verify from "./pages/Verify"; 
 
@@ -24,7 +26,9 @@ function App() {
         {/* Rutas privadas */}
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route index element={<Dashboard />} />
+          <Route path="reservations" element={<Reservations />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="users" element={<Users />} />
         </Route>
       </Routes>
     </>
