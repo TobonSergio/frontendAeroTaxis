@@ -5,8 +5,10 @@ const userService = {
   getCurrentUser: async () => {
     try {
       const response = await axios.get("/api/auth/me"); // ✅ URL corregida
+      console.log("xx" + response);
       return response.data;
     } catch (error) {
+      console.log("xx");
       console.error("Error al obtener usuario:", error);
       throw error;
     }
