@@ -1,29 +1,29 @@
+// src/services/userService.js
 import axios from "../api/axiosConfig.js";
 
 const userService = {
-  // Obtener usuario actual
+  // ✅ Obtener usuario actual
   getCurrentUser: async () => {
     try {
-      const response = await axios.get("/api/auth/me"); // ✅ URL corregida
-      console.log("xx" + response);
+      const response = await axios.get("/api/auth/me");
       return response.data;
     } catch (error) {
-      console.log("xx");
       console.error("Error al obtener usuario:", error);
       throw error;
     }
   },
 
-  // Actualizar datos del usuario
+  // ✅ Actualizar usuario
   updateUser: async (userData) => {
     try {
-      const response = await axios.put("/api/auth/me", userData); // ✅ URL corregida
+      const response = await axios.put("/api/auth/me", userData);
       return response.data;
     } catch (error) {
       console.error("Error al actualizar usuario:", error);
       throw error;
     }
   },
+
 };
 
 export default userService;

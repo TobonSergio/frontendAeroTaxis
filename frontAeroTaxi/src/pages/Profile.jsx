@@ -1,13 +1,15 @@
 import "../styles/styleProfile.css";
 import Sidebar from "../components/Sidebar";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import userService from "../services/userService.js";
 
 function Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
+  // Cargar usuario actual
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -24,6 +26,7 @@ function Profile() {
     fetchUser();
   }, []);
 
+  // Actualizar usuario
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -31,15 +34,20 @@ function Profile() {
       const updatedData = {
         name: form.name.value,
         lastName: form.lastName.value,
-        email: form.email.value,
+        username: user.username,
         number: form.number.value,
       };
+
       const updatedUser = await userService.updateUser(updatedData);
       setUser(updatedUser);
-      alert("Perfil actualizado correctamente");
+      alert("✅ Perfil actualizado correctamente");
+
+      // Ocultar el formulario tras actualizar
+      setShowForm(false);
+
     } catch (error) {
       console.error("Error al actualizar perfil:", error);
-      alert("Error al actualizar perfil");
+      alert("❌ Error al actualizar perfil");
     }
   };
 
@@ -54,34 +62,43 @@ function Profile() {
           <div className="avatar">
             <FaUserCircle size={80} />
           </div>
+
           <div className="user-info">
-            <h1>{user.name} {user.lastName}</h1>
+            <div className="user-info-header">
+              <h1>{user.name} {user.lastName}</h1>
+              <button
+                className="btn-edit"
+                onClick={() => setShowForm(!showForm)}
+                title="Editar perfil"
+              >
+                <FaEdit size={20} />
+              </button>
+            </div>
             <p>{user.email}</p>
+            <p className="user-role">Rol: {user.rolName}</p>
           </div>
         </header>
 
-        <section className="profile-section">
-          <h2>Editar Perfil</h2>
-          <form className="profile-form" onSubmit={handleSubmit}>
-            <label>
-              Nombre:
-              <input name="name" defaultValue={user.name} />
-            </label>
-            <label>
-              Apellido:
-              <input name="lastName" defaultValue={user.lastName} />
-            </label>
-            <label>
-              Email:
-              <input name="email" type="email" defaultValue={user.email} />
-            </label>
-            <label>
-              Teléfono:
-              <input name="number" defaultValue={user.number} />
-            </label>
-            <button type="submit" className="btn-save">Guardar Cambios</button>
-          </form>
-        </section>
+        {showForm && (
+          <section className="profile-section">
+            <h2>Editar Perfil</h2>
+            <form className="profile-form" onSubmit={handleSubmit}>
+              <label>
+                Nombre:
+                <input name="name" defaultValue={user.name} />
+              </label>
+              <label>
+                Apellido:
+                <input name="lastName" defaultValue={user.lastName} />
+              </label>
+              <label>
+                Teléfono:
+                <input name="number" defaultValue={user.number} />
+              </label>
+              <button type="submit" className="btn-save">Guardar Cambios</button>
+            </form>
+          </section>
+        )}
       </main>
     </div>
   );

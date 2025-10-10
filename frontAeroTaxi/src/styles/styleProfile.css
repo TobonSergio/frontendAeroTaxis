@@ -287,3 +287,32 @@
     font-size: 1.1rem;
   }
 }
+
+/* Botón de edición */
+.user-info-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-edit {
+  background: #0077ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-edit:hover {
+  background: #005fcc;
+}
+
+/* Transición suave al mostrar el formulario */
+.profile-section {
+  transition: all 0.3s ease;
+}
