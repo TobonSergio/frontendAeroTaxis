@@ -1,13 +1,17 @@
-import { Link } from "react-router-dom";
+// src/components/Navbar.jsx
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 function Navbar() {
-  const handleLogout = () => {
-    // 👉 Borras el token (o lo que uses para guardar sesión)
-    localStorage.removeItem("token");
+  const navigate = useNavigate();
+  const { logout, user } = useAuth();
 
-    // 👉 Rediriges al login reemplazando el historial
-    window.location.replace("/login");
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
   };
+
+  if (!user) return null;
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -33,20 +37,61 @@ function Navbar() {
         {/* Contenido */}
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+
             <li className="nav-item">
               <Link className="nav-link" to="/dashboard">🏠 Inicio</Link>
             </li>
+        {/* Rutas condicionales según rol */}
+              {user && (
+                <li className="nav-item">
+                  {user.rolid === 3 ? (
+                    // Cliente
+                    <Link className="nav-link" to="/dashboard/reserva-cliente">📅 Mis Reservas</Link>
+                  ) : (
+                    // Admin o Staff
+                    <Link className="nav-link" to="/dashboard/reservas">📅 Reservas</Link>
+                  )}
+                </li>
+              )}
+
+            {/* 🔹 Otras secciones comunes */}
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard/reservations">📅 Reservas</Link>
+              <Link className="nav-link" to="/dashboard/historial">🧾 Historial</Link>
             </li>
+
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard/profile">👤 Perfil</Link>
+              <Link className="nav-link" to="/dashboard/unidades">🚗 Unidades</Link>
             </li>
+
+            {/* 🔹 aquí va a ir el link solo para admin o staff */}
+            {user && (user.rolid === 1 || user.rolid === 3) && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/dashboard/rutas">🚗 Rutas</Link>
+              </li>
+            )}
+
+            {user.rolid === 1 && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/dashboard/users">
+                  👥 Usuarios
+                </Link>
+              </li>
+            )}
+              
+            {/* 🔹 Perfil según rol */}
             <li className="nav-item">
-              <Link className="nav-link" to="/dashboard/users">👤 Usuarios</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/dashboard/ajustes">⚙️ Ajustes</Link>
+              {user.rolid === 3 && (
+                <Link className="nav-link" to="/dashboard/cliente/perfil">👤 Mi Perfil</Link>
+              )}
+              {user.rolid === 1 && (
+                  <Link className="nav-link" to="/dashboard/profile">👤 Mi Perfil</Link>
+              )}
+              {user.rolid === 2 && (
+                <Link className="nav-link" to="/dashboard/staff/profile">👤 Mi Perfil</Link>
+              )}
+              {user.rolid === 4 && (
+                <Link className="nav-link" to="/dashboard/chofer/perfil">👤 Mi Perfil</Link>
+              )}
             </li>
 
             {/* 🚪 Cerrar sesión */}

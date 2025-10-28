@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import authService from "../services/authService"; // ✅ usamos el service
+import authService from "../services/authService";
 
 const Verify = () => {
   const [searchParams] = useSearchParams();
@@ -9,11 +9,11 @@ const Verify = () => {
   useEffect(() => {
     if (token) {
       authService.verifyAccount(token)
-        .then((res) => {
-          alert(res.data.message); // 🔥 usamos el mensaje del backend
-          window.location.href = "/login";
+        .then(res => {
+          alert(res.data.message || "✅ Cuenta verificada correctamente");
+          window.location.href = "/login"; // Redirige al login
         })
-        .catch((err) => {
+        .catch(err => {
           const msg = err.response?.data?.message || "❌ Error al verificar la cuenta";
           alert(msg);
         });

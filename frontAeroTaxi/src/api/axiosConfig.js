@@ -14,6 +14,9 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+
+
+
 });
 
 // Interceptor para agregar token automáticamente (excepto login/register/verify)
@@ -26,8 +29,21 @@ axiosInstance.interceptors.request.use(
     );
 
     if (token && !isPublicAuthEndpoint) {
+    console.log("xxxx entro al if xxxx");
+    console.log(config)
+    console.log(token);
+    console.log("xxxxxxx");
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    console.log("xxxx token xxxx");
+    console.log(token);
+    console.log("xxxx token xxxx");
+
+    console.log("xxx URL xxx");
+    console.log(config.url);
+    console.log("xxx URL xxx");
+
     return config;
   },
   (error) => Promise.reject(error)

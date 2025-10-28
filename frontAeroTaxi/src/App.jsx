@@ -8,8 +8,15 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Profile from "./pages/Profile.jsx";
 import Users from "./pages/Users.jsx";
 import Reservations from "./pages/Reservations.jsx";
+import Unidades from "./pages/Unidades.jsx";
 import OAuthCallback from "./pages/OAuthCallback"; 
 import Verify from "./pages/Verify"; 
+import ClienteProfile from "./pages/ClienteProfile.jsx";
+import ChoferProfile from "./pages/ChoferProfile.jsx";
+import Rutas from "./pages/Rutas.jsx"; // 👈 importa tu ManageRutas
+import ReservaCliente from "./pages/ReservaCliente.jsx";
+
+ // 👈 importa el componente
 
 function App() {
   return (
@@ -23,12 +30,16 @@ function App() {
         <Route path="/oauth-callback" element={<OAuthCallback />} />
         <Route path="/verify" element={<Verify />} />
 
-        {/* Rutas privadas */}
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route index element={<Dashboard />} />
           <Route path="reservations" element={<Reservations />} />
           <Route path="profile" element={<Profile />} />
           <Route path="users" element={<Users />} />
+          <Route path="unidades" element={<Unidades />} />
+          <Route path="cliente/perfil" element={<ClienteProfile />} />
+          <Route path="chofer/perfil" element={<ChoferProfile />} /> {/* Perfil de chofer */}
+          <Route path="rutas" element={<Rutas />} />
+          <Route path="reserva-cliente" element ={<ReservaCliente/>} />
         </Route>
       </Routes>
     </>

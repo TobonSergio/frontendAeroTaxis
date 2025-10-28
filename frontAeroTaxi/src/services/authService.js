@@ -1,15 +1,7 @@
-// src/services/authService.js
 import axiosInstance from "../api/axiosConfig";
 
-const register = (data) => {
-  return axiosInstance.post("/api/auth/register", data);
-};
-
-const verifyAccount = (token) => {
-  return axiosInstance.get(`/api/auth/verify?token=${token}`);
-};
-
 const login = (credentials) => {
+  // credentials = { username, password }
   return axiosInstance.post("/api/auth/login", credentials);
 };
 
@@ -17,14 +9,19 @@ const getCurrentUser = () => {
   return axiosInstance.get("/api/auth/me");
 };
 
-const logout = () => {
-  localStorage.removeItem("jwtToken");
+const verifyAccount = (token) => {
+  return axiosInstance.get(`/api/auth/verify?token=${token}`);
+};
+
+// 🔹 Nuevo: Google Login
+const googleLogin = () => {
+  // Redirige al endpoint backend que inicia OAuth con Google
+  window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
 };
 
 export default {
-  register,
-  verifyAccount,
   login,
   getCurrentUser,
-  logout,
+  verifyAccount,
+  googleLogin, // 🔹 exportamos la función de Google
 };
