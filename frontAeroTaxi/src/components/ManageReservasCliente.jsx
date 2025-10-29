@@ -1,142 +1,112 @@
-// src/components/ManageReservasCliente.jsx
 import { useState, useEffect } from "react";
 import reservaServiceCliente from "../services/reservaServiceCliente.js";
+import rutaService from "../services/rutaService.js";
 import { useAuth } from "../hooks/useAuth.js";
-import rutaService from "../services/rutaService.js"; // Para mostrar rutas por nombre
-import unidadService from "../services/unidadServices.js"; // Para mostrar unidades por nombre
 
-function ManageReservasCliente() {
+function CreateReservaCliente() {
   const { user } = useAuth();
-  const [reservas, setReservas] = useState([]);
   const [rutas, setRutas] = useState([]);
-  const [unidades, setUnidades] = useState([]);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
-    id: null,
     idRuta: "",
     lugarRecogida: "",
     destino: "",
     fechaReserva: "",
-    comentarios: ""
+    comentarios: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
-  // Cargar datos iniciales
+  // 🔹 Cargar rutas disponibles
   useEffect(() => {
-    if (user) {
-      cargarReservas();
-      cargarRutas();
-      cargarUnidades();
-    }
-  }, [user]);
+    const fetchRutas = async () => {
+      try {
+        const data = await rutaService.getAll();
+        setRutas(data);
+      } catch (error) {
+        console.error("Error al cargar rutas:", error);
+      }
+    };
+    fetchRutas();
+  }, []);
 
-  const cargarReservas = async () => {
-    try {
-      const data = await reservaServiceCliente.getAllByCliente(user.id);
-      setReservas(data);
-    } catch (error) {
-      console.error(error);
-      setMessage("Error al cargar las reservas");
-    }
-  };
 
-  const cargarRutas = async () => {
-    try {
-      const data = await rutaService.getAll();
-      setRutas(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const cargarUnidades = async () => {
-    try {
-      const data = await unidadService.getAll();
-      setUnidades(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  // 🔹 Manejar cambios en los inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+console.log("👤 Usuario actual:", user);
 
+  // 🔹 Enviar la reserva al backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setMessage("Debes iniciar sesión para crear una reserva");
+      return;
+    }
+
     setLoading(true);
     setMessage("");
 
+    // Extraer la hora desde fechaReserva
+    const fecha = formData.fechaReserva;
+    const hora = fecha ? fecha.split("T")[1] + ":00" : null; // ejemplo "14:00:00"
+
+    console.log("aqui se muestra nuestro user antes del payload");
+    console.log(user);
+
     const payload = {
-      idCliente: user.id,
-      idStaff: null, // Cliente no asigna staff
-      ...formData
+      idCliente: user.idCliente, // 👈 asegúrate de que user.idCliente existe en el hook useAuth
+      idRuta: formData.idRuta,
+      lugarRecogida: formData.lugarRecogida,
+      destino: formData.destino,
+      fechaReserva: formData.fechaReserva, // formato "YYYY-MM-DDTHH:mm"
+      horaReserva: hora,
+      comentarios: formData.comentarios,
     };
+    console.log("aqui se muestra nuestro payload");
+    console.log(payload);
 
     try {
-      if (formData.id) {
-        await reservaServiceCliente.update(formData.id, payload);
-        setMessage("Reserva actualizada correctamente");
-      } else {
-        await reservaServiceCliente.create(payload);
-        setMessage("Reserva creada correctamente");
-      }
-
-      // Reset form
+      await reservaServiceCliente.create(payload);
+      setMessage("✅ Reserva creada correctamente");
       setFormData({
-        id: null,
         idRuta: "",
         lugarRecogida: "",
         destino: "",
         fechaReserva: "",
-        comentarios: ""
+        comentarios: "",
       });
-
-      await cargarReservas();
     } catch (error) {
-      console.error(error);
-      setMessage("Error al guardar la reserva");
+      console.error("Error al crear la reserva:", error.response?.data || error);
+      setMessage(
+        `❌ Error al crear la reserva: ${
+          error.response?.data?.message || "Verifica los datos e inténtalo nuevamente"
+        }`
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEdit = (reserva) => {
-    setFormData({
-      id: reserva.id,
-      idRuta: reserva.ruta?.id || "",
-      lugarRecogida: reserva.lugarRecogida,
-      destino: reserva.destino,
-      fechaReserva: reserva.fechaReserva?.slice(0, 16) || "", // YYYY-MM-DDTHH:mm
-      comentarios: reserva.comentarios || ""
-    });
-    setMessage("");
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm("¿Eliminar reserva?")) return;
-    try {
-      await reservaServiceCliente.remove(id);
-      setMessage("Reserva eliminada correctamente");
-      await cargarReservas();
-    } catch (error) {
-      console.error(error);
-      setMessage("Error al eliminar la reserva");
-    }
-  };
-
   return (
-    <div className="reservas-container">
-      <h2>Mis Reservas</h2>
+    <div className="create-reserva-container">
+      <h2>Crear Reserva</h2>
 
-      <form onSubmit={handleSubmit} className="reservas-form">
+      <form onSubmit={handleSubmit} className="reserva-form">
         <label>
           Ruta:
-          <select name="idRuta" value={formData.idRuta} onChange={handleChange} required>
+          <select
+            name="idRuta"
+            value={formData.idRuta}
+            onChange={handleChange}
+            required
+          >
             <option value="">Seleccione una ruta</option>
             {rutas.map((ruta) => (
-              <option key={ruta.idRuta} value={ruta.idRuta}>
+              <option key={ruta.id} value={ruta.id}>
                 {ruta.inicio} → {ruta.fin}
               </option>
             ))}
@@ -187,44 +157,13 @@ function ManageReservasCliente() {
         </label>
 
         <button type="submit" disabled={loading}>
-          {loading ? "Procesando..." : formData.id ? "Actualizar" : "Crear"}
+          {loading ? "Procesando..." : "Crear Reserva"}
         </button>
       </form>
 
       {message && <p className="text-message">{message}</p>}
-
-      <h3>Listado de Reservas</h3>
-      <table className="reservas-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Ruta</th>
-            <th>Lugar Recogida</th>
-            <th>Destino</th>
-            <th>Fecha</th>
-            <th>Comentarios</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reservas.map((r) => (
-            <tr key={r.id}>
-              <td>{r.id}</td>
-              <td>{r.ruta ? `${r.ruta.inicio} → ${r.ruta.fin}` : r.idRuta}</td>
-              <td>{r.lugarRecogida}</td>
-              <td>{r.destino}</td>
-              <td>{new Date(r.fechaReserva).toLocaleString()}</td>
-              <td>{r.comentarios}</td>
-              <td>
-                <button onClick={() => handleEdit(r)}>✏️</button>
-                <button onClick={() => handleDelete(r.id)}>🗑️</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }
 
-export default ManageReservasCliente;
+export default CreateReservaCliente;

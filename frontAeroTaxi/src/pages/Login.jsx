@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import "../styles/styleLogin.css";
 import "../styles/styleNavbarLanding.css";
 import NavbarLanding from "../components/NavbarLanding";
@@ -6,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import authService from "../services/authService";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc"; // importamos el icono
+import { FcGoogle } from "react-icons/fc";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -21,22 +20,24 @@ function Login() {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
     if (token) {
-      login(token)
+      // 🔹 enviamos como objeto con token para AuthContext
+      login({ token })
         .then(() => navigate("/dashboard"))
         .catch(() => setError("No se pudo iniciar sesión con Google"));
     }
   }, [location.search]);
 
-  // Login con usuario y contraseña
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
       const response = await authService.login({ username, password });
-      const tokenFromBackend = response.data.token;
+      const data = response.data;
 
-      await login(tokenFromBackend);
+      console.log("✅ Datos recibidos del backend:", data);
+
+      await login(data);
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
@@ -79,11 +80,9 @@ function Login() {
           </div>
 
           <div className="login-actions">
-            <button type="submit" className="btn-login">
-              Entrar
-            </button>
+            <button type="submit" className="btn-login">Entrar</button>
             <button type="button" onClick={authService.googleLogin} className="btn-google">
-              <FcGoogle size={22} /> {/* icono */}
+              <FcGoogle size={22} />
               <span style={{ marginLeft: "8px" }}>Iniciar sesión con Google</span>
             </button>
           </div>

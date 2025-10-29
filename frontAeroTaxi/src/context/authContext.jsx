@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
         // 👇 Aseguramos que el rol quede claro
         const userFormatted = {
           id: data.id,
-          username: data.usuario,
+          idCliente: data.idCliente,
           correo: data.correo,
           rolid: data.rolId,
           rolnombre: data.rolName,
@@ -43,32 +43,47 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, [token]);
 
+
+  
   // Login
-  const login = async (tokenFromBackend) => {
-    localStorage.setItem("token", tokenFromBackend);
-    setToken(tokenFromBackend);
+const login = async (responseData) => {
+  console.log("📦 Datos recibidos en login():", responseData);
 
-    try {
-      const response = await authService.getCurrentUser();
-      const data = response.data;
+  // 🧩 Desestructuramos directamente los datos del backend
+  const { token, idUsuario, rolName, idPerfil } = responseData;
 
-      const userFormatted = {
-        id: data.id,
-        correo: data.correo,
-        username: data.usuario,
-        rolid: data.rolId,
-        rolnombre: data.rolName,
-      };
+  // 💾 Guardamos todo en localStorage
+  localStorage.setItem("token", token);
+  localStorage.setItem("idUsuario", idUsuario);
+  localStorage.setItem("rol", rolName);
+  localStorage.setItem("idPerfil", idPerfil);
 
-      console.log("✅ Usuario después de login:", userFormatted);
-      setUser(userFormatted);
-    } catch (err) {
-      console.error("Error obteniendo usuario después del login:", err);
-      setUser(null);
-      localStorage.removeItem("token");
-      throw err;
-    }
-  };
+  // 🔐 Actualizamos estado
+  setToken(token);
+
+  try {
+    const response = await authService.getCurrentUser();
+    const data = response.data;
+
+    const userFormatted = {
+      id: data.id,
+      correo: data.correo,
+      username: data.usuario,
+      rolid: data.rolId,
+      rolnombre: data.rolName, // 👈 usamos el rol real que viene del login
+      idPerfil, // 👈 lo añadimos al contexto también
+    };
+
+    console.log("✅ Usuario después de login:", userFormatted);
+    setUser(userFormatted);
+  } catch (err) {
+    console.error("Error obteniendo usuario después del login:", err);
+    setUser(null);
+    localStorage.removeItem("token");
+    throw err;
+  }
+};
+
 
   // Logout
   const logout = () => {
