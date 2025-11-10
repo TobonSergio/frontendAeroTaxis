@@ -1,0 +1,180 @@
+/* 🌌 Fondo general fijo y continuo */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed; /* ✅ Hace que el gradiente sea continuo */
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+/* 📦 Contenedor principal */
+.container {
+  min-height: 100%;
+  width: 100%;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+
+/* 🏷️ Título principal */
+.h2-reservas-pendientes {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f1f1f1;
+  margin-bottom: 35px;
+  border-bottom: 3px solid #00d8ff;
+  display: inline-block;
+  padding-bottom: 8px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.5px;
+}
+
+/* 💬 Mensaje de estado */
+.mensaje {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 700px;
+  font-weight: 500;
+  background-color: rgba(231, 76, 60, 0.15);
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+}
+
+/* 🧩 Contenedor de tarjetas */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1300px;
+  padding: 0 10px;
+}
+
+/* 🪩 Estilo de cada tarjeta */
+.card.card-asignacion {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 25px;
+  border: 2px solid transparent;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.card.card-asignacion:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+  border-color: #00d8ff;
+  box-shadow: 0 0 25px rgba(0, 216, 255, 0.2);
+}
+
+/* 🧾 Contenido del texto dentro de las tarjetas */
+.card p {
+  margin: 6px 0;
+  color: #cfcfcf;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* 🔘 Botón para asignar */
+.button-asignar {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.button-asignar:hover {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 114, 255, 0.4);
+}
+
+/* 🔘 Grupo de botones dentro de cada tarjeta */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* 🎛️ Botones específicos */
+.button-group button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+/* 🚗 Botón chofer */
+.button-chofer {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  box-shadow: 0 4px 6px rgba(231, 76, 60, 0.3);
+}
+
+.button-chofer:hover {
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(231, 76, 60, 0.5);
+}
+
+/* 🚌 Botón unidad */
+.button-unidad {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  box-shadow: 0 4px 6px rgba(0, 198, 255, 0.3);
+}
+
+.button-unidad:hover {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 198, 255, 0.5);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .h2-reservas-pendientes {
+    font-size: 1.6rem;
+  }
+
+  .cards-container {
+    grid-template-columns: 1fr;
+  }
+
+  .card.card-asignacion {
+    width: 90%;
+    margin: 0 auto;
+  }
+}

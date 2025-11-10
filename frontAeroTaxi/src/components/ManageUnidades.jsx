@@ -15,7 +15,6 @@ function ManageUnidades() {
   const [message, setMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  // ✅ Cargar unidades al iniciar
   useEffect(() => {
     cargarUnidades();
   }, []);
@@ -30,13 +29,11 @@ function ManageUnidades() {
     }
   };
 
-  // ✅ Manejador de cambios en el formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ Enviar formulario (crear o editar)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -68,14 +65,12 @@ function ManageUnidades() {
     }
   };
 
-  // ✅ Editar una unidad
   const handleEdit = (unidad) => {
     setFormData(unidad);
     setIsEditing(true);
     setMessage("");
   };
 
-  // ✅ Eliminar unidad
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar esta unidad?")) return;
     try {
@@ -89,128 +84,160 @@ function ManageUnidades() {
   };
 
   return (
-    <div className="users-list-container">
-      <h2>Gestión de Unidades</h2>
+    <div className="unidades-container">
+      <header className="unidades-header">
+        <h1>🚐 Gestión de Unidades</h1>
+        <p>Administra las unidades disponibles, ocupadas o en mantenimiento.</p>
+      </header>
 
       {/* Formulario */}
-      <form onSubmit={handleSubmit} className="users-form">
-        <label>
-          Placa:
-          <input
-            name="placa"
-            value={formData.placa}
-            onChange={handleChange}
-            required
-          />
-        </label>
+      <section className="form-section">
+        <h2>{isEditing ? "✏️ Editar Unidad" : "➕ Nueva Unidad"}</h2>
 
-        <label>
-          Serie:
-          <input
-            name="serie"
-            value={formData.serie}
-            onChange={handleChange}
-            required
-          />
-        </label>
+        <form onSubmit={handleSubmit} className="unidades-form">
+          <div className="form-grid">
+            <label>
+              Placa:
+              <input
+                name="placa"
+                value={formData.placa}
+                onChange={handleChange}
+                required
+              />
+            </label>
 
-        <label>
-          Fotografía (URL):
-          <input
-            name="fotografia"
-            value={formData.fotografia}
-            onChange={handleChange}
-          />
-        </label>
+            <label>
+              Serie:
+              <input
+                name="serie"
+                value={formData.serie}
+                onChange={handleChange}
+                required
+              />
+            </label>
 
-        <label>
-          Estado:
-          <select
-            name="estado"
-            value={formData.estado}
-            onChange={handleChange}
-            required
-          >
-            <option value="DISPONIBLE">DISPONIBLE</option>
-            <option value="OCUPADA">OCUPADA</option>
-            <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-          </select>
-        </label>
+            <label>
+              Fotografía (URL):
+              <input
+                name="fotografia"
+                value={formData.fotografia}
+                onChange={handleChange}
+              />
+            </label>
 
-        <div className="edit-buttons">
-          <button type="submit" disabled={loading}>
-            {loading
-              ? "Procesando..."
-              : isEditing
-              ? "💾 Actualizar Unidad"
-              : "✅ Crear Unidad"}
-          </button>
+            <label>
+              Estado:
+              <select
+                name="estado"
+                value={formData.estado}
+                onChange={handleChange}
+                required
+              >
+                <option value="DISPONIBLE">DISPONIBLE</option>
+                <option value="OCUPADA">OCUPADA</option>
+                <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+              </select>
+            </label>
+          </div>
 
-          {isEditing && (
-            <button
-              type="button"
-              onClick={() => {
-                setIsEditing(false);
-                setFormData({
-                  idUnidad: null,
-                  placa: "",
-                  serie: "",
-                  fotografia: "",
-                  estado: "DISPONIBLE",
-                });
-              }}
-            >
-              Cancelar
+          <div className="form-buttons">
+            <button type="submit" disabled={loading}>
+              {loading
+                ? "Procesando..."
+                : isEditing
+                ? "💾 Actualizar Unidad"
+                : "✅ Crear Unidad"}
             </button>
-          )}
-        </div>
-      </form>
 
-      {message && <p className="text-message">{message}</p>}
+            {isEditing && (
+              <button
+                type="button"
+                className="cancel-btn"
+                onClick={() => {
+                  setIsEditing(false);
+                  setFormData({
+                    idUnidad: null,
+                    placa: "",
+                    serie: "",
+                    fotografia: "",
+                    estado: "DISPONIBLE",
+                  });
+                }}
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
+        </form>
 
-      {/* Tabla de unidades */}
-      <h3>Listado de Unidades</h3>
-      <table className="users-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Placa</th>
-            <th>Serie</th>
-            <th>Fotografía</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {unidades.map((unidad) => (
-            <tr key={unidad.idUnidad}>
-              <td>{unidad.idUnidad}</td>
-              <td>{unidad.placa}</td>
-              <td>{unidad.serie}</td>
-              <td>
-                {unidad.fotografia ? (
-                  <img
-                    src={unidad.fotografia}
-                    alt="Foto unidad"
-                    width="60"
-                    height="40"
-                    style={{ objectFit: "cover", borderRadius: "6px" }}
-                  />
-                ) : (
-                  "Sin foto"
-                )}
-              </td>
-              <td>{unidad.estado}</td>
-              <td>
-                <button onClick={() => handleEdit(unidad)}>✏️ Editar</button>
-                <button onClick={() => handleDelete(unidad.idUnidad)}>
-                  🗑️ Eliminar
-                </button>
-              </td>
+        {message && <p className="text-message">{message}</p>}
+      </section>
+
+      {/* Tabla */}
+      <section className="table-section">
+        <h2>📋 Listado de Unidades</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Placa</th>
+              <th>Serie</th>
+              <th>Fotografía</th>
+              <th>Estado</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {unidades.length > 0 ? (
+              unidades.map((unidad) => (
+                <tr key={unidad.idUnidad}>
+                  <td>{unidad.idUnidad}</td>
+                  <td>{unidad.placa}</td>
+                  <td>{unidad.serie}</td>
+                  <td>
+                    {unidad.fotografia ? (
+                      <img
+                        src={unidad.fotografia}
+                        alt="Foto unidad"
+                        width="60"
+                        height="40"
+                      />
+                    ) : (
+                      "Sin foto"
+                    )}
+                  </td>
+                  <td>
+                    <span
+                      className={`estado ${
+                        unidad.estado === "DISPONIBLE"
+                          ? "estado-disponible"
+                          : unidad.estado === "OCUPADA"
+                          ? "estado-ocupada"
+                          : "estado-mantenimiento"
+                      }`}
+                    >
+                      {unidad.estado}
+                    </span>
+                  </td>
+                  <td className="actions">
+                    <button onClick={() => handleEdit(unidad)}>✏️</button>
+                    <button
+                      className="delete"
+                      onClick={() => handleDelete(unidad.idUnidad)}
+                    >
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No hay unidades registradas.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

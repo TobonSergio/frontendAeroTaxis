@@ -11,7 +11,7 @@ function CreateUserByAdmin() {
     correo: "",
     telefono: "",
     cargo: "",
-    rolId: 2, // 1 = ADMIN, 2 = STAFF
+    rolId: 2,
   });
 
   const [message, setMessage] = useState("");
@@ -29,7 +29,7 @@ function CreateUserByAdmin() {
 
     try {
       const response = await adminStaffService.createStaff(formData);
-      setMessage(`✅ Usuario creado correctamente. ID Staff: ${response.staffId}`);
+      setMessage(`✅ Usuario creado correctamente (ID: ${response.staffId})`);
       setFormData({
         username: "",
         password: "",
@@ -49,39 +49,39 @@ function CreateUserByAdmin() {
   };
 
   return (
-    <div className="users-list-container">
-      <h2>Crear Nuevo Usuario</h2>
+    <div className="users-container">
+      <h2 className="users-title">Crear Nuevo Usuario</h2>
+
       <form onSubmit={handleSubmit} className="users-form">
-        <label>
-          Username:
+        <label>Username:
           <input name="username" value={formData.username} onChange={handleChange} required />
         </label>
-        <label>
-          Password:
+
+        <label>Password:
           <input type="password" name="password" value={formData.password} onChange={handleChange} required />
         </label>
-        <label>
-          Nombre:
+
+        <label>Nombre:
           <input name="nombre" value={formData.nombre} onChange={handleChange} required />
         </label>
-        <label>
-          Apellido:
+
+        <label>Apellido:
           <input name="apellido" value={formData.apellido} onChange={handleChange} required />
         </label>
-        <label>
-          Correo:
+
+        <label>Correo:
           <input type="email" name="correo" value={formData.correo} onChange={handleChange} required />
         </label>
-        <label>
-          Teléfono:
+
+        <label>Teléfono:
           <input name="telefono" value={formData.telefono} onChange={handleChange} />
         </label>
-        <label>
-          Cargo:
+
+        <label>Cargo:
           <input name="cargo" value={formData.cargo} onChange={handleChange} required />
         </label>
-        <label>
-          Rol:
+
+        <label>Rol:
           <select name="rolId" value={formData.rolId} onChange={handleChange} required>
             <option value={1}>ADMIN</option>
             <option value={2}>STAFF</option>
@@ -94,7 +94,12 @@ function CreateUserByAdmin() {
           </button>
         </div>
       </form>
-      {message && <p className={`text-message ${message.startsWith("❌") ? "error" : ""}`}>{message}</p>}
+
+      {message && (
+        <p className={`text-message ${message.startsWith("❌") ? "error" : ""}`}>
+          {message}
+        </p>
+      )}
     </div>
   );
 }

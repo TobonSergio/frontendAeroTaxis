@@ -1,16 +1,31 @@
-/* ==============================
-   LAYOUT GENERAL
-============================== */
+/* 🌌 LAYOUT GENERAL */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+
+/* 📦 CONTENEDOR GENERAL */
 .dashboard {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  font-family: "Segoe UI", sans-serif;
-  background: #f9f9f9; /* Blanco suave */
-  color: #222; /* Texto negro */
+  min-height: 100%;
+  width: 100%;
 }
 
-
+/* ==============================
+   SIDEBAR
+============================== */
+.sidebar {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
 
 .sidebar nav ul {
   list-style: none;
@@ -30,14 +45,14 @@
   display: flex;
   align-items: center;
   transition: 0.3s;
-  padding: 8px 12px;
+  padding: 10px 15px;
   border-radius: 8px;
 }
 
 .sidebar nav ul li a:hover {
-  background: #b60000; /* Rojo */
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: #fff;
-  padding-left: 16px;
+  padding-left: 20px;
 }
 
 /* ==============================
@@ -45,199 +60,173 @@
 ============================== */
 .main-content {
   flex: 1;
-  padding: 30px;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .dashboard-header h1 {
-  font-size: 2rem;
-  margin-bottom: 5px;
-  color: #b60000; /* Rojo */
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #00d8ff;
+  text-shadow: 0 0 12px rgba(0, 216, 255, 0.4);
+  text-align: center;
 }
 
 .dashboard-header p {
-  color: #555;
-  margin-bottom: 30px;
+  color: #ccc;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
 /* ==============================
-   CARDS
+   CUSTOM CARDS
 ============================== */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
   margin-bottom: 40px;
 }
 
-.card {
-  background: white;
-  border-radius: 14px;
-  padding: 22px;
+.custom-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 25px;
   text-align: center;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-  border-left: 6px solid #ffcc00; /* Amarillo */
-  transition: 0.3s;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  border: 2px solid transparent;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
 }
 
-.card:hover {
+.custom-card:hover {
   transform: translateY(-6px);
-  border-left-color: #b60000; /* Rojo al hover */
+  border-color: #00d8ff;
+  box-shadow: 0 0 25px rgba(0, 216, 255, 0.3);
 }
 
-.card h3 {
+.custom-card h3 {
   font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #111; /* Negro */
+  margin-bottom: 12px;
+  color: #f1f1f1;
 }
 
-.card p {
-  font-size: 1.8rem;
+.custom-card p {
+  font-size: 2rem;
   font-weight: bold;
-  color: #b60000;
+  color: #00d8ff;
+  margin: 0;
 }
 
 /* ==============================
    TABLA
 ============================== */
 .table-section {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 1200px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
 }
 
 .table-section h2 {
-  margin-bottom: 15px;
-  color: #111;
+  margin-bottom: 20px;
+  color: #00d8ff;
+  text-align: center;
+  font-size: 1.6rem;
 }
 
 .table-section table {
   width: 100%;
   border-collapse: collapse;
+  color: #fff;
 }
 
 .table-section th,
 .table-section td {
-  padding: 12px;
+  padding: 14px 12px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .table-section th {
-  background: #ffeda5; /* Amarillo */
-  color: #111;
-  font-weight: bold;
+  background: rgba(255, 255, 255, 0.1);
+  color: #00d8ff;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
 }
 
 /* Estados */
 .status {
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: bold;
 }
 
 .status-active {
-  background: #e0f7e9;
-  color: #28a745;
+  background: rgba(0, 255, 150, 0.15);
+  color: #2ecc71;
+  border: 1px solid #2ecc71;
 }
 
 .status-completed {
-  background: #e7f1ff;
-  color: #007bff;
+  background: rgba(0, 162, 255, 0.15);
+  color: #00a2ff;
+  border: 1px solid #00a2ff;
 }
 
 .status-cancelled {
-  background: #ffe7e7;
-  color: #dc3545;
+  background: rgba(255, 0, 0, 0.15);
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
 }
 
 /* ==============================
    RESPONSIVE
 ============================== */
-
-/* Tablets */
 @media (max-width: 1024px) {
-  .sidebar {
-    width: 200px;
-    padding: 15px;
-  }
-
-  .sidebar .logo {
-    font-size: 1.5rem;
-  }
-
   .main-content {
-    padding: 20px;
+    padding: 30px 20px;
   }
 
   .dashboard-header h1 {
     font-size: 1.8rem;
   }
-
-  .card {
-    padding: 18px;
-  }
 }
 
-/* Móviles */
 @media (max-width: 768px) {
-  .dashboard {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 18px;
-  }
-
-  .sidebar nav {
-    display: none; /* Aquí luego podrías meter un menú hamburguesa */
-  }
-
-  .main-content {
-    padding: 15px;
-  }
-
-  .dashboard-header h1 {
-    font-size: 1.6rem;
-  }
-
   .cards {
     grid-template-columns: 1fr;
   }
-}
-
-/* Móviles pequeños */
-@media (max-width: 480px) {
-  .sidebar {
-    padding: 10px 14px;
-  }
-
-  .sidebar .logo {
-    font-size: 1.3rem;
-  }
-
-  .main-content {
-    padding: 12px;
-  }
-
-  .dashboard-header h1 {
-    font-size: 1.4rem;
-  }
-
-  .card {
-    padding: 14px;
-  }
 
   .table-section {
-    padding: 12px;
+    padding: 20px;
   }
 
   .table-section table,
+  .table-section th,
+  .table-section td {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .table-section {
+    padding: 16px;
+  }
+
   .table-section th,
   .table-section td {
     font-size: 0.85rem;

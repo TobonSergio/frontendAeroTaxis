@@ -38,53 +38,62 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
+            {/* 🔹 Inicio */}
             <li className="nav-item">
               <Link className="nav-link" to="/dashboard">🏠 Inicio</Link>
             </li>
-        {/* Rutas condicionales según rol */}
-              {user && (
-                <li className="nav-item">
-                  {user.rolid === 3 ? (
-                    // Cliente
-                    <Link className="nav-link" to="/dashboard/reserva-cliente">📅 Mis Reservas</Link>
-                  ) : (
-                    // Admin o Staff
-                    <Link className="nav-link" to="/dashboard/reservas">📅 Reservas</Link>
-                  )}
-                </li>
-              )}
 
-            {/* 🔹 Otras secciones comunes */}
+            {/* 🔹 Reservas (depende del rol) */}
+            {user && (
+              <li className="nav-item">
+                {user.rolid === 3 ? (
+                  <Link className="nav-link" to="/dashboard/reserva-cliente">📅 Mis Reservas</Link>
+                ) : (
+                  <Link className="nav-link" to="/dashboard/reservas">📅 Reservas</Link>
+                )}
+              </li>
+            )}
+
+            {/* 🔹 Historial (visible para todos) */}
             <li className="nav-item">
               <Link className="nav-link" to="/dashboard/historial">🧾 Historial</Link>
             </li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/dashboard/unidades">🚗 Unidades</Link>
-            </li>
-
-            {/* 🔹 aquí va a ir el link solo para admin o staff */}
-            {user && (user.rolid === 1 || user.rolid === 3) && (
+            {/* 🔹 Unidades (solo para rol 1 o 2) */}
+            {(user.rolid === 1 || user.rolid === 2) && (
               <li className="nav-item">
-                <Link className="nav-link" to="/dashboard/rutas">🚗 Rutas</Link>
+                <Link className="nav-link" to="/dashboard/unidades">🚗 Unidades</Link>
               </li>
             )}
 
+            {/* 🔹 Rutas (solo para rol 1 o 2) */}
+            {(user.rolid === 1 || user.rolid === 2) && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/dashboard/rutas">🗺️ Rutas</Link>
+              </li>
+            )}
+
+            {/* 🔹 Asignaciones (solo para rol 1 o 2) */}
+            {(user.rolid === 1 || user.rolid === 2) && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/dashboard/asignaciones">📋 Asignaciones</Link>
+              </li>
+            )}
+
+            {/* 🔹 Usuarios (solo admin) */}
             {user.rolid === 1 && (
               <li className="nav-item">
-                <Link className="nav-link" to="/dashboard/users">
-                  👥 Usuarios
-                </Link>
+                <Link className="nav-link" to="/dashboard/users">👥 Usuarios</Link>
               </li>
             )}
-              
+
             {/* 🔹 Perfil según rol */}
             <li className="nav-item">
               {user.rolid === 3 && (
                 <Link className="nav-link" to="/dashboard/cliente/perfil">👤 Mi Perfil</Link>
               )}
               {user.rolid === 1 && (
-                  <Link className="nav-link" to="/dashboard/profile">👤 Mi Perfil</Link>
+                <Link className="nav-link" to="/dashboard/profile">👤 Mi Perfil</Link>
               )}
               {user.rolid === 2 && (
                 <Link className="nav-link" to="/dashboard/staff/profile">👤 Mi Perfil</Link>
@@ -94,7 +103,7 @@ function Navbar() {
               )}
             </li>
 
-            {/* 🚪 Cerrar sesión */}
+            {/* 🔹 Cerrar sesión */}
             <li className="nav-item">
               <button
                 className="nav-link btn btn-link"

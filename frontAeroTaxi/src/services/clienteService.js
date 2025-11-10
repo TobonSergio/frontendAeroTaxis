@@ -49,6 +49,22 @@ const clienteService = {
       throw error;
     }
   },
+
+  // ✅ Listar reservas del cliente
+  getByClienteId: async (idCliente) => {
+    try {
+      console.log(`🔹 [reservaService] GET /api/reservas/mis-reservas/${idCliente}`);
+      const response = await axiosInstance.get(`/api/reservas/mis-reservas/${idCliente}`);
+      console.log("✅ Reservas del cliente:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("❌ Error al obtener reservas del cliente:", error);
+      throw error;
+    }
+  },
+
 };
+
+
 
 export default clienteService;

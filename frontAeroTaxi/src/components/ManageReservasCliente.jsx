@@ -8,6 +8,7 @@ function CreateReservaCliente() {
   const [rutas, setRutas] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [ultimaReserva, setUltimaReserva] = useState(null); // 👈 guardará la reserva creada
 
   const [formData, setFormData] = useState({
     idRuta: "",
@@ -30,15 +31,15 @@ function CreateReservaCliente() {
     fetchRutas();
   }, []);
 
-
   // 🔹 Manejar cambios en los inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-console.log("👤 Usuario actual:", user);
 
-  // 🔹 Enviar la reserva al backend
+  console.log("👤 Usuario actual:", user);
+
+  // 🔹 Crear la reserva
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,28 +51,31 @@ console.log("👤 Usuario actual:", user);
     setLoading(true);
     setMessage("");
 
-    // Extraer la hora desde fechaReserva
+    // Extraer hora desde fechaReserva
     const fecha = formData.fechaReserva;
-    const hora = fecha ? fecha.split("T")[1] + ":00" : null; // ejemplo "14:00:00"
-
-    console.log("aqui se muestra nuestro user antes del payload");
-    console.log(user);
+    const hora = fecha ? fecha.split("T")[1] + ":00" : null;
 
     const payload = {
-      idCliente: user.idCliente, // 👈 asegúrate de que user.idCliente existe en el hook useAuth
+      idCliente: user.idCliente, // 👈 asegúrate de que user.idCliente exista
       idRuta: formData.idRuta,
       lugarRecogida: formData.lugarRecogida,
       destino: formData.destino,
-      fechaReserva: formData.fechaReserva, // formato "YYYY-MM-DDTHH:mm"
+      fechaReserva: formData.fechaReserva,
       horaReserva: hora,
       comentarios: formData.comentarios,
     };
-    console.log("aqui se muestra nuestro payload");
-    console.log(payload);
+
+    console.log("📦 Enviando payload:", payload);
 
     try {
-      await reservaServiceCliente.create(payload);
+      const response = await reservaServiceCliente.create(payload);
+
+      // ✅ Guardamos la reserva creada (usa la data devuelta del backend)
+      setUltimaReserva(response);
+
       setMessage("✅ Reserva creada correctamente");
+
+      // Reiniciar formulario
       setFormData({
         idRuta: "",
         lugarRecogida: "",
@@ -80,14 +84,44 @@ console.log("👤 Usuario actual:", user);
         comentarios: "",
       });
     } catch (error) {
-      console.error("Error al crear la reserva:", error.response?.data || error);
+      console.error("❌ Error al crear la reserva:", error.response?.data || error);
       setMessage(
-        `❌ Error al crear la reserva: ${
+        `❌ Error: ${
           error.response?.data?.message || "Verifica los datos e inténtalo nuevamente"
         }`
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+  // 🔹 Descargar PDF usando el service correcto
+  const handleDownloadPdf = async () => {
+    if (!ultimaReserva || !ultimaReserva.idReserva) {
+      console.warn("⚠️ No hay una reserva válida para descargar PDF");
+      return;
+    }
+
+    try {
+      await reservaServiceCliente.downloadPDF(ultimaReserva.idReserva);
+    } catch (error) {
+      console.error("❌ Error al descargar PDF:", error);
+      setMessage("❌ No se pudo descargar el PDF");
+    }
+  };
+
+  // 🔹 Descargar QR usando el service correcto
+  const handleDownloadQr = async () => {
+    if (!ultimaReserva || !ultimaReserva.idReserva) {
+      console.warn("⚠️ No hay una reserva válida para descargar QR");
+      return;
+    }
+
+    try {
+      await reservaServiceCliente.downloadQR(ultimaReserva.idReserva);
+    } catch (error) {
+      console.error("❌ Error al descargar QR:", error);
+      setMessage("❌ No se pudo descargar el QR");
     }
   };
 
@@ -162,6 +196,15 @@ console.log("👤 Usuario actual:", user);
       </form>
 
       {message && <p className="text-message">{message}</p>}
+
+      {/* 🔹 Botones de descarga solo si hay una reserva creada */}
+      {ultimaReserva && (
+        <div className="download-buttons">
+          <h3>Descargar documentos:</h3>
+          <button onClick={handleDownloadPdf}>📄 Descargar PDF</button>
+          <button onClick={handleDownloadQr}>🔳 Descargar QR</button>
+        </div>
+      )}
     </div>
   );
 }

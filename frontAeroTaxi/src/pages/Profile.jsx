@@ -37,7 +37,7 @@ function Profile() {
 
     try {
       const updated = await staffService.updateProfile(updatedData);
-      setStaff(updated);
+      setStaff((prev) => ({ ...prev, ...updated }));
       setEditing(false);
       alert("✅ Perfil actualizado correctamente");
     } catch (error) {
@@ -52,7 +52,6 @@ function Profile() {
   return (
     <div className="profile-page">
       <Sidebar />
-
       <main className="profile-main">
         <header className="profile-header">
           <div className="avatar">
@@ -61,7 +60,9 @@ function Profile() {
 
           <div className="user-info">
             <div className="user-info-header">
-              <h1>{staff.nombre} {staff.apellido}</h1>
+              <h1>
+                {staff.nombre || "Sin nombre"} {staff.apellido || ""}
+              </h1>
               <button
                 className="btn-edit"
                 onClick={() => setEditing(!editing)}
@@ -70,36 +71,45 @@ function Profile() {
                 <FaEdit size={20} />
               </button>
             </div>
-            <p><strong>Correo:</strong> {staff.usuario?.correo}</p>
+
+            <p><strong>Correo:</strong> {staff.correo || "No disponible"}</p>
             <p><strong>Teléfono:</strong> {staff.telefono || "No registrado"}</p>
             <p><strong>Cargo:</strong> {staff.cargo || "Sin asignar"}</p>
-            <p className="user-role">
-              Rol: {staff.usuario?.rol?.nombre}
-            </p>
+            <p><strong>Rol:</strong> {staff.rolName || "Sin rol"}</p>
           </div>
         </header>
 
         {editing && (
           <section className="profile-section">
-            <h2>Editar Perfil</h2>
+            <h2>✏️ Editar Perfil</h2>
             <form className="profile-form" onSubmit={handleSubmit}>
               <label>
                 Nombre:
-                <input name="nombre" defaultValue={staff.nombre} required />
+                <input name="nombre" defaultValue={staff.nombre || ""} required />
               </label>
               <label>
                 Apellido:
-                <input name="apellido" defaultValue={staff.apellido} required />
+                <input name="apellido" defaultValue={staff.apellido || ""} required />
               </label>
               <label>
                 Teléfono:
-                <input name="telefono" defaultValue={staff.telefono} />
+                <input name="telefono" defaultValue={staff.telefono || ""} />
               </label>
               <label>
                 Cargo:
-                <input name="cargo" defaultValue={staff.cargo} />
+                <input name="cargo" defaultValue={staff.cargo || ""} />
               </label>
-              <button type="submit" className="btn-save">Guardar Cambios</button>
+
+              <div className="form-buttons">
+                <button type="submit" className="btn-save">💾 Guardar Cambios</button>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setEditing(false)}
+                >
+                  Cancelar
+                </button>
+              </div>
             </form>
           </section>
         )}

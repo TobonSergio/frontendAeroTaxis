@@ -1,157 +1,228 @@
-/* src/styles/styleUnidades.css */
-
-/* Contenedor principal */
-.users-list-container {
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 20px 30px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* 🌌 FONDO Y FUENTE GLOBAL */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: "Poppins", sans-serif;
+  color: #fff;
 }
 
-/* Títulos */
-.users-list-container h2,
-.users-list-container h3 {
-  text-align: center;
-  color: #1a1a1a;
-  margin-bottom: 20px;
-}
-
-/* Formulario */
-.users-form {
+/* 📦 CONTENEDOR PRINCIPAL */
+.unidades-container {
+  padding: 40px 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 30px;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.users-form label {
-  flex: 1 1 200px;
+/* HEADER */
+.unidades-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.unidades-header h1 {
+  font-size: 2rem;
+  color: #00d8ff;
+  text-shadow: 0 0 12px rgba(0, 216, 255, 0.4);
+}
+
+.unidades-header p {
+  color: #ccc;
+  font-size: 1rem;
+}
+
+/* FORMULARIO */
+.form-section {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+  margin-bottom: 40px;
+}
+
+.form-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00d8ff;
+}
+
+.unidades-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.unidades-form label {
   display: flex;
   flex-direction: column;
   font-weight: 500;
-  color: #333;
 }
 
-.users-form input,
-.users-form select {
+.unidades-form input,
+.unidades-form select {
   margin-top: 6px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.users-form input:focus,
-.users-form select:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
-}
-
-/* Botones del formulario */
-.edit-buttons {
-  display: flex;
-  gap: 12px;
-  flex-basis: 100%;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.edit-buttons button {
-  padding: 8px 18px;
+  padding: 10px 12px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.unidades-form input:focus,
+.unidades-form select:focus {
+  border: 1px solid #00d8ff;
+  box-shadow: 0 0 6px rgba(0, 216, 255, 0.3);
+}
+
+/* BOTONES */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.form-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: 0.3s;
 }
 
-.edit-buttons button[type="submit"] {
-  background-color: #007bff;
-  color: white;
+.form-buttons button[type="submit"] {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
 }
 
-.edit-buttons button[type="submit"]:hover {
-  background-color: #0056b3;
+.form-buttons button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 10px rgba(0, 216, 255, 0.5);
 }
 
-.edit-buttons button[type="button"] {
-  background-color: #6c757d;
-  color: white;
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ddd;
 }
 
-.edit-buttons button[type="button"]:hover {
-  background-color: #5a6268;
+.cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
-/* Mensaje de éxito o error */
+/* MENSAJE */
 .text-message {
   text-align: center;
-  font-weight: 500;
-  margin-bottom: 20px;
-  color: #28a745;
-}
-
-.text-message.error {
-  color: #dc3545;
-}
-
-/* Tabla de unidades */
-.users-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-.users-table th,
-.users-table td {
-  padding: 12px 15px;
-  text-align: center;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.users-table th {
-  background-color: #007bff;
-  color: white;
+  color: #2ecc71;
+  margin-top: 15px;
   font-weight: 600;
 }
 
-.users-table tr:hover {
-  background-color: #f1f5f9;
-  transition: 0.2s;
+/* TABLA */
+.table-section {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 1100px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
 }
 
-.users-table img {
-  border-radius: 6px;
+.table-section h2 {
+  text-align: center;
+  color: #00d8ff;
+  margin-bottom: 20px;
+}
+
+.table-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-section th,
+.table-section td {
+  padding: 12px 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.table-section th {
+  color: #00d8ff;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.table-section img {
+  border-radius: 8px;
   object-fit: cover;
 }
 
-/* Botones de acciones en la tabla */
-.users-table button {
-  padding: 6px 10px;
-  margin: 0 2px;
+/* ESTADOS */
+.estado {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.estado-disponible {
+  background: rgba(0, 255, 150, 0.15);
+  color: #2ecc71;
+  border: 1px solid #2ecc71;
+}
+
+.estado-ocupada {
+  background: rgba(0, 162, 255, 0.15);
+  color: #00a2ff;
+  border: 1px solid #00a2ff;
+}
+
+.estado-mantenimiento {
+  background: rgba(255, 193, 7, 0.15);
+  color: #f1c40f;
+  border: 1px solid #f1c40f;
+}
+
+/* ACCIONES */
+.actions button {
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 0 3px;
   cursor: pointer;
-  transition: all 0.2s;
-  font-size: 14px;
+  transition: 0.3s;
 }
 
-.users-table button:hover {
-  opacity: 0.8;
+.actions button:hover {
+  transform: scale(1.1);
 }
 
-.users-table button:first-child {
-  background-color: #ffc107;
-  color: #212529;
+.actions .delete {
+  background: rgba(255, 0, 0, 0.25);
+  color: #ff6b6b;
 }
 
-.users-table button:last-child {
-  background-color: #dc3545;
-  color: white;
+.actions button:not(.delete) {
+  background: rgba(0, 255, 255, 0.15);
+  color: #00d8ff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .form-section, .table-section {
+    padding: 20px;
+  }
+
+  .table-section th, .table-section td {
+    font-size: 0.9rem;
+  }
 }

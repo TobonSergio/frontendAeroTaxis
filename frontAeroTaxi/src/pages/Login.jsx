@@ -14,38 +14,60 @@ function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+// 🔹 Función para redirigir según rol
+const redirectByRole = (rolId, rolName) => {
+  console.log("🎯 [redirectByRole] Recibido rolId:", rolId, "| rolName:", rolName);
 
-  // Manejar token de Google si viene en la URL
+  if (rolName === "CLIENTE" || rolId === 3) {
+    console.log("➡️ Redirigiendo a /dashboard/reserva-cliente");
+    navigate("/dashboard/reserva-cliente");
+  } else if (rolName === "CHOFER" || rolId === 4) {
+    console.log("➡️ Redirigiendo a /dashboard/chofer/perfil");
+    navigate("/dashboard/chofer/perfil");
+  } else {
+    console.log("⚠️ Rol no reconocido, redirigiendo a /dashboard");
+    navigate("/dashboard");
+  }
+};
+
+  // 🔹 Manejar token de Google si viene en la URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
     if (token) {
-      // 🔹 enviamos como objeto con token para AuthContext
       login({ token })
-        .then(() => navigate("/dashboard"))
+        .then((userData) => {
+          console.log("✅ Usuario con Google:", userData);
+          redirectByRole(userData?.rolid);
+        })
         .catch(() => setError("No se pudo iniciar sesión con Google"));
     }
   }, [location.search]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+// 🔹 Login normal con usuario/contraseña
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
 
-    try {
-      const response = await authService.login({ username, password });
-      const data = response.data;
+  try {
+    console.log("🚀 Iniciando login...");
+    const response = await authService.login({ username, password });
+    const data = response.data;
 
-      console.log("✅ Datos recibidos del backend:", data);
+    console.log("✅ [Login.jsx] Datos recibidos del backend:", data);
 
-      await login(data);
-      navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
-      setError(
-        err.response?.data?.message || "Usuario o contraseña incorrectos"
-      );
-    }
-  };
+    // ✅ Guardar en contexto
+    const userData = await login(data);
+    console.log("📦 [Login.jsx] Datos guardados en contexto:", userData);
+
+    // ✅ Redirigir según el rol
+    redirectByRole(userData?.rolId, userData?.rolName);
+
+  } catch (err) {
+    console.error("❌ Error al iniciar sesión:", err);
+    setError(err.response?.data?.message || "Usuario o contraseña incorrectos");
+  }
+};
 
   return (
     <div className="login-page">
@@ -81,7 +103,11 @@ function Login() {
 
           <div className="login-actions">
             <button type="submit" className="btn-login">Entrar</button>
-            <button type="button" onClick={authService.googleLogin} className="btn-google">
+            <button
+              type="button"
+              onClick={authService.googleLogin}
+              className="btn-google"
+            >
               <FcGoogle size={22} />
               <span style={{ marginLeft: "8px" }}>Iniciar sesión con Google</span>
             </button>

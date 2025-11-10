@@ -1,3 +1,4 @@
+// src/pages/ClienteProfile.jsx
 import "../styles/styleProfile.css";
 import Sidebar from "../components/Sidebar";
 import { FaUserCircle, FaEdit } from "react-icons/fa";
@@ -62,7 +63,9 @@ function ClienteProfile() {
 
           <div className="user-info">
             <div className="user-info-header">
-              <h1>{cliente.nombre} {cliente.apellido}</h1>
+              <h1>
+                {cliente.nombre || "Sin nombre"} {cliente.apellido || ""}
+              </h1>
               <button
                 className="btn-edit"
                 onClick={() => setShowForm(!showForm)}
@@ -71,9 +74,13 @@ function ClienteProfile() {
                 <FaEdit size={20} />
               </button>
             </div>
-            <p><strong>Teléfono:</strong> {cliente.telefono}</p>
-            <p><strong>Dirección:</strong> {cliente.direccion}</p>
-            <p><strong>Ciudad:</strong> {cliente.ciudad}</p>
+
+            <p><strong>Correo:</strong> {cliente.correo || "No disponible"}</p>
+            <p><strong>Teléfono:</strong> {cliente.telefono || "No registrado"}</p>
+            <p><strong>Dirección:</strong> {cliente.direccion || "No registrada"}</p>
+            <p><strong>Ciudad:</strong> {cliente.ciudad || "No registrada"}</p>
+            <p><strong>Usuario:</strong> {cliente.username || "Sin usuario"}</p>
+            <p><strong>Rol:</strong> {cliente.rolName || "Sin rol"}</p>
           </div>
         </header>
 
@@ -101,7 +108,9 @@ function ClienteProfile() {
                 Ciudad:
                 <input name="ciudad" defaultValue={cliente.ciudad} />
               </label>
-              <button type="submit" className="btn-save">Guardar Cambios</button>
+              <button type="submit" className="btn-save">
+                Guardar Cambios
+              </button>
             </form>
           </section>
         )}

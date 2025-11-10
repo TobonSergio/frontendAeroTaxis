@@ -1,224 +1,232 @@
-/* ===============================
-   Estilos Generales de Users.jsx
-   =============================== */
-
-.users-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #f9f9f9;
-  font-family: Arial, sans-serif;
-}
-
-.users-main {
-  flex: 1;
-  padding: 2rem;
-}
-
-.users-main header {
-  margin-bottom: 2rem;
-}
-
-.users-main h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-}
-
-/* ===============================
-   Tabla de Usuarios
-   =============================== */
-.users-main table {
+/* 🎨 Fondo general */
+.users-container {
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 2rem;
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.users-main table th,
-.users-main table td {
-  padding: 12px 15px;
-  text-align: left;
-}
-
-.users-main table thead {
-  background: #2c3e50;
-  color: white;
-}
-
-.users-main table tbody tr {
-  border-bottom: 1px solid #ddd;
-}
-
-.users-main table tbody tr:nth-child(even) {
-  background: #f4f6f8;
-}
-
-.users-main table tbody tr:hover {
-  background: #eaeaea;
-  cursor: pointer;
-}
-
-/* ===============================
-   Formulario de Crear Usuario
-   =============================== */
-/* ===============================
-   Estilos Mejorados Formulario Crear Usuario
-   =============================== */
-
-/* Contenedor general */
-.users-list-container {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f7fc;
+  padding: 30px 20px;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
-.users-list-container h2 {
+/* 📏 Ajuste entre formulario y tabla */
+.create-user-section,
+.list-users-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* 💡 Separador (línea) */
+.users-main hr {
+  margin: 10px 0;
+  border: none;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  width: 85%;
+  max-width: 1000px;
+  border-radius: 2px;
+}
+
+/* 🏷️ Título */
+.users-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #f1f1f1;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Formulario con dos columnas */
+/* 💬 Mensajes */
+.text-message {
+  margin-top: 15px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  width: 80%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.text-message.error {
+  background-color: rgba(231, 76, 60, 0.15);
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+}
+
+.text-message:not(.error) {
+  background-color: rgba(46, 204, 113, 0.15);
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+}
+
+/* 📋 Tabla de usuarios */
+.users-table {
+  width: 90%;
+  max-width: 1100px;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  margin-top: 15px;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.users-table th {
+  background: rgba(255, 255, 255, 0.1);
+  color: #00d8ff;
+  font-weight: 600;
+}
+
+.users-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* ✏️ Botones dentro de la tabla */
+.users-table td .btn-edit,
+.users-table td .btn-delete {
+  display: inline-block;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin: 2px;
+  transition: all 0.3s ease;
+}
+
+.users-table td .btn-edit {
+  background: rgba(0, 255, 255, 0.15);
+  color: #00d8ff;
+}
+
+.users-table td .btn-delete {
+  background: rgba(255, 0, 0, 0.2);
+  color: #ff6b6b;
+}
+
+.users-table td .btn-edit:hover,
+.users-table td .btn-delete:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* 🧾 Formulario */
 .users-form {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* dos columnas iguales */
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 700px;
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px 25px;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 900px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
 }
 
 .users-form label {
   display: flex;
   flex-direction: column;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: #34495e;
+  color: #fff;
+  font-weight: 500;
 }
 
-/* Inputs y select */
 .users-form input,
 .users-form select {
-  margin-top: 5px;
-  padding: 12px 15px;
-  font-size: 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
   outline: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
   transition: all 0.3s ease;
 }
 
 .users-form input:focus,
 .users-form select:focus {
-  border-color: #6c63ff;
-  box-shadow: 0 0 8px rgba(108,99,255,0.2);
+  box-shadow: 0 0 6px #00d8ff;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Botón ocupa toda la fila */
+/* 💾 Botones de acción del formulario */
 .edit-buttons {
-  grid-column: 1 / -1; /* ocupa ambas columnas */
+  grid-column: 1 / -1;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 10px;
 }
 
-.users-form button {
-  padding: 12px 20px;
-  background: linear-gradient(90deg, #6c63ff, #3f3dff);
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
+.edit-buttons button,
+.btn-cancel {
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
-.users-form button:hover {
-  background: linear-gradient(90deg, #5b52e6, #2c2aff);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+.edit-buttons button {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
 }
 
-/* Mensajes */
-.text-message {
-  grid-column: 1 / -1;
-  margin-top: 1rem;
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: #27ae60;
+.btn-cancel {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: #fff;
 }
 
-.text-message.error {
-  color: #e74c3c;
+.edit-buttons button:hover,
+.btn-cancel:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* ===============================
-   Responsive
-   =============================== */
+/* 🌀 Texto de carga */
+.loading-text {
+  color: #00d8ff;
+  font-size: 1.1rem;
+  margin-top: 15px;
+}
+
+/* 📱 Responsive */
 @media (max-width: 768px) {
-  .users-main table,
-  .users-main table thead,
-  .users-main table tbody,
-  .users-main table th,
-  .users-main table td,
-  .users-main table tr {
-    display: block;
-    width: 100%;
+  .users-title {
+    font-size: 1.6rem;
   }
 
-  .users-main table thead {
-    display: none;
-  }
-
-  .users-main table tr {
-    margin-bottom: 1rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    padding: 10px;
-  }
-
-  .users-main table td {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 10px;
-    border: none;
-    border-bottom: 1px solid #eee;
-  }
-
-  .users-main table td:last-child {
-    border-bottom: none;
-  }
-
-  .users-main form {
-    width: 100%;
-  }
-}
-
-/* ===============================
-   Responsive
-   =============================== */
-@media (max-width: 500px) {
   .users-form {
-    padding: 1.5rem;
+    grid-template-columns: 1fr;
+    padding: 20px;
+    width: 95%;
   }
 
-  .users-form input,
-  .users-form select {
-    padding: 10px 12px;
+  .users-table {
+    width: 95%;
+    font-size: 0.9rem;
   }
 
-  .users-form button {
-    width: 100%;
+  .edit-buttons {
+    flex-direction: column;
+    align-items: center;
   }
 }

@@ -8,10 +8,6 @@ function Users() {
     <div className="users-page">
       <Sidebar />
       <main className="users-main">
-        <header>
-          <h1>Gestión de Usuarios</h1>
-        </header>
-
         {/* ✅ Formulario para crear nuevos usuarios */}
         <section className="create-user-section">
           <CreateUserByAdmin />

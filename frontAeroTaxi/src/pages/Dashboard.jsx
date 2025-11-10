@@ -1,66 +1,111 @@
+import { useEffect, useState } from "react";
 import "../styles/styleDashboard.css";
-import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Sidebar.jsx";
+import reservaService from "../services/reservaService.js";
 
 function Dashboard() {
+  const [reservas, setReservas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchReservas = async () => {
+      try {
+        const data = await reservaService.getAllForDashboard();
+        setReservas(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("❌ Error al cargar las reservas del dashboard:", err);
+        setError("No se pudieron cargar las reservas del dashboard.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReservas();
+  }, []);
+
+  // 📊 Cálculos simples
+  const totalReservas = reservas.length;
+  const reservasPendientes = reservas.filter(r => r.estado === "PENDIENTE").length;
+  const reservasConfirmadas = reservas.filter(r => r.estado === "CONFIRMADA").length;
+  const notificaciones = totalReservas;
+
+  // Mostrar las últimas 3 reservas
+  const ultimasReservas = reservas.slice(0, 3);
+
+  if (loading) return <p className="loading-text">Cargando datos...</p>;
+  if (error) return <p className="text-message error">{error}</p>;
+
   return (
     <div className="dashboard">
-      {/* Sidebar reutilizable */}
-      <Sidebar />
+      <Navbar />
 
-      {/* Contenido principal */}
       <main className="main-content">
         <header className="dashboard-header">
           <h1>Bienvenido al Dashboard ✈️</h1>
-          <p>Gestiona tus reservas, perfil y más desde aquí.</p>
+          <p>Gestiona tus reservas y obtén un resumen general de la operación.</p>
         </header>
 
-        {/* Cards con info rápida */}
         <section className="cards">
-          <div className="card">
-            <h3>Reservas activas</h3>
-            <p>3</p>
+          <div className="custom-card">
+            <h3>Reservas pendientes</h3>
+            <p>{reservasPendientes}</p>
           </div>
-          <div className="card">
-            <h3>Viajes completados</h3>
-            <p>12</p>
+          <div className="custom-card">
+            <h3>Reservas confirmadas</h3>
+            <p>{reservasConfirmadas}</p>
           </div>
-          <div className="card">
-            <h3>Notificaciones</h3>
-            <p>5</p>
+          <div className="custom-card">
+            <h3>Total de reservas</h3>
+            <p>{totalReservas}</p>
           </div>
         </section>
 
-        {/* Tabla de ejemplo */}
         <section className="table-section">
           <h2>Últimas Reservas</h2>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Cliente</th>
                 <th>Destino</th>
-                <th>Fecha</th>
+                <th>Fecha de Reserva</th>
                 <th>Estado</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>#001</td>
-                <td>Bogotá</td>
-                <td>2025-09-12</td>
-                <td><span className="status status-active">Activa</span></td>
-              </tr>
-              <tr>
-                <td>#002</td>
-                <td>Medellín</td>
-                <td>2025-09-08</td>
-                <td><span className="status status-completed">Completada</span></td>
-              </tr>
-              <tr>
-                <td>#003</td>
-                <td>Cali</td>
-                <td>2025-08-30</td>
-                <td><span className="status status-cancelled">Cancelada</span></td>
-              </tr>
+              {ultimasReservas.length > 0 ? (
+                ultimasReservas.map((reserva) => (
+                  <tr key={reserva.idReserva}>
+                    <td>#{reserva.idReserva}</td>
+                    <td>{reserva.nombreCliente}</td>
+                    <td>{reserva.destino || "—"}</td>
+                    <td>
+                      {reserva.fechaReserva
+                        ? new Date(reserva.fechaReserva).toLocaleString("es-CO", {
+                            dateStyle: "short",
+                            timeStyle: "short",
+                          })
+                        : "Sin fecha"}
+                    </td>
+                    <td>
+                      <span
+                        className={`estado-tag ${
+                          reserva.estado === "PENDIENTE"
+                            ? "estado-pendiente"
+                            : "estado-confirmada"
+                        }`}
+                      >
+                        {reserva.estado}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5">No hay reservas registradas.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </section>

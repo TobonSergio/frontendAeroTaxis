@@ -15,6 +15,10 @@ import ClienteProfile from "./pages/ClienteProfile.jsx";
 import ChoferProfile from "./pages/ChoferProfile.jsx";
 import Rutas from "./pages/Rutas.jsx"; // 👈 importa tu ManageRutas
 import ReservaCliente from "./pages/ReservaCliente.jsx";
+import AsignarUnidadChofer from "./pages/Asignaciones.jsx";
+import AsignacionChoferAndUnidad from "./pages/AsignacionChoferAndUnidad.jsx";
+import MisReservas from "./pages/MisReservas.jsx";
+
 
  // 👈 importa el componente
 
@@ -39,7 +43,10 @@ function App() {
           <Route path="cliente/perfil" element={<ClienteProfile />} />
           <Route path="chofer/perfil" element={<ChoferProfile />} /> {/* Perfil de chofer */}
           <Route path="rutas" element={<Rutas />} />
-          <Route path="reserva-cliente" element ={<ReservaCliente/>} />
+          <Route path="reserva-cliente" element ={<MisReservas/>} />
+          <Route path="asignaciones" element ={<AsignarUnidadChofer/>} />
+            {/* 🔹 Nueva ruta para asignar chofer y unidad */}
+          <Route path="asignaciones/asignar/:idReserva" element={<AsignacionChoferAndUnidad />} />
         </Route>
       </Routes>
     </>

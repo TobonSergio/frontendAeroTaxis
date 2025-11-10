@@ -1,5 +1,6 @@
+// src/context/authContext.jsx
 import { createContext, useState, useEffect } from "react";
-import authService from "../services/authService";
+import authService from "../services/authService.js";
 
 export const AuthContext = createContext();
 
@@ -8,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Cargar usuario actual si hay token
+  // 🔹 Cargar usuario actual al iniciar la app si hay token
   useEffect(() => {
     const fetchUser = async () => {
       if (!token) {
@@ -20,16 +21,26 @@ export const AuthProvider = ({ children }) => {
         const response = await authService.getCurrentUser();
         const data = response.data;
 
-        // 👇 Aseguramos que el rol quede claro
+        // 🔹 Normalizamos la estructura del usuario
+        const idPerfil =
+          data.idCliente || data.idStaff || data.idChofer || null;
+        const tipoPerfil = data.idCliente
+          ? "CLIENTE"
+          : data.idStaff
+          ? "STAFF"
+          : data.idChofer
+          ? "CHOFER"
+          : "USER";
+
         const userFormatted = {
           id: data.id,
-          idCliente: data.idCliente,
           correo: data.correo,
           rolid: data.rolId,
           rolnombre: data.rolName,
+          idPerfil,
+          tipoPerfil,
         };
 
-        console.log("✅ Usuario autenticado:", userFormatted);
         setUser(userFormatted);
       } catch (err) {
         console.error("Error cargando usuario:", err);
@@ -43,49 +54,50 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, [token]);
 
+  // 🔹 Login
+  const login = async (responseData) => {
+    const { token: newToken } = responseData;
 
-  
-  // Login
-const login = async (responseData) => {
-  console.log("📦 Datos recibidos en login():", responseData);
+    if (!newToken) throw new Error("Token no recibido desde el backend");
 
-  // 🧩 Desestructuramos directamente los datos del backend
-  const { token, idUsuario, rolName, idPerfil } = responseData;
+    // 💾 Guardamos token en localStorage
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
 
-  // 💾 Guardamos todo en localStorage
-  localStorage.setItem("token", token);
-  localStorage.setItem("idUsuario", idUsuario);
-  localStorage.setItem("rol", rolName);
-  localStorage.setItem("idPerfil", idPerfil);
+    // 🔹 Cargamos los datos del usuario después del login
+    try {
+      const response = await authService.getCurrentUser();
+      const data = response.data;
 
-  // 🔐 Actualizamos estado
-  setToken(token);
+      const idPerfil =
+        data.idCliente || data.idStaff || data.idChofer || null;
+      const tipoPerfil = data.idCliente
+        ? "CLIENTE"
+        : data.idStaff
+        ? "STAFF"
+        : data.idChofer
+        ? "CHOFER"
+        : "USER";
 
-  try {
-    const response = await authService.getCurrentUser();
-    const data = response.data;
+      const userFormatted = {
+        id: data.id,
+        correo: data.correo,
+        rolid: data.rolId,
+        rolnombre: data.rolName,
+        idPerfil,
+        tipoPerfil,
+      };
 
-    const userFormatted = {
-      id: data.id,
-      correo: data.correo,
-      username: data.usuario,
-      rolid: data.rolId,
-      rolnombre: data.rolName, // 👈 usamos el rol real que viene del login
-      idPerfil, // 👈 lo añadimos al contexto también
-    };
+      setUser(userFormatted);
+    } catch (err) {
+      console.error("Error obteniendo usuario después del login:", err);
+      setUser(null);
+      localStorage.removeItem("token");
+      throw err;
+    }
+  };
 
-    console.log("✅ Usuario después de login:", userFormatted);
-    setUser(userFormatted);
-  } catch (err) {
-    console.error("Error obteniendo usuario después del login:", err);
-    setUser(null);
-    localStorage.removeItem("token");
-    throw err;
-  }
-};
-
-
-  // Logout
+  // 🔹 Logout
   const logout = () => {
     setToken(null);
     setUser(null);
