@@ -1,28 +1,34 @@
-// src/services/choferService.js
 import axios from "../api/axiosConfig.js";
 
 const choferService = {
-  // ✅ Obtener perfil del chofer
-  getProfile: async () => {
-    try {
-      const response = await axios.get("/api/chofer/me");
-      return response.data;
-    } catch (error) {
-      console.error("Error al obtener perfil del chofer:", error);
-      throw error;
-    }
+  // 🔹 Obtener todos los choferes
+  getAll: async () => {
+    const response = await axios.get("/api/gestion/choferes");
+    return response.data;
   },
 
-  // ✅ Actualizar perfil del chofer
-  updateProfile: async (data) => {
-    try {
-      const response = await axios.put("/api/chofer/me", data);
-      return response.data;
-    } catch (error) {
-      console.error("Error al actualizar perfil del chofer:", error);
-      throw error;
-    }
-  }
+  // 🔹 Crear nuevo chofer
+  create: async (data) => {
+    const response = await axios.post("/api/gestion/choferes", data);
+    return response.data;
+  },
+
+  // 🔹 Actualizar chofer
+  update: async (id, data) => {
+    const response = await axios.put(`/api/gestion/choferes/${id}`, data);
+    return response.data;
+  },
+
+  // 🔹 Eliminar chofer
+  remove: async (id) => {
+    await axios.delete(`/api/gestion/choferes/${id}`);
+  },
+
+  // 🔹 Listar choferes disponibles (opcional)
+  getDisponibles: async () => {
+    const response = await axios.get("/api/gestion/choferes/disponibles");
+    return response.data;
+  },
 };
 
 export default choferService;

@@ -1,3 +1,4 @@
+// src/components/CreateReservaCliente.jsx
 import { useState, useEffect } from "react";
 import reservaServiceCliente from "../services/reservaServiceCliente.js";
 import rutaService from "../services/rutaService.js";
@@ -8,7 +9,6 @@ function CreateReservaCliente() {
   const [rutas, setRutas] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [ultimaReserva, setUltimaReserva] = useState(null); // 👈 guardará la reserva creada
 
   const [formData, setFormData] = useState({
     idRuta: "",
@@ -37,8 +37,6 @@ function CreateReservaCliente() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  console.log("👤 Usuario actual:", user);
-
   // 🔹 Crear la reserva
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,12 +49,11 @@ function CreateReservaCliente() {
     setLoading(true);
     setMessage("");
 
-    // Extraer hora desde fechaReserva
     const fecha = formData.fechaReserva;
     const hora = fecha ? fecha.split("T")[1] + ":00" : null;
 
     const payload = {
-      idCliente: user.idCliente, // 👈 asegúrate de que user.idCliente exista
+      idCliente: user.idPerfil, // ID del cliente autenticado
       idRuta: formData.idRuta,
       lugarRecogida: formData.lugarRecogida,
       destino: formData.destino,
@@ -68,11 +65,7 @@ function CreateReservaCliente() {
     console.log("📦 Enviando payload:", payload);
 
     try {
-      const response = await reservaServiceCliente.create(payload);
-
-      // ✅ Guardamos la reserva creada (usa la data devuelta del backend)
-      setUltimaReserva(response);
-
+      await reservaServiceCliente.create(payload);
       setMessage("✅ Reserva creada correctamente");
 
       // Reiniciar formulario
@@ -92,36 +85,6 @@ function CreateReservaCliente() {
       );
     } finally {
       setLoading(false);
-    }
-  };
-
-  // 🔹 Descargar PDF usando el service correcto
-  const handleDownloadPdf = async () => {
-    if (!ultimaReserva || !ultimaReserva.idReserva) {
-      console.warn("⚠️ No hay una reserva válida para descargar PDF");
-      return;
-    }
-
-    try {
-      await reservaServiceCliente.downloadPDF(ultimaReserva.idReserva);
-    } catch (error) {
-      console.error("❌ Error al descargar PDF:", error);
-      setMessage("❌ No se pudo descargar el PDF");
-    }
-  };
-
-  // 🔹 Descargar QR usando el service correcto
-  const handleDownloadQr = async () => {
-    if (!ultimaReserva || !ultimaReserva.idReserva) {
-      console.warn("⚠️ No hay una reserva válida para descargar QR");
-      return;
-    }
-
-    try {
-      await reservaServiceCliente.downloadQR(ultimaReserva.idReserva);
-    } catch (error) {
-      console.error("❌ Error al descargar QR:", error);
-      setMessage("❌ No se pudo descargar el QR");
     }
   };
 
@@ -196,15 +159,6 @@ function CreateReservaCliente() {
       </form>
 
       {message && <p className="text-message">{message}</p>}
-
-      {/* 🔹 Botones de descarga solo si hay una reserva creada */}
-      {ultimaReserva && (
-        <div className="download-buttons">
-          <h3>Descargar documentos:</h3>
-          <button onClick={handleDownloadPdf}>📄 Descargar PDF</button>
-          <button onClick={handleDownloadQr}>🔳 Descargar QR</button>
-        </div>
-      )}
     </div>
   );
 }

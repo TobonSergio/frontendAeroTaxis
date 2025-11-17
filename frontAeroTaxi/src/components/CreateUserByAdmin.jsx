@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import adminStaffService from "../services/adminUserService.js";
 import "../styles/styleUsers.css";
 
-function CreateUserByAdmin() {
+function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -17,6 +17,23 @@ function CreateUserByAdmin() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (selectedUser) {
+      setFormData(selectedUser);
+    } else {
+      setFormData({
+        username: "",
+        password: "",
+        nombre: "",
+        apellido: "",
+        correo: "",
+        telefono: "",
+        cargo: "",
+        rolId: 2,
+      });
+    }
+  }, [selectedUser]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -28,21 +45,17 @@ function CreateUserByAdmin() {
     setLoading(true);
 
     try {
-      const response = await adminStaffService.createStaff(formData);
-      setMessage(`✅ Usuario creado correctamente (ID: ${response.staffId})`);
-      setFormData({
-        username: "",
-        password: "",
-        nombre: "",
-        apellido: "",
-        correo: "",
-        telefono: "",
-        cargo: "",
-        rolId: 2,
-      });
+      if (selectedUser) {
+        await adminStaffService.updateStaff(selectedUser.idStaff, formData);
+        setMessage("✅ Usuario actualizado correctamente");
+        setSelectedUser(null);
+      } else {
+        const response = await adminStaffService.createStaff(formData);
+        setMessage(`✅ Usuario creado correctamente (ID: ${response.staffId})`);
+      }
     } catch (error) {
-      console.error("Error al crear usuario:", error);
-      setMessage("❌ Error al crear usuario. Revisa los datos o el servidor.");
+      console.error("Error al guardar usuario:", error);
+      setMessage("❌ Error al guardar usuario.");
     } finally {
       setLoading(false);
     }
@@ -50,7 +63,9 @@ function CreateUserByAdmin() {
 
   return (
     <div className="users-container">
-      <h2 className="users-title">Crear Nuevo Usuario</h2>
+      <h2 className="users-title">
+        {selectedUser ? "Editar Usuario" : "Crear Nuevo Usuario"}
+      </h2>
 
       <form onSubmit={handleSubmit} className="users-form">
         <label>Username:
@@ -58,7 +73,13 @@ function CreateUserByAdmin() {
         </label>
 
         <label>Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required={!selectedUser}
+          />
         </label>
 
         <label>Nombre:
@@ -90,8 +111,23 @@ function CreateUserByAdmin() {
 
         <div className="edit-buttons">
           <button type="submit" disabled={loading}>
-            {loading ? "Creando..." : "✅ Crear Usuario"}
+            {loading
+              ? selectedUser
+                ? "Guardando..."
+                : "Creando..."
+              : selectedUser
+              ? "Guardar"
+              : "Crear"}
           </button>
+          {selectedUser && (
+            <button
+              type="button"
+              className="btn-cancel"
+              onClick={() => setSelectedUser(null)}
+            >
+              Cancelar
+            </button>
+          )}
         </div>
       </form>
 

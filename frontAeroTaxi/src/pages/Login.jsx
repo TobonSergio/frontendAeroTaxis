@@ -14,21 +14,22 @@ function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-// 🔹 Función para redirigir según rol
-const redirectByRole = (rolId, rolName) => {
-  console.log("🎯 [redirectByRole] Recibido rolId:", rolId, "| rolName:", rolName);
 
-  if (rolName === "CLIENTE" || rolId === 3) {
-    console.log("➡️ Redirigiendo a /dashboard/reserva-cliente");
-    navigate("/dashboard/reserva-cliente");
-  } else if (rolName === "CHOFER" || rolId === 4) {
-    console.log("➡️ Redirigiendo a /dashboard/chofer/perfil");
-    navigate("/dashboard/chofer/perfil");
-  } else {
-    console.log("⚠️ Rol no reconocido, redirigiendo a /dashboard");
-    navigate("/dashboard");
-  }
-};
+  // 🔹 Función para redirigir según rol
+  const redirectByRole = (rolId, rolName) => {
+    console.log("🎯 [redirectByRole] Recibido rolId:", rolId, "| rolName:", rolName);
+
+    if (rolName === "CLIENTE" || rolId === 3) {
+      console.log("➡️ Redirigiendo a /dashboard/reserva-cliente");
+      navigate("/dashboard/reserva-cliente");
+    } else if (rolName === "CHOFER" || rolId === 4) {
+      console.log("➡️ Redirigiendo a /dashboard/chofer/perfil");
+      navigate("/dashboard/chofer/perfil");
+    } else {
+      console.log("⚠️ Rol no reconocido, redirigiendo a /dashboard");
+      navigate("/dashboard");
+    }
+  };
 
   // 🔹 Manejar token de Google si viene en la URL
   useEffect(() => {
@@ -38,36 +39,36 @@ const redirectByRole = (rolId, rolName) => {
       login({ token })
         .then((userData) => {
           console.log("✅ Usuario con Google:", userData);
-          redirectByRole(userData?.rolid);
+          redirectByRole(userData?.rolid, userData?.rolnombre);
         })
         .catch(() => setError("No se pudo iniciar sesión con Google"));
     }
   }, [location.search]);
 
-// 🔹 Login normal con usuario/contraseña
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
+  // 🔹 Login normal con usuario/contraseña
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  try {
-    console.log("🚀 Iniciando login...");
-    const response = await authService.login({ username, password });
-    const data = response.data;
+    try {
+      console.log("🚀 Iniciando login...");
+      const response = await authService.login({ username, password });
+      const data = response.data;
 
-    console.log("✅ [Login.jsx] Datos recibidos del backend:", data);
+      console.log("✅ [Login.jsx] Datos recibidos del backend:", data);
 
-    // ✅ Guardar en contexto
-    const userData = await login(data);
-    console.log("📦 [Login.jsx] Datos guardados en contexto:", userData);
+      // ✅ Guardar en contexto
+      const userData = await login(data);
+      console.log("📦 [Login.jsx] Datos guardados en contexto:", userData);
 
-    // ✅ Redirigir según el rol
-    redirectByRole(userData?.rolId, userData?.rolName);
+      // 🚨 AQUÍ ESTABA EL ERROR — ahora usamos los nombres correctos
+      redirectByRole(userData?.rolid, userData?.rolnombre);
 
-  } catch (err) {
-    console.error("❌ Error al iniciar sesión:", err);
-    setError(err.response?.data?.message || "Usuario o contraseña incorrectos");
-  }
-};
+    } catch (err) {
+      console.error("❌ Error al iniciar sesión:", err);
+      setError(err.response?.data?.message || "Usuario o contraseña incorrectos");
+    }
+  };
 
   return (
     <div className="login-page">

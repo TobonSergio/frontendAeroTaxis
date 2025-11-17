@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
         const response = await authService.getCurrentUser();
         const data = response.data;
 
-        // 🔹 Normalizamos la estructura del usuario
         const idPerfil =
           data.idCliente || data.idStaff || data.idChofer || null;
         const tipoPerfil = data.idCliente
@@ -54,17 +53,16 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, [token]);
 
-  // 🔹 Login
+  // 🔹 Función de login (retorna usuario formateado)
   const login = async (responseData) => {
     const { token: newToken } = responseData;
 
     if (!newToken) throw new Error("Token no recibido desde el backend");
 
-    // 💾 Guardamos token en localStorage
+    // 💾 Guardamos token
     localStorage.setItem("token", newToken);
     setToken(newToken);
 
-    // 🔹 Cargamos los datos del usuario después del login
     try {
       const response = await authService.getCurrentUser();
       const data = response.data;
@@ -89,6 +87,9 @@ export const AuthProvider = ({ children }) => {
       };
 
       setUser(userFormatted);
+
+      // 🔥 IMPORTANTE: retornamos el usuario para usarlo en Login.jsx
+      return userFormatted;
     } catch (err) {
       console.error("Error obteniendo usuario después del login:", err);
       setUser(null);
@@ -97,7 +98,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🔹 Logout
+  // 🔹 Función de logout
   const logout = () => {
     setToken(null);
     setUser(null);

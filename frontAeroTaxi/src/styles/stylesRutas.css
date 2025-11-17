@@ -2,7 +2,6 @@
 html, body, #root {
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   background-attachment: fixed;
   background-size: cover;
   font-family: "Poppins", sans-serif;
@@ -24,8 +23,8 @@ html, body, #root {
 .rutas-title {
   text-align: center;
   font-size: 2rem;
-  color: #00d8ff;
-  text-shadow: 0 0 12px rgba(0, 216, 255, 0.4);
+  color: #ff0000;
+  text-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
   margin-bottom: 30px;
 }
 
@@ -54,13 +53,13 @@ html, body, #root {
   padding: 10px 12px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  color: #ffffff;
   transition: 0.3s;
 }
 
 .form-group input:focus {
   outline: none;
-  box-shadow: 0 0 8px #00d8ff;
+  box-shadow: 0 0 8px #ff0000;
 }
 
 /* 🔘 Botones */
@@ -83,20 +82,20 @@ html, body, #root {
 }
 
 .edit-buttons button[type="submit"] {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  background: linear-gradient(135deg, #ff0000, #b60000);
 }
 
 .edit-buttons button[type="submit"]:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 15px rgba(0, 216, 255, 0.5);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
 
 .edit-buttons button[type="button"] {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(255, 16, 16);
 }
 
 .edit-buttons button[type="button"]:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgb(216, 0, 0);
 }
 
 /* 💬 Mensajes */
@@ -118,7 +117,7 @@ html, body, #root {
 
 .rutas-table-section h3 {
   text-align: center;
-  color: #00d8ff;
+  color: #ff0000;
   margin-bottom: 20px;
 }
 
@@ -135,39 +134,16 @@ html, body, #root {
 }
 
 .rutas-table th {
-  background: rgba(255, 255, 255, 0.1);
-  color: #00d8ff;
+  background: rgba(7, 7, 7, 0.1);
+  color: #ff0000;
   text-transform: uppercase;
   font-size: 0.9rem;
 }
 
 .rutas-table tr:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(7, 7, 7, 0.1);
 }
 
-/* 🧰 Botones tabla */
-.rutas-table button {
-  padding: 6px 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin: 0 4px;
-}
-
-.rutas-table button:first-child {
-  background: linear-gradient(135deg, #fbc531, #e1b12c);
-  color: #000;
-}
-
-.rutas-table button:last-child {
-  background: linear-gradient(135deg, #e84118, #c23616);
-  color: #fff;
-}
-
-.rutas-table button:hover {
-  transform: scale(1.05);
-}
 
 /* 📱 Responsive */
 @media (max-width: 768px) {

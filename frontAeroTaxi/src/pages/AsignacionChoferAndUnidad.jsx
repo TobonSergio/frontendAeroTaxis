@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import asignacionService from "../services/asignacionService";
-import Navbar from "../components/Sidebar.jsx"; // <-- IMPORTAR EL NAVBAR
+import reservaArchivoService from "../services/reservaArchivoService"; // 🧾 Importamos tu servicio existente
+import Navbar from "../components/Sidebar.jsx";
 import "../styles/styleAsignarUnidadAndChofer.css";
 
 function AsignacionChoferAndUnidad() {
@@ -14,6 +15,7 @@ function AsignacionChoferAndUnidad() {
   const [unidadSeleccionada, setUnidadSeleccionada] = useState(null);
   const [mensaje, setMensaje] = useState("");
   const [esError, setEsError] = useState(false);
+  const [mostrarBotonPdf, setMostrarBotonPdf] = useState(false); // 🧾 Nuevo estado
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -61,11 +63,21 @@ function AsignacionChoferAndUnidad() {
 
       setMensaje("✅ Asignación creada exitosamente.");
       setEsError(false);
+      setMostrarBotonPdf(true); // 🧾 Mostramos el botón de descarga
 
-      setTimeout(() => navigate("/dashboard/asignaciones"), 2000);
     } catch (error) {
       console.error("❌ Error al crear la asignación:", error);
       setMensaje("❌ Error al crear la asignación.");
+      setEsError(true);
+    }
+  };
+
+  // 🧾 Descargar PDF usando el servicio que ya tienes
+  const descargarPDF = async () => {
+    try {
+      await reservaArchivoService.descargarPdf(idReserva);
+    } catch (error) {
+      setMensaje("⚠️ Error al descargar el PDF.");
       setEsError(true);
     }
   };
@@ -77,13 +89,17 @@ function AsignacionChoferAndUnidad() {
 
   return (
     <div className="page-layout">
-      <Navbar /> {/* <-- NAVBAR ARRIBA */}
+      <Navbar />
 
       <main className="asig-container">
-        <h2 className="asig-titulo">Asignar Chofer y Unidad a la Reserva #{idReserva}</h2>
+        <h2 className="asig-titulo">
+          Asignar Chofer y Unidad a la Reserva #{idReserva}
+        </h2>
+
         {mensaje && <p className={getMensajeClass()}>{mensaje}</p>}
 
         <div className="asig-grid">
+          {/* Choferes */}
           <div className="asig-seccion">
             <h3 className="asig-subtitulo">Choferes Disponibles</h3>
             <div className="asig-cards">
@@ -93,7 +109,11 @@ function AsignacionChoferAndUnidad() {
                 choferes.map((chofer) => (
                   <div
                     key={chofer.idChofer}
-                    className={`asig-card ${choferSeleccionado?.idChofer === chofer.idChofer ? "asig-seleccionado" : ""}`}
+                    className={`asig-card ${
+                      choferSeleccionado?.idChofer === chofer.idChofer
+                        ? "asig-seleccionado"
+                        : ""
+                    }`}
                   >
                     <p><strong>Nombre:</strong> {chofer.nombre} {chofer.apellido}</p>
                     <p><strong>Correo:</strong> {chofer.correo}</p>
@@ -111,6 +131,7 @@ function AsignacionChoferAndUnidad() {
             </div>
           </div>
 
+          {/* Unidades */}
           <div className="asig-seccion">
             <h3 className="asig-subtitulo">Unidades Disponibles</h3>
             <div className="asig-cards">
@@ -120,7 +141,11 @@ function AsignacionChoferAndUnidad() {
                 unidades.map((unidad) => (
                   <div
                     key={unidad.idUnidad}
-                    className={`asig-card ${unidadSeleccionada?.idUnidad === unidad.idUnidad ? "asig-seleccionado" : ""}`}
+                    className={`asig-card ${
+                      unidadSeleccionada?.idUnidad === unidad.idUnidad
+                        ? "asig-seleccionado"
+                        : ""
+                    }`}
                   >
                     {unidad.fotografia ? (
                       <img src={unidad.fotografia} alt="Unidad" className="asig-img" />
@@ -147,6 +172,13 @@ function AsignacionChoferAndUnidad() {
           <button className="asig-btn-final" onClick={crearAsignacion}>
             Crear Asignación
           </button>
+
+          {/* 🧾 Mostrar el botón de descarga solo después de crear la asignación */}
+          {mostrarBotonPdf && (
+            <button className="asig-btn-final descargar" onClick={descargarPDF}>
+              Descargar Comprobante PDF
+            </button>
+          )}
         </div>
       </main>
     </div>

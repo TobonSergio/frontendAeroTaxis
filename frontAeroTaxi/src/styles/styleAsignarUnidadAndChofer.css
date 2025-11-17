@@ -2,7 +2,7 @@
 .asig-container {
   min-height: 100%; /* ✅ En lugar de 100vh */
   width: 100%;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
   background-attachment: fixed; /* ✅ Fondo continuo */
   background-repeat: no-repeat;
   background-size: cover;
@@ -81,7 +81,7 @@
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #00d8ff;
+  color: #ff0000;
 }
 
 /* 🧩 Tarjetas de choferes y unidades */
@@ -106,8 +106,8 @@
 }
 
 .asig-seleccionado {
-  border-color: #00d8ff;
-  box-shadow: 0 0 15px #00d8ff50;
+  border-color: #ff0000;
+  box-shadow: 0 0 15px #ff000050;
 }
 
 /* 🖼️ Imagen o placeholder de unidad */
@@ -136,7 +136,7 @@
 .asig-btn {
   margin-top: 10px;
   padding: 10px 15px;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  background: linear-gradient(135deg, #ff0000, #a80000);
   color: white;
   border: none;
   border-radius: 10px;
@@ -146,7 +146,7 @@
 }
 
 .asig-btn:hover {
-  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  background: linear-gradient(135deg, #ff0000, #a80000);
   transform: scale(1.05);
 }
 
@@ -157,18 +157,18 @@
 
 .asig-btn-final {
   padding: 15px 40px;
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  background: linear-gradient(135deg, #cc2e2e, #ae2727);
   border: none;
   color: #fff;
   font-size: 1.2rem;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+  box-shadow: 0 4px 15px rgba(204, 46, 46, 0.3);
 }
 
 .asig-btn-final:hover {
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  background: linear-gradient(135deg, #ae2727, #cc2e2e);
   transform: scale(1.05);
 }
 

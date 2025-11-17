@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/styleDashboard.css";
 import Navbar from "../components/Sidebar.jsx";
 import reservaService from "../services/reservaService.js";
+import StatusTag from "../components/StatusTag.jsx";
 
 function Dashboard() {
   const [reservas, setReservas] = useState([]);
@@ -42,7 +43,7 @@ function Dashboard() {
 
       <main className="main-content">
         <header className="dashboard-header">
-          <h1>Bienvenido al Dashboard ✈️</h1>
+          <h1>Bienvenido al Dashboard</h1>
           <p>Gestiona tus reservas y obtén un resumen general de la operación.</p>
         </header>
 
@@ -89,15 +90,7 @@ function Dashboard() {
                         : "Sin fecha"}
                     </td>
                     <td>
-                      <span
-                        className={`estado-tag ${
-                          reserva.estado === "PENDIENTE"
-                            ? "estado-pendiente"
-                            : "estado-confirmada"
-                        }`}
-                      >
-                        {reserva.estado}
-                      </span>
+                      <StatusTag estado={reserva.estado} />
                     </td>
                   </tr>
                 ))

@@ -18,6 +18,8 @@ import ReservaCliente from "./pages/ReservaCliente.jsx";
 import AsignarUnidadChofer from "./pages/Asignaciones.jsx";
 import AsignacionChoferAndUnidad from "./pages/AsignacionChoferAndUnidad.jsx";
 import MisReservas from "./pages/MisReservas.jsx";
+// 👇 Importa la nueva page
+import ManageChoferes from "./pages/ManageChoferes.jsx";
 
 
  // 👈 importa el componente
@@ -47,6 +49,9 @@ function App() {
           <Route path="asignaciones" element ={<AsignarUnidadChofer/>} />
             {/* 🔹 Nueva ruta para asignar chofer y unidad */}
           <Route path="asignaciones/asignar/:idReserva" element={<AsignacionChoferAndUnidad />} />
+          <Route path="cliente/reservas" element={<ReservaCliente />} />
+          {/* 🚗 Nueva ruta para gestionar choferes (solo visible para rol 1 o 2) */}
+          <Route path="choferes" element={<ManageChoferes />} />
         </Route>
       </Routes>
     </>

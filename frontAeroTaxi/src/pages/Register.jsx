@@ -14,24 +14,25 @@ function Register() {
   const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-    try {
-      await authService.register({
-        name,
-        lastName,
-        email,
-        number,
-        username,
-        password,
-      });
-      setSuccess("✅ Usuario registrado correctamente. Revisa tu correo para verificar la cuenta.");
-    } catch (err) {
-      setError(err.response?.data || "❌ Error al registrar usuario");
-    }
-  };
+  try {
+    await authService.register({
+      nombre: name,
+      apellido: lastName,
+      telefono: number,
+      correo: email,
+      password: password,
+    });
+
+    setSuccess("✅ Usuario registrado correctamente. Revisa tu correo para verificar la cuenta.");
+  } catch (err) {
+    setError(err.response?.data?.message || "❌ Error al registrar usuario");
+  }
+};
+
 
   return (
     <div className="register-page">
@@ -60,11 +61,6 @@ function Register() {
           <div className="form-group">
             <label>Teléfono</label>
             <input type="tel" value={number} onChange={(e) => setNumber(e.target.value)} required />
-          </div>
-
-          <div className="form-group">
-            <label>Usuario</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </div>
 
           <div className="form-group">

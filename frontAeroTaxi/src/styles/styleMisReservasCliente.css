@@ -1,0 +1,361 @@
+/* 🌌 FONDO GLOBAL — aplica a toda la app */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+  scroll-behavior: smooth;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* 💠 contenedor principal */
+.reservas-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: transparent;
+}
+
+/* 📍 CONTENIDO PRINCIPAL */
+.reservas-main {
+  flex: 1;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
+}
+
+/* 🧾 ENCABEZADO DE RESERVAS */
+.reservas-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  padding: 25px 35px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  margin-bottom: 40px;
+  transition: 0.3s;
+}
+
+.reservas-header:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.reservas-header h1 {
+  font-size: 2rem;
+  color: #ff4b4b;
+  text-shadow: 0 0 15px rgba(255, 75, 75, 0.5);
+  margin-bottom: 10px;
+}
+
+.reservas-header p {
+  color: #dcdcdc;
+  font-size: 1rem;
+}
+
+/* 📋 FORMULARIO DE NUEVA RESERVA */
+.reserva-form-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  padding: 35px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  margin-bottom: 40px;
+  transition: all 0.3s ease;
+}
+
+.reserva-form-section:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.reserva-form-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #ff4b4b;
+  font-size: 1.6rem;
+  text-shadow: 0 0 12px rgba(255, 75, 75, 0.5);
+}
+
+/* 🧩 FORMULARIO */
+.reserva-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.reserva-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #cdd6e0;
+}
+
+.reserva-form input,
+.reserva-form select,
+.reserva-form textarea {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  resize: none;
+}
+
+.reserva-form input:focus,
+.reserva-form select:focus,
+.reserva-form textarea:focus {
+  border: 1px solid #ff4b4b;
+  box-shadow: 0 0 8px rgba(255, 75, 75, 0.35);
+}
+
+/* 🔴 BOTONES ROJOS */
+.reserva-form button[type="submit"] {
+  background: linear-gradient(135deg, #ff4b4b, #ff1a1a);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  margin-top: 25px;
+  width: 100%;
+  max-width: 260px;
+  align-self: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 75, 75, 0.4);
+}
+
+.reserva-form button[type="submit"]:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(135deg, #ff5f5f, #ff2e2e);
+  box-shadow: 0 0 20px rgba(255, 75, 75, 0.7);
+}
+
+.reserva-form button[disabled] {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* 📊 TABLA DE RESERVAS */
+.reservas-table-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  padding: 35px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  margin-bottom: 40px;
+  transition: all 0.3s ease;
+}
+
+.reservas-table-section:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.reservas-table-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #ff4b4b;
+  font-size: 1.5rem;
+  text-shadow: 0 0 12px rgba(255, 75, 75, 0.5);
+}
+
+/* 🧾 TABLA */
+.tabla-reservas {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.tabla-reservas th,
+.tabla-reservas td {
+  padding: 12px 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cdd6e0;
+}
+
+/* Encabezado */
+.tabla-reservas th {
+  color: #ff4b4b;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 14px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  font-size: 1rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Filas */
+.tabla-reservas td {
+  padding: 12px 14px;
+  text-align: center;
+  color: #e6e6e6;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.tabla-reservas tr:hover {
+  background: rgba(255, 75, 75, 0.08);
+  transform: scale(1.01);
+}
+
+/* 🔘 ESTADOS DE RESERVA */
+.estado {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.estado.confirmada {
+  background: linear-gradient(135deg, rgba(0, 255, 150, 0.2), rgba(0, 200, 120, 0.3));
+  color: #2ecc71;
+}
+
+.estado.cancelada {
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.25), rgba(255, 0, 0, 0.35));
+  color: #ff6b6b;
+}
+
+.estado.pendiente {
+  background: linear-gradient(135deg, rgba(255, 210, 70, 0.25), rgba(255, 193, 7, 0.35));
+  color: #f1c40f;
+}
+
+/* 🔹 Filas clickeables */
+.fila-reserva {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fila-reserva:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 🔹 Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-detalle {
+  background: #2b2b2b;
+  color: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(255, 75, 75, 0.4);
+  animation: abrirModal 0.3s ease-in-out;
+}
+
+@keyframes abrirModal {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.detalle-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #3a3a3a;
+  border-radius: 10px;
+}
+
+.detalle-section h3 {
+  margin-bottom: 0.5rem;
+  color: #ffb347;
+}
+
+.cerrar-modal-btn {
+  background: linear-gradient(135deg, #ff4b4b, #ff1a1a);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.cerrar-modal-btn:hover {
+  background: linear-gradient(135deg, #ff5f5f, #ff2e2e);
+  box-shadow: 0 0 12px rgba(255, 75, 75, 0.6);
+}
+
+.descargar-pdf-btn {
+  background-color: #00bcd4;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.3s;
+}
+
+.descargar-pdf-btn:hover {
+  background-color: #0097a7;
+}
+
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .reserva-form-section,
+  .reservas-header {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .reserva-form {
+    grid-template-columns: 1fr;
+  }
+
+  .tabla-reservas th,
+  .tabla-reservas td {
+    font-size: 0.9rem;
+  }
+
+  .modal-detalle {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}

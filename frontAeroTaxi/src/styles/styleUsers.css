@@ -1,7 +1,7 @@
 /* 🎨 Fondo general */
 .users-container {
   width: 100%;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
   background-attachment: fixed;
   color: #fff;
   display: flex;
@@ -88,7 +88,7 @@
 
 .users-table th {
   background: rgba(255, 255, 255, 0.1);
-  color: #00d8ff;
+  color: #ff0000;
   font-weight: 600;
 }
 
@@ -109,21 +109,8 @@
   transition: all 0.3s ease;
 }
 
-.users-table td .btn-edit {
-  background: rgba(0, 255, 255, 0.15);
-  color: #00d8ff;
-}
 
-.users-table td .btn-delete {
-  background: rgba(255, 0, 0, 0.2);
-  color: #ff6b6b;
-}
 
-.users-table td .btn-edit:hover,
-.users-table td .btn-delete:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
-}
 
 /* 🧾 Formulario */
 .users-form {
@@ -161,7 +148,7 @@
 
 .users-form input:focus,
 .users-form select:focus {
-  box-shadow: 0 0 6px #00d8ff;
+  box-shadow: 0 0 6px #ff0000;
   background-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -186,7 +173,7 @@
 }
 
 .edit-buttons button {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  background: linear-gradient(135deg, #ff0000, #9b0000);
   color: #fff;
 }
 
@@ -203,10 +190,11 @@
 
 /* 🌀 Texto de carga */
 .loading-text {
-  color: #00d8ff;
+  color: #ff0000;
   font-size: 1.1rem;
   margin-top: 15px;
 }
+
 
 /* 📱 Responsive */
 @media (max-width: 768px) {

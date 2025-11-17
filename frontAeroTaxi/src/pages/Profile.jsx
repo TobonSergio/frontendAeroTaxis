@@ -55,7 +55,7 @@ function Profile() {
       <main className="profile-main">
         <header className="profile-header">
           <div className="avatar">
-            <FaUserCircle size={80} />
+            <FaUserCircle size={100} />
           </div>
 
           <div className="user-info">
@@ -101,7 +101,7 @@ function Profile() {
               </label>
 
               <div className="form-buttons">
-                <button type="submit" className="btn-save">💾 Guardar Cambios</button>
+                <button type="submit" className="btn-save">Guardar</button>
                 <button
                   type="button"
                   className="cancel-btn"

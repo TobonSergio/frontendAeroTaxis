@@ -15,13 +15,13 @@
 .reservations-main h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #2c3e50;
+  color: #502c2c;
 }
 
 .reservations-main h2 {
   margin: 2rem 0 1rem;
   font-size: 1.4rem;
-  color: #34495e;
+  color: #5e3434;
 }
 
 /* --- Tabla de reservas --- */
@@ -42,7 +42,7 @@
 }
 
 .reservations-table th {
-  background: #2c3e50;
+  background: #502c2c;
   color: #fff;
   font-weight: 600;
 }
@@ -94,7 +94,7 @@
   margin-top: 1rem;
   padding: 0.7rem;
   font-size: 1rem;
-  background: #2c3e50;
+  background: #502c2c;
   color: white;
   border: none;
   border-radius: 6px;
@@ -148,7 +148,7 @@
   .reservations-table td::before {
     content: attr(data-label); /* mostramos el título de la columna */
     font-weight: 600;
-    color: #2c3e50;
+    color: #502c2c;
   }
 
   /* Formulario ocupa todo el ancho */

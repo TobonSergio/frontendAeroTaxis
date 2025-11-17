@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import adminStaffService from "../services/adminUserService.js";
 import "../styles/styleUsers.css";
+import ActionButtons from "../components/ActionButtons.jsx";
 
-function AdminUserList() {
+
+function AdminUserList({ setSelectedUser }) {
   const [staffList, setStaffList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editingStaff, setEditingStaff] = useState(null);
-  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     loadStaff();
@@ -24,19 +24,10 @@ function AdminUserList() {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("¿Seguro que deseas eliminar este usuario?")) return;
-    try {
-      await adminStaffService.deleteStaff(id);
-      setStaffList(staffList.filter((s) => s.idStaff !== id));
-    } catch (error) {
-      console.error("Error al eliminar usuario:", error);
-    }
-  };
-
+  // 🔹 Aquí estaba el problema: faltaba definir handleEdit correctamente
   const handleEdit = (staff) => {
-    setEditingStaff(staff.idStaff);
-    setFormData({
+    setSelectedUser({
+      idStaff: staff.idStaff,
       username: staff.username || "",
       password: "",
       nombre: staff.nombre,
@@ -48,22 +39,13 @@ function AdminUserList() {
     });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSaveEdit = async (e) => {
-    e.preventDefault();
-    const payload = { ...formData };
-    if (!payload.password) delete payload.password;
-
+  const handleDelete = async (id) => {
+    if (!window.confirm("¿Seguro que deseas eliminar este usuario?")) return;
     try {
-      await adminStaffService.updateStaff(editingStaff, payload);
-      await loadStaff();
-      setEditingStaff(null);
+      await adminStaffService.deleteStaff(id);
+      setStaffList(staffList.filter((s) => s.idStaff !== id));
     } catch (error) {
-      console.error("Error al actualizar usuario:", error);
+      console.error("Error al eliminar usuario:", error);
     }
   };
 
@@ -95,53 +77,15 @@ function AdminUserList() {
               <td>{s.cargo || "-"}</td>
               <td>{s.rolNombre}</td>
               <td>
-                <button className="btn-edit" onClick={() => handleEdit(s)}>✏️</button>
-                <button className="btn-delete" onClick={() => handleDelete(s.idStaff)}>🗑️</button>
+                <ActionButtons
+                  onEdit={() => handleEdit(s)}
+                  onDelete={() => handleDelete(s.idStaff)}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {editingStaff && (
-        <div className="edit-form-container">
-          <h3 className="users-title" style={{ fontSize: "1.4rem" }}>Editar Usuario</h3>
-          <form onSubmit={handleSaveEdit} className="users-form">
-            <label>Username:
-              <input name="username" value={formData.username} onChange={handleChange} required />
-            </label>
-            <label>Password:
-              <input type="password" name="password" value={formData.password} onChange={handleChange} />
-            </label>
-            <label>Nombre:
-              <input name="nombre" value={formData.nombre} onChange={handleChange} required />
-            </label>
-            <label>Apellido:
-              <input name="apellido" value={formData.apellido} onChange={handleChange} required />
-            </label>
-            <label>Correo:
-              <input type="email" name="correo" value={formData.correo} onChange={handleChange} required />
-            </label>
-            <label>Teléfono:
-              <input name="telefono" value={formData.telefono} onChange={handleChange} />
-            </label>
-            <label>Cargo:
-              <input name="cargo" value={formData.cargo} onChange={handleChange} />
-            </label>
-            <label>Rol:
-              <select name="rolId" value={formData.rolId} onChange={handleChange} required>
-                <option value={1}>ADMIN</option>
-                <option value={2}>STAFF</option>
-              </select>
-            </label>
-
-            <div className="edit-buttons">
-              <button type="submit">💾 Guardar</button>
-              <button type="button" className="btn-cancel" onClick={() => setEditingStaff(null)}>❌ Cancelar</button>
-            </div>
-          </form>
-        </div>
-      )}
     </div>
   );
 }

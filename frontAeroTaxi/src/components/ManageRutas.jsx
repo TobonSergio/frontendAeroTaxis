@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import rutaService from "../services/rutaService.js";
 import "../styles/stylesRutas.css";
+import ActionButtons from "../components/ActionButtons.jsx";
 
 function ManageRutas() {
   const [rutas, setRutas] = useState([]);
@@ -78,7 +79,7 @@ function ManageRutas() {
 
   return (
     <div className="rutas-container">
-      <h2 className="rutas-title">🚍 Gestión de Rutas</h2>
+      <h2 className="rutas-title">Gestión de Rutas</h2>
 
       {/* Formulario */}
       <form onSubmit={handleSubmit} className="rutas-form">
@@ -121,8 +122,8 @@ function ManageRutas() {
             {loading
               ? "Procesando..."
               : isEditing
-              ? "💾 Actualizar Ruta"
-              : "✅ Crear Ruta"}
+              ? "Actualizar"
+              : "Crear"}
           </button>
 
           {isEditing && (
@@ -162,8 +163,10 @@ function ManageRutas() {
                 <td>{ruta.fin}</td>
                 <td>${ruta.precio}</td>
                 <td>
-                  <button onClick={() => handleEdit(ruta)}>✏️</button>
-                  <button onClick={() => handleDelete(ruta.idRuta)}>🗑️</button>
+                  <ActionButtons
+                    onEdit={() => handleEdit(ruta)}
+                    onDelete={() => handleDelete(s.idRuta)}
+                  />
                 </td>
               </tr>
             ))}

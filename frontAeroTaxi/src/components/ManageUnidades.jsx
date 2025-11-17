@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import unidadService from "../services/unidadServices";
 import "../styles/styleUnidades.css";
+import ActionButtons from "../components/ActionButtons.jsx";
+import StatusTag from "../components/StatusTag.jsx";
 
 function ManageUnidades() {
   const [unidades, setUnidades] = useState([]);
@@ -85,14 +87,10 @@ function ManageUnidades() {
 
   return (
     <div className="unidades-container">
-      <header className="unidades-header">
-        <h1>🚐 Gestión de Unidades</h1>
-        <p>Administra las unidades disponibles, ocupadas o en mantenimiento.</p>
-      </header>
 
       {/* Formulario */}
       <section className="form-section">
-        <h2>{isEditing ? "✏️ Editar Unidad" : "➕ Nueva Unidad"}</h2>
+        <h2>{isEditing ? "✏️ Editar Unidad" : "Nueva Unidad"}</h2>
 
         <form onSubmit={handleSubmit} className="unidades-form">
           <div className="form-grid">
@@ -145,8 +143,8 @@ function ManageUnidades() {
               {loading
                 ? "Procesando..."
                 : isEditing
-                ? "💾 Actualizar Unidad"
-                : "✅ Crear Unidad"}
+                ? "Actualizar Unidad"
+                : "Crear Unidad"}
             </button>
 
             {isEditing && (
@@ -207,26 +205,13 @@ function ManageUnidades() {
                     )}
                   </td>
                   <td>
-                    <span
-                      className={`estado ${
-                        unidad.estado === "DISPONIBLE"
-                          ? "estado-disponible"
-                          : unidad.estado === "OCUPADA"
-                          ? "estado-ocupada"
-                          : "estado-mantenimiento"
-                      }`}
-                    >
-                      {unidad.estado}
-                    </span>
+                    <StatusTag estado={unidad.estado} />
                   </td>
-                  <td className="actions">
-                    <button onClick={() => handleEdit(unidad)}>✏️</button>
-                    <button
-                      className="delete"
-                      onClick={() => handleDelete(unidad.idUnidad)}
-                    >
-                      🗑️
-                    </button>
+                  <td>
+                    <ActionButtons
+                      onEdit={() => handleEdit(unidad)}
+                      onDelete={() => handleDelete(unidad.idUnidad)}
+                    />
                   </td>
                 </tr>
               ))
