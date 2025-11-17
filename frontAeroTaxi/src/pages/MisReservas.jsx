@@ -59,7 +59,8 @@ function MisReservas() {
 const descargarPdf = async (idReserva) => {
   console.log(`🔹 Iniciando descarga de PDF para reserva ID: ${idReserva}`);
   try {
-    const response = await fetch(`http://localhost:8080/api/reservas/pdf/${idReserva}`, {
+    const baseUrl = import.meta.env.VITE_API_URL; // <-- aquí tomamos la URL del .env
+    const response = await fetch(`${baseUrl}/api/reservas/pdf/${idReserva}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -90,6 +91,7 @@ const descargarPdf = async (idReserva) => {
     alert("El comprobante aún no está disponible.");
   }
 };
+
 
 
   if (loading) return <p className="loading-text">Cargando tus reservas...</p>;
