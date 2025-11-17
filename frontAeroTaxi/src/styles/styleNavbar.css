@@ -150,3 +150,139 @@
 .btn-logout:active {
   transform: scale(0.95);
 }
+/* 📱📱 RESPONSIVE — Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  .navbar-custom {
+    padding: 0.6rem 1.3rem;
+  }
+
+  .navbar-links {
+    gap: 1rem;
+  }
+
+  .navbar-logo-img {
+    height: 40px;
+  }
+
+  .navbar-search input {
+    width: 120px;
+  }
+}
+
+/* 📱 Responsive — Móviles medianos (≤768px) */
+@media (max-width: 768px) {
+
+  /* Convertimos el navbar a diseño tipo app móvil */
+  .navbar-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Logo */
+  .navbar-left {
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .navbar-logo-img {
+    height: 38px;
+  }
+
+  .navbar-links {
+    gap: 1rem;
+  }
+
+  .navbar-links a {
+    font-size: 0.95rem;
+  }
+
+  /* Buscador más pequeño */
+  .navbar-search input {
+    width: 150px;
+    padding: 0.35rem 0.7rem;
+  }
+
+  /* Botón logout más compacto */
+  .btn-logout {
+    font-size: 1.1rem;
+  }
+}
+
+/* 📱📱 Móviles pequeños (≤480px) */
+@media (max-width: 480px) {
+
+  .navbar-custom {
+    padding: 0.5rem 1rem;
+  }
+
+  /* Layout de columnas, centrado */
+  .navbar-container {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .navbar-left {
+    gap: 0.7rem;
+  }
+
+  .navbar-logo-img {
+    height: 35px;
+  }
+
+  /* LINKS → convertirlos en botones tipo pill */
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .navbar-links a {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .navbar-links a::after {
+    display: none; /* sin línea animada en móvil para no sobrecargar */
+  }
+
+  /* Buscador más pequeño */
+  .navbar-search input {
+    width: 120px;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  /* Botón logout más accesible */
+  .btn-logout {
+    font-size: 1.2rem;
+    padding: 0.3rem;
+    margin-left: 0;
+  }
+}
+
+/* 📱📱📱 Ultra Small Devices (≤360px) */
+@media (max-width: 360px) {
+
+  .navbar-links {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .navbar-logo-img {
+    height: 32px;
+  }
+
+  .navbar-search input {
+    width: 100%;
+  }
+
+  .btn-logout {
+    font-size: 1.1rem;
+  }
+}

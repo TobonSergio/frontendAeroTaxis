@@ -334,28 +334,170 @@ html, body {
   background-color: #0097a7;
 }
 
+/* 📱📱 RESPONSIVE MEJORADO — móviles y tablets */
+@media (max-width: 1024px) {
+  .reservas-main {
+    padding: 40px 15px;
+    gap: 25px;
+  }
 
-/* 📱 RESPONSIVE */
-@media (max-width: 768px) {
-  .reserva-form-section,
   .reservas-header {
-    padding: 20px;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    max-width: 95%;
+    padding: 20px 25px;
+  }
+
+  .reservas-table-section {
+    max-width: 95%;
+    padding: 25px;
+  }
+}
+
+/* 📱 Móviles medianos */
+@media (max-width: 768px) {
+
+  /* Header */
+  .reservas-header h1 {
+    font-size: 1.7rem;
+  }
+
+  .reservas-header p {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  /* Form */
+  .reserva-form-section {
+    padding: 22px;
   }
 
   .reserva-form {
     grid-template-columns: 1fr;
+    gap: 18px;
   }
 
+  .reserva-form input,
+  .reserva-form select,
+  .reserva-form textarea {
+    padding: 11px 12px;
+    font-size: 0.95rem;
+  }
+
+  /* Botón */
+  .reserva-form button[type="submit"] {
+    max-width: 200px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+
+  /* Tabla → estilo más compacto */
   .tabla-reservas th,
   .tabla-reservas td {
+    font-size: 0.85rem;
+    padding: 10px 8px;
+  }
+
+  /* Modal */
+  .modal-detalle {
+    width: 92%;
+    padding: 1.3rem;
+  }
+
+  .detalle-section {
+    padding: 0.8rem;
+  }
+
+  .detalle-section h3 {
+    font-size: 1rem;
+  }
+
+  .cerrar-modal-btn {
+    width: 100%;
+  }
+}
+
+
+/* 📱📱 Móviles pequeños (≤ 480px) — Diseño tipo tarjetas */
+@media (max-width: 480px) {
+
+  .reservas-main {
+    padding: 25px 12px;
+    gap: 20px;
+  }
+
+  .reservas-header {
+    padding: 18px;
+  }
+
+  .reservas-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .reservas-header p {
+    font-size: 0.85rem;
+  }
+
+  /* Form compactado */
+  .reserva-form-section {
+    padding: 18px;
+  }
+
+  .reserva-form label {
     font-size: 0.9rem;
   }
 
+  .reserva-form input,
+  .reserva-form select,
+  .reserva-form textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  /* Tabla → convertir en tarjetas */
+  .tabla-reservas {
+    border: none;
+  }
+
+  .tabla-reservas thead {
+    display: none; /* Ocultamos encabezado para formato móvil */
+  }
+
+  .tabla-reservas tr {
+    display: block;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  }
+
+  .tabla-reservas td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 4px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .tabla-reservas td:last-child {
+    border-bottom: none;
+  }
+
+  .tabla-reservas td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #ff4b4b;
+    margin-right: 10px;
+  }
+
+  /* Modal */
   .modal-detalle {
-    width: 90%;
-    padding: 1.5rem;
+    width: 95%;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .cerrar-modal-btn,
+  .descargar-pdf-btn {
+    width: 100%;
   }
 }
