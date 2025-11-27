@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import reservaService from "../services/reservaService.js";
-import Card from "../components/Dashboard/Card.jsx";
-import DashboardHeader from "../components/Dashboard/DashboardHeader.jsx";
-import UltimasReservasTable from "../components/Dashboard/UltimasReservasTable.jsx";
+import Card from "../components/dashboard/Card.jsx";
+import DashboardHeader from "../components/dashboard/DashboardHeader.jsx";
+import UltimasReservasTable from "../components/dashboard/UltimasReservasTable.jsx";
 
 function Dashboard() {
   const [reservas, setReservas] = useState([]);
