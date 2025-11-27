@@ -1,180 +1,53 @@
-/* 🌌 FONDO Y FUENTE GLOBAL */
-html, body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
-  font-family: "Poppins", sans-serif;
-  color: #fff;
-}
-
-/* 📦 CONTENEDOR PRINCIPAL */
+/* CONTENEDOR PRINCIPAL */
 .unidades-container {
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* HEADER */
-.unidades-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.unidades-header h1 {
-  font-size: 2rem;
-  color: #ff0000;
-  text-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
-}
-
-.unidades-header p {
-  color: #ccc;
-  font-size: 1rem;
-}
-
-/* FORMULARIO */
-.form-section {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 18px;
+  padding: 40px 8%;               /* Más espacio lateral */
   width: 100%;
-  max-width: 900px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
-  margin-bottom: 40px;
-}
-
-.form-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #ff0000;
-}
-
-.unidades-form .form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.unidades-form label {
+  max-width: 1400px;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  font-weight: 500;
+  gap: 45px;                   /* SEPARA FORM y TABLA */
 }
 
-.unidades-form input,
-.unidades-form select {
-  margin-top: 6px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  font-size: 0.95rem;
-  outline: none;
-  transition: 0.3s;
+/* TARJETA DEL FORMULARIO */
+.unidades-container section {       /* Fondo blanco limpio */
+  color: #ffffff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
 
-.unidades-form input:focus,
-.unidades-form select:focus {
-  border: 1px solid #ff0000;
-  box-shadow: 0 0 6px rgba(255, 0, 0, 0.3);
-}
-
-/* BOTONES */
-.form-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.form-buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: 0.3s;
-}
-
-.form-buttons button[type="submit"] {
-  background: linear-gradient(135deg, #ff0000, #661a1a);
-  color: #fff;
-}
-
-.form-buttons button[type="submit"]:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 10px rgba(0, 216, 255, 0.5);
-}
-
-.cancel-btn {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ddd;
-}
-
-.cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* MENSAJE */
-.text-message {
-  text-align: center;
-  color: #2ecc71;
-  margin-top: 15px;
-  font-weight: 600;
+/* Ajustamos el formulario dentro */
+.unidades-container form .row > div {
+  margin-bottom: 15px;
 }
 
 /* TABLA */
-.table-section {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  padding: 30px;
-  border-radius: 18px;
-  width: 100%;
-  max-width: 1100px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+.table-responsive {
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
 
-.table-section h2 {
-  text-align: center;
-  color: #ff0000;
-  margin-bottom: 20px;
+/* La tabla oscura queda adentro sin tocar los bordes */
+.table {
+  margin-bottom: 0;
+  border-radius: 10px;
+  overflow: hidden;
 }
-
-.table-section table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table-section th,
-.table-section td {
-  padding: 12px 14px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.table-section th {
-  color: #ff0000;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.table-section img {
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .form-section, .table-section {
+  .unidades-container {
+    padding: 30px 5%;
+    gap: 30px;
+  }
+
+  .unidades-container section {
     padding: 20px;
   }
 
-  .table-section th, .table-section td {
-    font-size: 0.9rem;
+  .table-responsive {
+    padding: 15px;
   }
 }

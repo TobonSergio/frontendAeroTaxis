@@ -1,5 +1,5 @@
 import "../styles/styleProfile.css";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Navbar.jsx";
 import { FaUserCircle, FaEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import choferService from "../services/choferService.js";
@@ -15,8 +15,7 @@ function ChoferProfile() {
         const data = await choferService.getProfile();
         setChofer(data);
       } catch (error) {
-        console.error("Error al cargar perfil:", error);
-        alert("❌ No se pudo cargar tu perfil. Verifica tu sesión.");
+        alert("❌ No se pudo cargar tu perfil.");
       } finally {
         setLoading(false);
       }
@@ -26,27 +25,26 @@ function ChoferProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.target;
+    const f = e.target;
 
-    const updatedData = {
-      nombre: form.nombre.value,
-      apellido: form.apellido.value,
-      telefono: form.telefono.value,
-      licenciaConduccion: form.licenciaConduccion.value,
-      bilingue: form.bilingue.checked,
-      username: chofer.usuario?.username, // opcional si quieres permitir cambiar
-      correo: chofer.usuario?.correo,     // opcional si quieres permitir cambiar
-      password: form.password?.value      // opcional
+    const updated = {
+      nombre: f.nombre.value,
+      apellido: f.apellido.value,
+      telefono: f.telefono.value,
+      licenciaConduccion: f.licenciaConduccion.value,
+      bilingue: f.bilingue.checked,
+      username: chofer.usuario?.username,
+      correo: chofer.usuario?.correo,
+      password: f.password.value || null,
     };
 
     try {
-      const updated = await choferService.updateProfile(updatedData);
-      setChofer(updated);
+      const r = await choferService.updateProfile(updated);
+      setChofer(r);
       setEditing(false);
-      alert("✅ Perfil actualizado correctamente");
-    } catch (error) {
-      console.error("Error al actualizar perfil:", error);
-      alert("❌ Error al actualizar perfil");
+      alert("✅ Perfil actualizado");
+    } catch (e) {
+      alert("❌ Error actualizando");
     }
   };
 
@@ -54,66 +52,76 @@ function ChoferProfile() {
   if (!chofer) return <p>No se encontró el perfil.</p>;
 
   return (
-    <div className="profile-page">
+    <div className="profile-layout">
       <Sidebar />
 
-      <main className="profile-main">
-        <header className="profile-header">
+      <main className="profile-content">
+
+        {/* HEADER */}
+        <header className="profile-card header-card">
           <div className="avatar">
-            <FaUserCircle size={80} />
+            <FaUserCircle size={90} />
           </div>
 
-          <div className="user-info">
-            <div className="user-info-header">
-              <h1>{chofer.nombre} {chofer.apellido}</h1>
-              <button
-                className="btn-edit"
-                onClick={() => setEditing(!editing)}
-                title="Editar perfil"
-              >
-                <FaEdit size={20} />
-              </button>
-            </div>
+          <div className="header-details">
+            <h1>{chofer.nombre} {chofer.apellido}</h1>
+            <button className="btn-edit" onClick={() => setEditing(!editing)}>
+              <FaEdit /> Editar
+            </button>
+          </div>
+
+          <div className="info-grid">
             <p><strong>Correo:</strong> {chofer.usuario?.correo}</p>
             <p><strong>Teléfono:</strong> {chofer.telefono || "No registrado"}</p>
             <p><strong>Licencia:</strong> {chofer.licenciaConduccion || "No registrado"}</p>
             <p><strong>Bilingüe:</strong> {chofer.bilingue ? "Sí" : "No"}</p>
-            <p><strong>Rol:</strong> {chofer.usuario?.rol?.nombre || "No asignado"}</p> {/* 🔹 rol */}
+            <p><strong>Rol:</strong> {chofer.usuario?.rol?.nombre}</p>
           </div>
         </header>
 
+        {/* FORMULARIO */}
         {editing && (
-          <section className="profile-section">
+          <section className="profile-card form-card">
             <h2>Editar Perfil</h2>
+
             <form className="profile-form" onSubmit={handleSubmit}>
-              <label>
-                Nombre:
-                <input name="nombre" defaultValue={chofer.nombre} required />
-              </label>
-              <label>
-                Apellido:
-                <input name="apellido" defaultValue={chofer.apellido} required />
-              </label>
-              <label>
-                Teléfono:
-                <input name="telefono" defaultValue={chofer.telefono} />
-              </label>
-              <label>
-                Licencia:
-                <input name="licenciaConduccion" defaultValue={chofer.licenciaConduccion} />
-              </label>
-              <label>
-                Bilingüe:
-                <input name="bilingue" type="checkbox" defaultChecked={chofer.bilingue} />
-              </label>
-              <label>
-                Contraseña (opcional):
-                <input name="password" type="password" placeholder="Nueva contraseña" />
-              </label>
+              <div className="form-grid">
+                <label>
+                  Nombre:
+                  <input name="nombre" defaultValue={chofer.nombre} required />
+                </label>
+
+                <label>
+                  Apellido:
+                  <input name="apellido" defaultValue={chofer.apellido} required />
+                </label>
+
+                <label>
+                  Teléfono:
+                  <input name="telefono" defaultValue={chofer.telefono} />
+                </label>
+
+                <label>
+                  Licencia:
+                  <input name="licenciaConduccion" defaultValue={chofer.licenciaConduccion} />
+                </label>
+
+                <label className="check-field">
+                  <span>Bilingüe:</span>
+                  <input type="checkbox" name="bilingue" defaultChecked={chofer.bilingue} />
+                </label>
+
+                <label>
+                  Contraseña:
+                  <input name="password" type="password" placeholder="Nueva contraseña (opcional)" />
+                </label>
+              </div>
+
               <button type="submit" className="btn-save">Guardar Cambios</button>
             </form>
           </section>
         )}
+
       </main>
     </div>
   );

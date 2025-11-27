@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import "../styles/styleDashboard.css";
-import Navbar from "../components/Sidebar.jsx";
+import Navbar from "../components/Navbar.jsx";
 import reservaService from "../services/reservaService.js";
-import StatusTag from "../components/StatusTag.jsx";
+import Card from "../components/Dashboard/Card.jsx";
+import DashboardHeader from "../components/Dashboard/DashboardHeader.jsx";
+import UltimasReservasTable from "../components/Dashboard/UltimasReservasTable.jsx";
 
 function Dashboard() {
   const [reservas, setReservas] = useState([]);
@@ -21,87 +22,31 @@ function Dashboard() {
         setLoading(false);
       }
     };
-
     fetchReservas();
   }, []);
 
-  // 📊 Cálculos simples
+  if (loading) return <p className="text-center mt-5">Cargando datos...</p>;
+  if (error) return <p className="alert alert-danger mt-5">{error}</p>;
+
   const totalReservas = reservas.length;
   const reservasPendientes = reservas.filter(r => r.estado === "PENDIENTE").length;
   const reservasConfirmadas = reservas.filter(r => r.estado === "CONFIRMADA").length;
-  const notificaciones = totalReservas;
-
-  // Mostrar las últimas 3 reservas
   const ultimasReservas = reservas.slice(0, 3);
-
-  if (loading) return <p className="loading-text">Cargando datos...</p>;
-  if (error) return <p className="text-message error">{error}</p>;
 
   return (
     <div className="dashboard">
       <Navbar />
 
-      <main className="main-content">
-        <header className="dashboard-header">
-          <h1>Bienvenido al Dashboard</h1>
-          <p>Gestiona tus reservas y obtén un resumen general de la operación.</p>
-        </header>
+      <main className="container my-4">
+        <DashboardHeader />
 
-        <section className="cards">
-          <div className="custom-card">
-            <h3>Reservas pendientes</h3>
-            <p>{reservasPendientes}</p>
-          </div>
-          <div className="custom-card">
-            <h3>Reservas confirmadas</h3>
-            <p>{reservasConfirmadas}</p>
-          </div>
-          <div className="custom-card">
-            <h3>Total de reservas</h3>
-            <p>{totalReservas}</p>
-          </div>
-        </section>
+        <div className="row">
+          <Card title="Reservas pendientes" value={reservasPendientes} />
+          <Card title="Reservas confirmadas" value={reservasConfirmadas} />
+          <Card title="Total de reservas" value={totalReservas} />
+        </div>
 
-        <section className="table-section">
-          <h2>Últimas Reservas</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Destino</th>
-                <th>Fecha de Reserva</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ultimasReservas.length > 0 ? (
-                ultimasReservas.map((reserva) => (
-                  <tr key={reserva.idReserva}>
-                    <td>#{reserva.idReserva}</td>
-                    <td>{reserva.nombreCliente}</td>
-                    <td>{reserva.destino || "—"}</td>
-                    <td>
-                      {reserva.fechaReserva
-                        ? new Date(reserva.fechaReserva).toLocaleString("es-CO", {
-                            dateStyle: "short",
-                            timeStyle: "short",
-                          })
-                        : "Sin fecha"}
-                    </td>
-                    <td>
-                      <StatusTag estado={reserva.estado} />
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5">No hay reservas registradas.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </section>
+        <UltimasReservasTable reservas={ultimasReservas} />
       </main>
     </div>
   );

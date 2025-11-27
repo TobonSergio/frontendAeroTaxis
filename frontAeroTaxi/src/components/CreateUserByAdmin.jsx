@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import adminStaffService from "../services/adminUserService.js";
-import "../styles/styleUsers.css";
 
 function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
   const [formData, setFormData] = useState({
@@ -35,8 +34,7 @@ function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
   }, [selectedUser]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -47,95 +45,164 @@ function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
     try {
       if (selectedUser) {
         await adminStaffService.updateStaff(selectedUser.idStaff, formData);
-        setMessage("✅ Usuario actualizado correctamente");
+        setMessage("Usuario actualizado correctamente");
         setSelectedUser(null);
       } else {
         const response = await adminStaffService.createStaff(formData);
-        setMessage(`✅ Usuario creado correctamente (ID: ${response.staffId})`);
+        setMessage(`Usuario creado correctamente (ID: ${response.staffId})`);
       }
     } catch (error) {
-      console.error("Error al guardar usuario:", error);
-      setMessage("❌ Error al guardar usuario.");
+      setMessage("Error al guardar usuario.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="users-container">
-      <h2 className="users-title">
-        {selectedUser ? "Editar Usuario" : "Crear Nuevo Usuario"}
-      </h2>
+    <div className="container mt-4">
+      <div className="card shadow border-0 bg-dark text-white">
+        <div className="card-header bg-secondary text-white text-center">
+          <h5 className="mb-0">
+            {selectedUser ? "Editar Usuario" : "Crear Nuevo Usuario"}
+          </h5>
+        </div>
 
-      <form onSubmit={handleSubmit} className="users-form">
-        <label>Username:
-          <input name="username" value={formData.username} onChange={handleChange} required />
-        </label>
+        <div className="card-body">
+          <form onSubmit={handleSubmit}>
 
-        <label>Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required={!selectedUser}
-          />
-        </label>
+            <div className="mb-3">
+              <label className="form-label text-white">Username</label>
+              <input
+                name="username"
+                className="form-control bg-dark text-white border-secondary"
+                value={formData.username}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <label>Nombre:
-          <input name="nombre" value={formData.nombre} onChange={handleChange} required />
-        </label>
+            <div className="mb-3">
+              <label className="form-label text-white">Password</label>
+              <input
+                type="password"
+                name="password"
+                className="form-control bg-dark text-white border-secondary"
+                value={formData.password}
+                onChange={handleChange}
+                required={!selectedUser}
+              />
+            </div>
 
-        <label>Apellido:
-          <input name="apellido" value={formData.apellido} onChange={handleChange} required />
-        </label>
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label className="form-label text-white">Nombre</label>
+                <input
+                  name="nombre"
+                  className="form-control bg-dark text-white border-secondary"
+                  value={formData.nombre}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-        <label>Correo:
-          <input type="email" name="correo" value={formData.correo} onChange={handleChange} required />
-        </label>
+              <div className="col-md-6 mb-3">
+                <label className="form-label text-white">Apellido</label>
+                <input
+                  name="apellido"
+                  className="form-control bg-dark text-white border-secondary"
+                  value={formData.apellido}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
 
-        <label>Teléfono:
-          <input name="telefono" value={formData.telefono} onChange={handleChange} />
-        </label>
+            <div className="mb-3">
+              <label className="form-label text-white">Correo</label>
+              <input
+                type="email"
+                name="correo"
+                className="form-control bg-dark text-white border-secondary"
+                value={formData.correo}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <label>Cargo:
-          <input name="cargo" value={formData.cargo} onChange={handleChange} required />
-        </label>
+            <div className="mb-3">
+              <label className="form-label text-white">Teléfono</label>
+              <input
+                name="telefono"
+                className="form-control bg-dark text-white border-secondary"
+                value={formData.telefono}
+                onChange={handleChange}
+              />
+            </div>
 
-        <label>Rol:
-          <select name="rolId" value={formData.rolId} onChange={handleChange} required>
-            <option value={1}>ADMIN</option>
-            <option value={2}>STAFF</option>
-          </select>
-        </label>
+            <div className="mb-3">
+              <label className="form-label text-white">Cargo</label>
+              <input
+                name="cargo"
+                className="form-control bg-dark text-white border-secondary"
+                value={formData.cargo}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <div className="edit-buttons">
-          <button type="submit" disabled={loading}>
-            {loading
-              ? selectedUser
-                ? "Guardando..."
-                : "Creando..."
-              : selectedUser
-              ? "Guardar"
-              : "Crear"}
-          </button>
-          {selectedUser && (
-            <button
-              type="button"
-              className="btn-cancel"
-              onClick={() => setSelectedUser(null)}
+            <div className="mb-3">
+              <label className="form-label text-white">Rol</label>
+              <select
+                name="rolId"
+                className="form-select bg-dark text-white border-secondary"
+                value={formData.rolId}
+                onChange={handleChange}
+                required
+              >
+                <option value={1}>ADMIN</option>
+                <option value={2}>STAFF</option>
+              </select>
+            </div>
+
+            <div className="d-flex gap-2">
+              <button
+                type="submit"
+                className="btn btn-danger flex-grow-1"
+                disabled={loading}
+              >
+                {loading
+                  ? selectedUser
+                    ? "Guardando..."
+                    : "Creando..."
+                  : selectedUser
+                  ? "Guardar"
+                  : "Crear"}
+              </button>
+
+              {selectedUser && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setSelectedUser(null)}
+                >
+                  Cancelar
+                </button>
+              )}
+            </div>
+          </form>
+
+          {message && (
+            <div
+              className={`alert mt-3 ${
+                message.includes("Error") ? "alert-danger" : "alert-success"
+              }`}
             >
-              Cancelar
-            </button>
+              {message}
+            </div>
           )}
         </div>
-      </form>
-
-      {message && (
-        <p className={`text-message ${message.startsWith("❌") ? "error" : ""}`}>
-          {message}
-        </p>
-      )}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-/* 🌌 Fondo tipo glass */
+/* 🌌 NAVBAR GLASS PRINCIPAL */
 .navbar-custom {
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
@@ -9,23 +9,23 @@
   top: 0;
   z-index: 1000;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  font-family: "Poppins", sans-serif;
 }
 
-/* 🔹 Contenedor principal */
+/* Contenedor principal */
 .navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* 🔹 Lado izquierdo */
+/* Logo y lado izquierdo */
 .navbar-left {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-/* ✈️ Logo */
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: 700;
@@ -33,11 +33,11 @@
   text-decoration: none;
   transition: color 0.3s ease;
 }
+
 .navbar-logo:hover {
   color: #ff6666;
 }
 
-/* 🖼️ Imagen del logo */
 .navbar-logo-img {
   height: 45px;
   width: auto;
@@ -51,8 +51,7 @@
   filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.678));
 }
 
-
-/* 🔗 Links */
+/* Links Desktop */
 .navbar-links {
   display: flex;
   list-style: none;
@@ -84,18 +83,18 @@
   color: #ffee00;
   transform: translateY(-2px);
 }
+
 .navbar-links a:hover::after {
   width: 100%;
 }
 
-/* 🔹 Lado derecho */
+/* Lado derecho (buscador + logout) */
 .navbar-right {
   display: flex;
   align-items: center;
   gap: 1.2rem;
 }
 
-/* 🔍 Buscador */
 .navbar-search input {
   padding: 0.4rem 0.8rem;
   border-radius: 10px;
@@ -105,30 +104,16 @@
   outline: none;
   transition: background 0.3s ease;
 }
+
 .navbar-search input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
+
 .navbar-search input:focus {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* 🚪 Botón logout */
-.btn-logout {
-  background: linear-gradient(90deg, #ffee00, #ffee00);
-  border: none;
-  padding: 0.4rem 1rem;
-  border-radius: 10px;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-.btn-logout:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgb(255, 252, 65);
-}
-
-/* 🔘 Botón de cerrar sesión elegante */
+/* Botón logout elegante */
 .btn-logout {
   background: transparent;
   border: none;
@@ -139,7 +124,6 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.25s ease, color 0.25s ease;
-  margin-left: 10px;
 }
 
 .btn-logout:hover {
@@ -150,139 +134,102 @@
 .btn-logout:active {
   transform: scale(0.95);
 }
-/* 📱📱 RESPONSIVE — Tablets (≤1024px) */
-@media (max-width: 1024px) {
-  .navbar-custom {
-    padding: 0.6rem 1.3rem;
-  }
 
-  .navbar-links {
-    gap: 1rem;
-  }
-
-  .navbar-logo-img {
-    height: 40px;
-  }
-
-  .navbar-search input {
-    width: 120px;
-  }
+/* BURGER ICONO */
+.navbar-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+}
+.navbar-burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #fff;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+.navbar-burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.navbar-burger.open span:nth-child(2) {
+  opacity: 0;
+}
+.navbar-burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* 📱 Responsive — Móviles medianos (≤768px) */
+/* MENÚ MÓVIL PROFESIONAL */
+.navbar-mobile-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(12px) saturate(180%);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  overflow-y: auto;
+  max-height: 80vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(-20px);
+}
+
+.navbar-mobile-menu.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.navbar-mobile-menu a,
+.navbar-mobile-menu button {
+  width: 90%;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.06);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-mobile-menu a:hover,
+.navbar-mobile-menu button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffee00;
+  transform: translateX(5px);
+}
+
+.navbar-mobile-search input {
+  width: 90%;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  outline: none;
+  margin-bottom: 0.5rem;
+}
+
+/* RESPONSIVE MÓVIL */
 @media (max-width: 768px) {
-
-  /* Convertimos el navbar a diseño tipo app móvil */
-  .navbar-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    padding-bottom: 0.5rem;
-  }
-
-  /* Logo */
-  .navbar-left {
-    width: 100%;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  .navbar-logo-img {
-    height: 38px;
-  }
-
-  .navbar-links {
-    gap: 1rem;
-  }
-
-  .navbar-links a {
-    font-size: 0.95rem;
-  }
-
-  /* Buscador más pequeño */
-  .navbar-search input {
-    width: 150px;
-    padding: 0.35rem 0.7rem;
-  }
-
-  /* Botón logout más compacto */
+  .navbar-links,
+  .navbar-search,
   .btn-logout {
-    font-size: 1.1rem;
+    display: none;
   }
-}
-
-/* 📱📱 Móviles pequeños (≤480px) */
-@media (max-width: 480px) {
-
-  .navbar-custom {
-    padding: 0.5rem 1rem;
-  }
-
-  /* Layout de columnas, centrado */
-  .navbar-container {
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-
-  .navbar-left {
-    gap: 0.7rem;
-  }
-
-  .navbar-logo-img {
-    height: 35px;
-  }
-
-  /* LINKS → convertirlos en botones tipo pill */
-  .navbar-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.6rem;
-  }
-
-  .navbar-links a {
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    border-radius: 8px;
-    backdrop-filter: blur(6px);
-    background: rgba(255, 255, 255, 0.06);
-  }
-
-  .navbar-links a::after {
-    display: none; /* sin línea animada en móvil para no sobrecargar */
-  }
-
-  /* Buscador más pequeño */
-  .navbar-search input {
-    width: 120px;
-    font-size: 0.85rem;
-    padding: 0.3rem 0.6rem;
-  }
-
-  /* Botón logout más accesible */
-  .btn-logout {
-    font-size: 1.2rem;
-    padding: 0.3rem;
-    margin-left: 0;
-  }
-}
-
-/* 📱📱📱 Ultra Small Devices (≤360px) */
-@media (max-width: 360px) {
-
-  .navbar-links {
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .navbar-logo-img {
-    height: 32px;
-  }
-
-  .navbar-search input {
-    width: 100%;
-  }
-
-  .btn-logout {
-    font-size: 1.1rem;
+  .navbar-burger {
+    display: flex;
   }
 }

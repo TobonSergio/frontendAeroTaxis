@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Navbar from "../components/Navbar.jsx";
+import Mensaje from "../components/AsignacionChoferAndUnidad/Mensaje.jsx";
+import SeleccionList from "../components/AsignacionChoferAndUnidad/SeleccionList.jsx";
 import asignacionService from "../services/asignacionService";
-import reservaArchivoService from "../services/reservaArchivoService"; // 🧾 Importamos tu servicio existente
-import Navbar from "../components/Sidebar.jsx";
-import "../styles/styleAsignarUnidadAndChofer.css";
+import reservaArchivoService from "../services/reservaArchivoService";
 
 function AsignacionChoferAndUnidad() {
   const { idReserva } = useParams();
-  const navigate = useNavigate();
 
+  // Estados principales
   const [choferes, setChoferes] = useState([]);
   const [unidades, setUnidades] = useState([]);
   const [choferSeleccionado, setChoferSeleccionado] = useState(null);
   const [unidadSeleccionada, setUnidadSeleccionada] = useState(null);
   const [mensaje, setMensaje] = useState("");
   const [esError, setEsError] = useState(false);
-  const [mostrarBotonPdf, setMostrarBotonPdf] = useState(false); // 🧾 Nuevo estado
+  const [mostrarBotonPdf, setMostrarBotonPdf] = useState(false);
 
+  // Cargar choferes y unidades disponibles
   useEffect(() => {
     const cargarDatos = async () => {
       try {
@@ -27,155 +29,92 @@ function AsignacionChoferAndUnidad() {
         setChoferes(dataChoferes);
         setUnidades(dataUnidades);
       } catch (error) {
-        console.error("❌ Error al cargar datos:", error);
-        setMensaje("Error al cargar choferes o unidades.");
-        setEsError(true);
+        console.error(error);
+        mostrarMensaje("Error al cargar choferes o unidades.", true);
       }
     };
     cargarDatos();
   }, []);
 
-  const seleccionarChofer = (chofer) => {
-    setChoferSeleccionado(chofer);
-    setMensaje(`✅ Chofer ${chofer.nombre} ${chofer.apellido} seleccionado.`);
-    setEsError(false);
+  // Función para mostrar mensajes
+  const mostrarMensaje = (msg, error = false) => {
+    setMensaje(msg);
+    setEsError(error);
   };
 
-  const seleccionarUnidad = (unidad) => {
-    setUnidadSeleccionada(unidad);
-    setMensaje(`✅ Unidad ${unidad.placa} seleccionada.`);
-    setEsError(false);
-  };
-
+  // Crear la asignación
   const crearAsignacion = async () => {
     if (!choferSeleccionado || !unidadSeleccionada) {
-      setMensaje("⚠️ Debes seleccionar un chofer y una unidad antes de continuar.");
-      setEsError(true);
+      mostrarMensaje("⚠️ Debes seleccionar un chofer y una unidad.", true);
       return;
     }
 
     try {
       await asignacionService.crearAsignacion({
-        idReserva: parseInt(idReserva),
-        idChofer: parseInt(choferSeleccionado.idChofer),
-        idUnidad: parseInt(unidadSeleccionada.idUnidad),
+        idReserva: Number(idReserva),
+        idChofer: Number(choferSeleccionado.idChofer),
+        idUnidad: Number(unidadSeleccionada.idUnidad),
       });
-
-      setMensaje("✅ Asignación creada exitosamente.");
-      setEsError(false);
-      setMostrarBotonPdf(true); // 🧾 Mostramos el botón de descarga
-
+      mostrarMensaje("✅ Asignación creada exitosamente.", false);
+      setMostrarBotonPdf(true);
     } catch (error) {
-      console.error("❌ Error al crear la asignación:", error);
-      setMensaje("❌ Error al crear la asignación.");
-      setEsError(true);
+      console.error(error);
+      mostrarMensaje("❌ Error al crear la asignación.", true);
     }
   };
 
-  // 🧾 Descargar PDF usando el servicio que ya tienes
+  // Descargar comprobante PDF
   const descargarPDF = async () => {
     try {
       await reservaArchivoService.descargarPdf(idReserva);
     } catch (error) {
-      setMensaje("⚠️ Error al descargar el PDF.");
-      setEsError(true);
+      mostrarMensaje("⚠️ Error al descargar el PDF.", true);
     }
   };
 
-  const getMensajeClass = () => {
-    if (!mensaje) return "";
-    return esError ? "asig-mensaje asig-error" : "asig-mensaje asig-success";
-  };
-
   return (
-    <div className="page-layout">
+    <div className="dashboard">
       <Navbar />
 
-      <main className="asig-container">
-        <h2 className="asig-titulo">
+      <main className="container py-4">
+        <h2 className="text-white mb-4">
           Asignar Chofer y Unidad a la Reserva #{idReserva}
         </h2>
 
-        {mensaje && <p className={getMensajeClass()}>{mensaje}</p>}
+        <Mensaje mensaje={mensaje} esError={esError} />
 
-        <div className="asig-grid">
-          {/* Choferes */}
-          <div className="asig-seccion">
-            <h3 className="asig-subtitulo">Choferes Disponibles</h3>
-            <div className="asig-cards">
-              {choferes.length === 0 ? (
-                <p className="asig-mensaje">No hay choferes disponibles.</p>
-              ) : (
-                choferes.map((chofer) => (
-                  <div
-                    key={chofer.idChofer}
-                    className={`asig-card ${
-                      choferSeleccionado?.idChofer === chofer.idChofer
-                        ? "asig-seleccionado"
-                        : ""
-                    }`}
-                  >
-                    <p><strong>Nombre:</strong> {chofer.nombre} {chofer.apellido}</p>
-                    <p><strong>Correo:</strong> {chofer.correo}</p>
-                    <p><strong>Teléfono:</strong> {chofer.telefono}</p>
-                    <p><strong>Licencia:</strong> {chofer.licenciaConduccion}</p>
-                    <button
-                      className="asig-btn"
-                      onClick={() => seleccionarChofer(chofer)}
-                    >
-                      Seleccionar Chofer
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
+        <div className="row g-4">
+          {/* Lista de Choferes */}
+          <div className="col-12 col-lg-6">
+            <SeleccionList
+              titulo="Choferes Disponibles"
+              items={choferes}
+              seleccionado={choferSeleccionado}
+              onSeleccionar={setChoferSeleccionado}
+              tipo="chofer"
+            />
           </div>
 
-          {/* Unidades */}
-          <div className="asig-seccion">
-            <h3 className="asig-subtitulo">Unidades Disponibles</h3>
-            <div className="asig-cards">
-              {unidades.length === 0 ? (
-                <p className="asig-mensaje">No hay unidades disponibles.</p>
-              ) : (
-                unidades.map((unidad) => (
-                  <div
-                    key={unidad.idUnidad}
-                    className={`asig-card ${
-                      unidadSeleccionada?.idUnidad === unidad.idUnidad
-                        ? "asig-seleccionado"
-                        : ""
-                    }`}
-                  >
-                    {unidad.fotografia ? (
-                      <img src={unidad.fotografia} alt="Unidad" className="asig-img" />
-                    ) : (
-                      <div className="asig-placeholder">Sin imagen</div>
-                    )}
-                    <p><strong>Placa:</strong> {unidad.placa}</p>
-                    <p><strong>Serie:</strong> {unidad.serie}</p>
-                    <p><strong>Tipo:</strong> {unidad.tipo}</p>
-                    <button
-                      className="asig-btn"
-                      onClick={() => seleccionarUnidad(unidad)}
-                    >
-                      Seleccionar Unidad
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
+          {/* Lista de Unidades */}
+          <div className="col-12 col-lg-6">
+            <SeleccionList
+              titulo="Unidades Disponibles"
+              items={unidades}
+              seleccionado={unidadSeleccionada}
+              onSeleccionar={setUnidadSeleccionada}
+              tipo="unidad"
+            />
           </div>
         </div>
 
-        <div className="asig-final">
-          <button className="asig-btn-final" onClick={crearAsignacion}>
+        {/* Botones de acción */}
+        <div className="mt-4 d-flex flex-column flex-md-row gap-3">
+          <button className="btn btn-success flex-grow-1" onClick={crearAsignacion}>
             Crear Asignación
           </button>
 
-          {/* 🧾 Mostrar el botón de descarga solo después de crear la asignación */}
           {mostrarBotonPdf && (
-            <button className="asig-btn-final descargar" onClick={descargarPDF}>
+            <button className="btn btn-primary flex-grow-1" onClick={descargarPDF}>
               Descargar Comprobante PDF
             </button>
           )}

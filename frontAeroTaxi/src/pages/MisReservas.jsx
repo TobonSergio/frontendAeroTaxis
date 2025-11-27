@@ -1,7 +1,7 @@
 // src/pages/MisReservas.jsx
 import { useEffect, useState } from "react";
 import clienteService from "../services/clienteService.js";
-import Navbar from "../components/Sidebar.jsx";
+import Navbar from "../components/Navbar.jsx";
 import ManageReservasCliente from "../components/ManageReservasCliente.jsx";
 import "../styles/styleMisReservasCliente.css";
 

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import rutaService from "../services/rutaService.js";
 import "../styles/stylesRutas.css";
-import ActionButtons from "../components/ActionButtons.jsx";
+import RutaForm from "./rutas/RutaForm.jsx";
+import RutasTable from "./rutas/RutasTable.jsx";
 
 function ManageRutas() {
   const [rutas, setRutas] = useState([]);
@@ -29,11 +30,6 @@ function ManageRutas() {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -50,10 +46,10 @@ function ManageRutas() {
 
       setFormData({ idRuta: null, inicio: "", fin: "", precio: "" });
       setIsEditing(false);
-      await cargarRutas();
-    } catch (error) {
-      console.error("❌ Error al guardar ruta:", error);
-      setMessage("Error al guardar la ruta. Revisa los datos o permisos.");
+      cargarRutas();
+    } catch (e) {
+      console.error(e);
+      setMessage("Error al guardar la ruta");
     } finally {
       setLoading(false);
     }
@@ -62,18 +58,18 @@ function ManageRutas() {
   const handleEdit = (ruta) => {
     setFormData(ruta);
     setIsEditing(true);
-    setMessage("");
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de eliminar esta ruta?")) return;
+    if (!window.confirm("¿Eliminar esta ruta?")) return;
+
     try {
       await rutaService.remove(id);
-      setMessage("🗑️ Ruta eliminada correctamente");
-      await cargarRutas();
-    } catch (error) {
-      console.error("❌ Error al eliminar ruta:", error);
-      setMessage("Error al eliminar la ruta.");
+      setMessage("🗑️ Ruta eliminada");
+      cargarRutas();
+    } catch (e) {
+      console.error(e);
+      setMessage("Error al eliminar.");
     }
   };
 
@@ -81,98 +77,18 @@ function ManageRutas() {
     <div className="rutas-container">
       <h2 className="rutas-title">Gestión de Rutas</h2>
 
-      {/* Formulario */}
-      <form onSubmit={handleSubmit} className="rutas-form">
-        <div className="form-group">
-          <label>Inicio:</label>
-          <input
-            name="inicio"
-            value={formData.inicio}
-            onChange={handleChange}
-            placeholder="Ej: Medellín"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Fin:</label>
-          <input
-            name="fin"
-            value={formData.fin}
-            onChange={handleChange}
-            placeholder="Ej: Bogotá"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Precio:</label>
-          <input
-            type="number"
-            name="precio"
-            value={formData.precio}
-            onChange={handleChange}
-            placeholder="Ej: 120000"
-            required
-          />
-        </div>
-
-        <div className="edit-buttons">
-          <button type="submit" disabled={loading}>
-            {loading
-              ? "Procesando..."
-              : isEditing
-              ? "Actualizar"
-              : "Crear"}
-          </button>
-
-          {isEditing && (
-            <button
-              type="button"
-              onClick={() => {
-                setIsEditing(false);
-                setFormData({ idRuta: null, inicio: "", fin: "", precio: "" });
-              }}
-            >
-              Cancelar
-            </button>
-          )}
-        </div>
-      </form>
+      <RutaForm
+        formData={formData}
+        setFormData={setFormData}
+        loading={loading}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        handleSubmit={handleSubmit}
+      />
 
       {message && <p className="text-message">{message}</p>}
 
-      {/* Tabla de rutas */}
-      <div className="rutas-table-section">
-        <h3>Listado de Rutas</h3>
-        <table className="rutas-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Inicio</th>
-              <th>Fin</th>
-              <th>Precio</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rutas.map((ruta) => (
-              <tr key={ruta.idRuta}>
-                <td>{ruta.idRuta}</td>
-                <td>{ruta.inicio}</td>
-                <td>{ruta.fin}</td>
-                <td>${ruta.precio}</td>
-                <td>
-                  <ActionButtons
-                    onEdit={() => handleEdit(ruta)}
-                    onDelete={() => handleDelete(s.idRuta)}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <RutasTable rutas={rutas} onEdit={handleEdit} onDelete={handleDelete} />
     </div>
   );
 }

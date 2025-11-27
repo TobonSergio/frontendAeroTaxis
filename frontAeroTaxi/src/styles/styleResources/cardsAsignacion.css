@@ -1,0 +1,93 @@
+/* Card general */
+.custom-card {
+  background-color: #252525; /* un color oscuro más moderno */
+  color: #fff;
+  border-radius: 16px; /* más redondeado */
+  border: 2px solid transparent;
+  overflow: hidden;
+  max-height: 350px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* sombra suave */
+}
+
+/* Hover más elegante */
+.custom-card:hover {
+  transform: translateY(-6px);
+  border-color: #f39c12; /* borde dorado al pasar el mouse */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Card seleccionada */
+.custom-card.selected {
+  border-color: #e74c3c; /* rojo brillante */
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+}
+
+/* Imagen */
+.custom-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #444;
+  transition: transform 0.3s ease;
+}
+
+.custom-card img:hover {
+  transform: scale(1.05); /* efecto zoom sutil al pasar el mouse */
+}
+
+/* Contenido */
+.custom-card .card-body {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Titulos */
+.custom-card .card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #f1c40f; /* dorado suave para destacar */
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+/* Textos */
+.custom-card .card-text {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  color: #ecf0f1;
+}
+/* Botón rojo de selección */
+.custom-card .btn-select {
+  margin-top: auto;
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  background-color: #e74c3c; /* rojo principal */
+  color: #fff;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.custom-card .btn-select:hover {
+  background-color: #c0392b; /* rojo más oscuro al pasar el mouse */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Cards más anchas en escritorio */
+@media (min-width: 992px) { /* lg y superior */
+  .custom-card {
+    max-width: 350px; /* un poco más ancho */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

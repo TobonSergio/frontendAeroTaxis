@@ -3,7 +3,6 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
   background-attachment: fixed; /* ✅ Hace que el gradiente sea continuo */
   background-repeat: no-repeat;
   background-size: cover;
@@ -20,7 +19,6 @@ html, body, #root {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
 }
 
 

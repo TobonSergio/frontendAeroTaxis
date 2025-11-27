@@ -1,9 +1,9 @@
-import Navbar from "../components/Sidebar.jsx";
+import Navbar from "../components/Navbar.jsx";
 import AsignarUnidadChofer from "../components/AsignarUnidadChofer";
 
 function AsignarUnidadAndChofer() {
   return (
-    <div className="page-layout">
+    <div className="dashboard">
       <Navbar />
 
       <main className="main-content">

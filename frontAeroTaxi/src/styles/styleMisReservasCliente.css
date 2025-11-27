@@ -118,6 +118,24 @@ html, body {
   resize: none;
 }
 
+/* Opciones del select */
+.reserva-form select option {
+  background-color: rgba(20, 20, 20, 0.9); /* fondo oscuro tipo glass */
+  color: #fff; /* texto blanco */
+}
+
+/* Alternativa para Webkit (Chrome, Safari) */
+.reserva-form select::-webkit-scrollbar {
+  width: 8px;
+}
+.reserva-form select::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+.reserva-form select::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .reserva-form input:focus,
 .reserva-form select:focus,
 .reserva-form textarea:focus {

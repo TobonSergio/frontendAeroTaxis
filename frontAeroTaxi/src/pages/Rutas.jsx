@@ -1,9 +1,9 @@
-import Navbar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 import ManageRutas from "../components/ManageRutas";
 
 function Rutas() {
   return (
-    <div className="page-layout">
+    <div className="dashboard">
       <Navbar /> {/* Navbar arriba */}
 
       <main className="">

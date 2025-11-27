@@ -1,20 +1,12 @@
-/* 🎨 Estilo general del contenedor */
+/* 🎨 Contenedor principal */
 .asig-container {
-  min-height: 100%; /* ✅ En lugar de 100vh */
+  min-height: 100%;
   width: 100%;
   background: linear-gradient(135deg, #000000, #363636, #3f3f3f);
-  background-attachment: fixed; /* ✅ Fondo continuo */
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: #fff;
   padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  color: #fff;
   font-family: "Poppins", sans-serif;
-  box-sizing: border-box; /* Previene saltos de scroll */
 }
-
 
 /* 🏷️ Título principal */
 .asig-titulo {
@@ -22,168 +14,18 @@
   font-weight: 700;
   margin-bottom: 30px;
   text-align: center;
-  color: #f1f1f1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* 💬 Mensaje de éxito o error */
+/* 💬 Mensajes de éxito o error */
 .asig-mensaje {
   text-align: center;
-  font-size: 1rem;
   margin-bottom: 20px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 700px;
-  font-weight: 500;
 }
 
-.asig-success {
-  background-color: rgba(46, 204, 113, 0.15);
-  border: 1px solid #2ecc71;
-  color: #2ecc71;
-}
 
-.asig-error {
-  background-color: rgba(231, 76, 60, 0.15);
-  border: 1px solid #e74c3c;
-  color: #e74c3c;
-}
-
-/* 📦 Diseño de las secciones */
-.asig-grid {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 1300px;
-}
-
-.asig-seccion {
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 25px;
-  flex: 1 1 500px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.asig-seccion:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
-}
-
-.asig-subtitulo {
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #ff0000;
-}
-
-/* 🧩 Tarjetas de choferes y unidades */
-.asig-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.asig-card {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-.asig-card:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-4px);
-}
-
-.asig-seleccionado {
-  border-color: #ff0000;
-  box-shadow: 0 0 15px #ff000050;
-}
-
-/* 🖼️ Imagen o placeholder de unidad */
-.asig-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-
-.asig-placeholder {
-  width: 100%;
-  height: 160px;
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-style: italic;
-  margin-bottom: 10px;
-}
-
-/* 🧭 Botones generales */
-.asig-btn {
-  margin-top: 10px;
-  padding: 10px 15px;
-  background: linear-gradient(135deg, #ff0000, #a80000);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.asig-btn:hover {
-  background: linear-gradient(135deg, #ff0000, #a80000);
-  transform: scale(1.05);
-}
-
-/* ✅ Botón final */
-.asig-final {
-  margin-top: 40px;
-}
-
-.asig-btn-final {
-  padding: 15px 40px;
-  background: linear-gradient(135deg, #cc2e2e, #ae2727);
-  border: none;
-  color: #fff;
-  font-size: 1.2rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(204, 46, 46, 0.3);
-}
-
-.asig-btn-final:hover {
-  background: linear-gradient(135deg, #ae2727, #cc2e2e);
-  transform: scale(1.05);
-}
-
-/* 📱 Responsive */
+/* 📱 Responsive adicional */
 @media (max-width: 768px) {
   .asig-titulo {
     font-size: 1.6rem;
-  }
-
-  .asig-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .asig-seccion {
-    width: 90%;
   }
 }

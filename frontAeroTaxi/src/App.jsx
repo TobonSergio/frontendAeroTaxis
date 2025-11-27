@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Profile from "./pages/Profile.jsx";
 import Users from "./pages/Users.jsx";
 import Reservations from "./pages/Reservations.jsx";
-import Unidades from "./pages/Unidades.jsx";
+import Unidades from "./pages/Unidades.jsx";    
 import OAuthCallback from "./pages/OAuthCallback"; 
 import Verify from "./pages/Verify"; 
 import ClienteProfile from "./pages/ClienteProfile.jsx";

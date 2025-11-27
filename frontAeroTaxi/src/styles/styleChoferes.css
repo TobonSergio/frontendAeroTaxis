@@ -12,6 +12,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 /* HEADER */
@@ -191,8 +192,7 @@ html, body {
 }
 
 .actions button:not(.delete):not(.edit) {
-  background: rgba(255, 238, 0, 0.726);
-  color: #ff0000;
+  color: #ffffff;
 }
 
 /* 🌟 SWITCH PERSONALIZADO (BILINGÜE) */
@@ -257,14 +257,115 @@ html, body {
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .form-section, .table-section {
-    padding: 20px;
+/* 📱📱 Responsive — Tablets */
+@media (max-width: 1024px) {
+  .table-section {
+    max-width: 95%;
+    padding: 25px;
   }
 
-  .table-section th, .table-section td {
+  .table-section table th,
+  .table-section table td {
     font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+/* 📱 Móviles medianos */
+@media (max-width: 768px) {
+  /* Arreglo REAL del scroll horizontal */
+.table-section table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important; /* evita que crezca */
+    overflow-x: hidden !important;
+    display: block; /* necesario para convertir a cards correctamente */
+    box-sizing: border-box;
+}
+
+.table-section {
+    overflow-x: hidden !important; /* evita scroll del contenedor */
+}
+
+  /* Contenedor */
+  .table-section {
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .table-section h2 {
+    font-size: 1.4rem;
+  }
+
+  /* Tabla compacta */
+  .table-section table th,
+  .table-section table td {
+    font-size: 0.85rem;
+    padding: 8px 6px;
+  }
+  
+}
+/* 📱 Móviles pequeños (≤ 480px) — convertir tabla en tarjetas */
+@media (max-width: 480px) {
+
+  /* Ocultar encabezados */
+  .table-section table thead {
+    display: none;
+  }
+
+  /* Cada fila como tarjeta */
+  .table-section table tr {
+    display: block;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    width: 100%;   /* 👈 EVITA SOBRERECORTE */
+    box-sizing: border-box;
+  }
+
+  /* Cada fila interna */
+  .table-section table td {
+    display: flex;
+    align-items: center;         /* 👈 Alineado limpio */
+    gap: 6px;                    /* 👈 Mucho más compacto */
+    padding: 6px 1px;
+    font-size: 0.83rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    width: 100%;
+    overflow-wrap: break-word;   /* 👈 evita textos largos cortados */
+    white-space: normal;         /* 👈 permite saltos de línea */
+  }
+
+  .table-section table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Etiquetas compactas */
+  .table-section table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #ff0000;
+    flex: 0 0 90px;             /* 👈 etiqueta fija sin ocupar demasiado */
+    text-align: left;
+  }
+
+  /* El valor */
+  .table-section table td span,
+  .table-section table td div {
+    flex: 1;                     /* 👈 el valor usa TODO el espacio restante */
+  }
+
+  /* Botones */
+  .actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  .actions button {
+    padding: 6px 8px;
+    font-size: 0.75rem;
   }
 }

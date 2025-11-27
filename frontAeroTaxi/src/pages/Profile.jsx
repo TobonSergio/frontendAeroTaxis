@@ -1,5 +1,5 @@
 import "../styles/styleProfile.css";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Navbar.jsx";
 import { FaUserCircle, FaEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import staffService from "../services/staffService.js";

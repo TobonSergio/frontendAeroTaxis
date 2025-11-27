@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import adminStaffService from "../services/adminUserService.js";
-import "../styles/styleUsers.css";
-import ActionButtons from "../components/ActionButtons.jsx";
-
 
 function AdminUserList({ setSelectedUser }) {
   const [staffList, setStaffList] = useState([]);
@@ -24,7 +21,6 @@ function AdminUserList({ setSelectedUser }) {
     }
   };
 
-  // 🔹 Aquí estaba el problema: faltaba definir handleEdit correctamente
   const handleEdit = (staff) => {
     setSelectedUser({
       idStaff: staff.idStaff,
@@ -49,44 +45,82 @@ function AdminUserList({ setSelectedUser }) {
     }
   };
 
-  if (loading) return <p className="loading-text">Cargando usuarios...</p>;
+  if (loading) {
+    return (
+      <div className="text-center mt-4">
+        <div className="spinner-border text-primary"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="users-container">
-      <h2 className="users-title">Usuarios del Sistema</h2>
+    <section className="mt-4">
+      <h2 className="mb-3">Usuarios del Sistema</h2>
 
-      <table className="users-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Cargo</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {staffList.map((s) => (
-            <tr key={s.idStaff}>
-              <td>{s.nombre}</td>
-              <td>{s.apellido}</td>
-              <td>{s.correo}</td>
-              <td>{s.telefono || "-"}</td>
-              <td>{s.cargo || "-"}</td>
-              <td>{s.rolNombre}</td>
-              <td>
-                <ActionButtons
-                  onEdit={() => handleEdit(s)}
-                  onDelete={() => handleDelete(s.idStaff)}
-                />
-              </td>
+      {/* Contenedor responsive */}
+      <div className="table-responsive shadow-sm rounded">
+        <table className="table table-dark table-striped table-hover table-bordered align-middle mb-0">
+          <thead className="table-primary text-dark">
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Cargo</th>
+              <th>Rol</th>
+              <th className="text-center">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+
+          <tbody>
+            {staffList.length > 0 ? (
+              staffList.map((s) => (
+                <tr key={s.idStaff}>
+                  <td>{s.nombre}</td>
+                  <td>{s.apellido}</td>
+                  <td>{s.correo}</td>
+                  <td>{s.telefono || "-"}</td>
+                  <td>{s.cargo || "-"}</td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        s.rolNombre === "ADMIN" ? "bg-danger" : "bg-info"
+                      }`}
+                    >
+                      {s.rolNombre}
+                    </span>
+                  </td>
+
+                  <td className="text-center">
+                    <div className="btn-group">
+                      <button
+                        onClick={() => handleEdit(s)}
+                        className="btn btn-sm btn-warning"
+                      >
+                        Editar
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(s.idStaff)}
+                        className="btn btn-sm btn-danger"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center py-3">
+                  No hay usuarios registrados.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }
 

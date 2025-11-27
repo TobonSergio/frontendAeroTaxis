@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import unidadService from "../services/unidadServices";
+
+import UnidadForm from "../components/unidades/UnidadForm.jsx";
+import UnidadTable from "../components/unidades/UnidadTable.jsx";
 import "../styles/styleUnidades.css";
-import ActionButtons from "../components/ActionButtons.jsx";
-import StatusTag from "../components/StatusTag.jsx";
 
 function ManageUnidades() {
   const [unidades, setUnidades] = useState([]);
@@ -12,7 +13,9 @@ function ManageUnidades() {
     serie: "",
     fotografia: "",
     estado: "DISPONIBLE",
+    tipoTaxi: "NORMAL",
   });
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +29,6 @@ function ManageUnidades() {
       const data = await unidadService.getAll();
       setUnidades(data);
     } catch (error) {
-      console.error("❌ Error al cargar unidades:", error);
       setMessage("Error al cargar las unidades");
     }
   };
@@ -44,24 +46,16 @@ function ManageUnidades() {
     try {
       if (isEditing) {
         await unidadService.update(formData.idUnidad, formData);
-        setMessage("✅ Unidad actualizada correctamente");
+        setMessage("Unidad actualizada correctamente");
       } else {
         await unidadService.create(formData);
-        setMessage("✅ Unidad creada correctamente");
+        setMessage("Unidad creada correctamente");
       }
 
-      setFormData({
-        idUnidad: null,
-        placa: "",
-        serie: "",
-        fotografia: "",
-        estado: "DISPONIBLE",
-      });
-      setIsEditing(false);
-      await cargarUnidades();
+      resetForm();
+      cargarUnidades();
     } catch (error) {
-      console.error("❌ Error al guardar unidad:", error);
-      setMessage("Error al guardar la unidad. Revisa los datos o permisos.");
+      setMessage("Error al guardar la unidad");
     } finally {
       setLoading(false);
     }
@@ -75,154 +69,40 @@ function ManageUnidades() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar esta unidad?")) return;
-    try {
-      await unidadService.remove(id);
-      setMessage("🗑️ Unidad eliminada correctamente");
-      await cargarUnidades();
-    } catch (error) {
-      console.error("❌ Error al eliminar unidad:", error);
-      setMessage("Error al eliminar la unidad.");
-    }
+
+    await unidadService.remove(id);
+    cargarUnidades();
+  };
+
+  const resetForm = () => {
+    setFormData({
+      idUnidad: null,
+      placa: "",
+      serie: "",
+      fotografia: "",
+      estado: "DISPONIBLE",
+      tipoTaxi: "NORMAL",
+    });
+    setIsEditing(false);
   };
 
   return (
     <div className="unidades-container">
+      <UnidadForm
+        formData={formData}
+        isEditing={isEditing}
+        loading={loading}
+        message={message}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        onCancel={resetForm}
+      />
 
-      {/* Formulario */}
-      <section className="form-section">
-        <h2>{isEditing ? "✏️ Editar Unidad" : "Nueva Unidad"}</h2>
-
-        <form onSubmit={handleSubmit} className="unidades-form">
-          <div className="form-grid">
-            <label>
-              Placa:
-              <input
-                name="placa"
-                value={formData.placa}
-                onChange={handleChange}
-                required
-              />
-            </label>
-
-            <label>
-              Serie:
-              <input
-                name="serie"
-                value={formData.serie}
-                onChange={handleChange}
-                required
-              />
-            </label>
-
-            <label>
-              Fotografía (URL):
-              <input
-                name="fotografia"
-                value={formData.fotografia}
-                onChange={handleChange}
-              />
-            </label>
-
-            <label>
-              Estado:
-              <select
-                name="estado"
-                value={formData.estado}
-                onChange={handleChange}
-                required
-              >
-                <option value="DISPONIBLE">DISPONIBLE</option>
-                <option value="OCUPADA">OCUPADA</option>
-                <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-              </select>
-            </label>
-          </div>
-
-          <div className="form-buttons">
-            <button type="submit" disabled={loading}>
-              {loading
-                ? "Procesando..."
-                : isEditing
-                ? "Actualizar Unidad"
-                : "Crear Unidad"}
-            </button>
-
-            {isEditing && (
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={() => {
-                  setIsEditing(false);
-                  setFormData({
-                    idUnidad: null,
-                    placa: "",
-                    serie: "",
-                    fotografia: "",
-                    estado: "DISPONIBLE",
-                  });
-                }}
-              >
-                Cancelar
-              </button>
-            )}
-          </div>
-        </form>
-
-        {message && <p className="text-message">{message}</p>}
-      </section>
-
-      {/* Tabla */}
-      <section className="table-section">
-        <h2>📋 Listado de Unidades</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Placa</th>
-              <th>Serie</th>
-              <th>Fotografía</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {unidades.length > 0 ? (
-              unidades.map((unidad) => (
-                <tr key={unidad.idUnidad}>
-                  <td>{unidad.idUnidad}</td>
-                  <td>{unidad.placa}</td>
-                  <td>{unidad.serie}</td>
-                  <td>
-                    {unidad.fotografia ? (
-                      <img
-                        src={unidad.fotografia}
-                        alt="Foto unidad"
-                        width="60"
-                        height="40"
-                      />
-                    ) : (
-                      "Sin foto"
-                    )}
-                  </td>
-                  <td>
-                    <StatusTag estado={unidad.estado} />
-                  </td>
-                  <td>
-                    <ActionButtons
-                      onEdit={() => handleEdit(unidad)}
-                      onDelete={() => handleDelete(unidad.idUnidad)}
-                    />
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No hay unidades registradas.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </section>
+      <UnidadTable
+        unidades={unidades}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }
