@@ -42,7 +42,13 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav me-auto">
 
-            <Link className="nav-link" to="/dashboard">Inicio</Link>
+            <Link
+              className="nav-link"
+              to={user?.rolid === 3 ? "/dashboard/inicio-cliente" : "/dashboard"}
+            >
+              Inicio
+            </Link>
+
 
             {user.rolid === 3 && (
               <Link className="nav-link" to="/dashboard/reserva-cliente">
@@ -51,7 +57,7 @@ function Navbar() {
             )}
 
             {(user.rolid === 1 || user.rolid === 2) && (
-              <Link className="nav-link" to="/dashboard/reservas">
+              <Link className="nav-link" to="/dashboard/reserva">
                 Reservas
               </Link>
             )}

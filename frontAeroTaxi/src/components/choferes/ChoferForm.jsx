@@ -96,17 +96,6 @@ function ChoferForm({
           {/* Campos solo si NO está editando */}
           {!isEditing && (
             <>
-              {/* Usuario */}
-              <div className="col-12 col-md-6">
-                <label className="form-label">Usuario</label>
-                <input
-                  className="form-control"
-                  name="username"
-                  value={formData.username}
-                  onChange={onChange}
-                  required
-                />
-              </div>
 
               {/* Contraseña */}
               <div className="col-12 col-md-6">

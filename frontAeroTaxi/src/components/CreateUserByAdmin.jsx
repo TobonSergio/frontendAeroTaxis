@@ -3,7 +3,6 @@ import adminStaffService from "../services/adminUserService.js";
 
 function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
   const [formData, setFormData] = useState({
-    username: "",
     password: "",
     nombre: "",
     apellido: "",
@@ -21,7 +20,6 @@ function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
       setFormData(selectedUser);
     } else {
       setFormData({
-        username: "",
         password: "",
         nombre: "",
         apellido: "",
@@ -71,28 +69,6 @@ function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
         <div className="card-body">
           <form onSubmit={handleSubmit}>
 
-            <div className="mb-3">
-              <label className="form-label text-white">Username</label>
-              <input
-                name="username"
-                className="form-control bg-dark text-white border-secondary"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label text-white">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="form-control bg-dark text-white border-secondary"
-                value={formData.password}
-                onChange={handleChange}
-                required={!selectedUser}
-              />
-            </div>
 
             <div className="row">
               <div className="col-md-6 mb-3">
@@ -137,6 +113,18 @@ function CreateUserByAdmin({ selectedUser, setSelectedUser }) {
                 className="form-control bg-dark text-white border-secondary"
                 value={formData.telefono}
                 onChange={handleChange}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label text-white">Password</label>
+              <input
+                type="password"
+                name="password"
+                className="form-control bg-dark text-white border-secondary"
+                value={formData.password}
+                onChange={handleChange}
+                required={!selectedUser}
               />
             </div>
 

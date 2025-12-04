@@ -13,4 +13,14 @@ const updateProfile = async (data) => {
   return response.data;
 };
 
-export default { getProfile, updateProfile };
+// 🔹 Obtener reservas creadas por este staff
+const getReservasByStaff = async (idStaff) => {
+  const response = await axiosInstance.get(`/api/reservas/staff/${idStaff}`);
+  return response.data;
+};
+
+export default {
+  getProfile,
+  updateProfile,
+  getReservasByStaff
+};

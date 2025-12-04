@@ -20,8 +20,8 @@ function Login() {
     console.log("🎯 [redirectByRole] Recibido rolId:", rolId, "| rolName:", rolName);
 
     if (rolName === "CLIENTE" || rolId === 3) {
-      console.log("➡️ Redirigiendo a /dashboard/reserva-cliente");
-      navigate("/dashboard/reserva-cliente");
+      console.log("➡️ Redirigiendo a /dashboard/inicio-cliente");
+      navigate("/dashboard/inicio-cliente");
     } else if (rolName === "CHOFER" || rolId === 4) {
       console.log("➡️ Redirigiendo a /dashboard/chofer/perfil");
       navigate("/dashboard/chofer/perfil");

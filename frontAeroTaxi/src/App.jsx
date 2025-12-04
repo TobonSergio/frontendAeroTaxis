@@ -20,6 +20,10 @@ import AsignacionChoferAndUnidad from "./pages/AsignacionChoferAndUnidad.jsx";
 import MisReservas from "./pages/MisReservas.jsx";
 // 👇 Importa la nueva page
 import ManageChoferes from "./pages/ManageChoferes.jsx";
+import HistorialClientePage from "./pages/HistorialCliente.jsx";
+import InicioCliente from "./pages/InicioCliente.jsx";
+import MisReservasStaff from "./pages/MisReservasStaff.jsx";
+
 
 
  // 👈 importa el componente
@@ -46,12 +50,15 @@ function App() {
           <Route path="chofer/perfil" element={<ChoferProfile />} /> {/* Perfil de chofer */}
           <Route path="rutas" element={<Rutas />} />
           <Route path="reserva-cliente" element ={<MisReservas/>} />
+          <Route path="reserva" element ={<MisReservasStaff/>} />
           <Route path="asignaciones" element ={<AsignarUnidadChofer/>} />
             {/* 🔹 Nueva ruta para asignar chofer y unidad */}
           <Route path="asignaciones/asignar/:idReserva" element={<AsignacionChoferAndUnidad />} />
           <Route path="cliente/reservas" element={<ReservaCliente />} />
           {/* 🚗 Nueva ruta para gestionar choferes (solo visible para rol 1 o 2) */}
           <Route path="choferes" element={<ManageChoferes />} />
+          <Route path="historial" element={<HistorialClientePage />} />
+          <Route path="inicio-cliente" element={<InicioCliente />} />
         </Route>
       </Routes>
     </>

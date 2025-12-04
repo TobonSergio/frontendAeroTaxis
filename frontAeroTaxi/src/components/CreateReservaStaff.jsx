@@ -1,15 +1,14 @@
-// src/components/CreateReservaCliente.jsx
-
+// src/components/CreateReservaStaff.jsx
 import { useState, useEffect } from "react";
 import reservaServiceCliente from "../services/reservaServiceCliente.js";
 import rutaService from "../services/rutaService.js";
 import { useAuth } from "../hooks/useAuth.js";
 
-function CreateReservaCliente() {
+function CreateReservaStaff({ onCreated }) {
   const { user } = useAuth();
   const [rutas, setRutas] = useState([]);
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
     idRuta: "",
@@ -19,16 +18,17 @@ function CreateReservaCliente() {
     comentarios: "",
   });
 
-  // Obtener rutas
+  // Cargar rutas
   useEffect(() => {
     const fetchRutas = async () => {
       try {
         const data = await rutaService.getAll();
         setRutas(data);
       } catch (error) {
-        console.error("Error al cargar rutas:", error);
+        console.error("❌ Error al cargar rutas:", error);
       }
     };
+
     fetchRutas();
   }, []);
 
@@ -39,20 +39,15 @@ function CreateReservaCliente() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!user) {
-      setMessage("Debes iniciar sesión para crear una reserva");
-      return;
-    }
-
     setLoading(true);
     setMessage("");
 
+    // obtener hora
     const fecha = formData.fechaReserva;
     const hora = fecha ? fecha.split("T")[1] + ":00" : null;
 
     const payload = {
-      idCliente: user.idPerfil,
+      idStaff: user.idPerfil, // 🔥 Staff creando su propia reserva
       idRuta: formData.idRuta,
       lugarRecogida: formData.lugarRecogida,
       destino: formData.destino,
@@ -63,7 +58,7 @@ function CreateReservaCliente() {
 
     try {
       await reservaServiceCliente.create(payload);
-      setMessage("Reserva creada correctamente");
+      setMessage("Reserva creada correctamente ✔");
 
       setFormData({
         idRuta: "",
@@ -72,13 +67,12 @@ function CreateReservaCliente() {
         fechaReserva: "",
         comentarios: "",
       });
+
+      if (onCreated) onCreated();
     } catch (error) {
-      console.error("Error al crear:", error);
+      console.error(error);
       setMessage(
-        `Error: ${
-          error.response?.data?.message ||
-          "Verifica los datos e inténtalo nuevamente"
-        }`
+        error.response?.data?.message || "Error al crear la reserva ❌"
       );
     } finally {
       setLoading(false);
@@ -88,26 +82,19 @@ function CreateReservaCliente() {
   return (
     <section className="container mt-4">
       <div className="row justify-content-center">
-        
-        {/* HACER LA CARD MÁS ANCHA → col-lg-8 */}
         <div className="col-lg-8 col-md-10">
 
           <div className="card shadow-lg bg-dark text-light border-secondary">
 
-            {/* Header */}
-            <div className="card-header bg-primary text-dark text-center fw-bold">
-              Crear Reserva
+            <div className="card-header bg-dark text-dark text-center fw-bold text-white">
+              Crear Reserva (Staff)
             </div>
 
             <div className="card-body">
-
-              {/* Mensaje */}
               {message && (
                 <div
                   className={`alert ${
-                    message.includes("Error")
-                      ? "alert-danger"
-                      : "alert-success"
+                    message.includes("Error") ? "alert-danger" : "alert-success"
                   }`}
                 >
                   {message}
@@ -115,11 +102,10 @@ function CreateReservaCliente() {
               )}
 
               <form onSubmit={handleSubmit}>
-
                 <div className="row">
 
                   {/* RUTA */}
-                  <div className="col-12 col-lg-6 mb-3">
+                  <div className="col-12 col-md-6 mb-3">
                     <label className="form-label">Ruta</label>
                     <select
                       name="idRuta"
@@ -137,9 +123,9 @@ function CreateReservaCliente() {
                     </select>
                   </div>
 
-                  {/* LUGAR DE RECOGIDA */}
-                  <div className="col-12 col-lg-6 mb-3">
-                    <label className="form-label">Lugar de recogida</label>
+                  {/* LUGAR */}
+                  <div className="col-12 col-md-6 mb-3">
+                    <label className="form-label">Lugar de Recogida</label>
                     <input
                       type="text"
                       name="lugarRecogida"
@@ -151,7 +137,7 @@ function CreateReservaCliente() {
                   </div>
 
                   {/* DESTINO */}
-                  <div className="col-12 col-lg-6 mb-3">
+                  <div className="col-12 col-md-6 mb-3">
                     <label className="form-label">Destino</label>
                     <input
                       type="text"
@@ -164,8 +150,8 @@ function CreateReservaCliente() {
                   </div>
 
                   {/* FECHA */}
-                  <div className="col-12 col-lg-6 mb-3">
-                    <label className="form-label">Fecha y hora</label>
+                  <div className="col-12 col-md-6 mb-3">
+                    <label className="form-label">Fecha y Hora</label>
                     <input
                       type="datetime-local"
                       name="fechaReserva"
@@ -190,29 +176,17 @@ function CreateReservaCliente() {
 
                 </div>
 
-                {/* BOTÓN */}
-                <button
-                  type="submit"
-                  className="btn btn-success w-100"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <span>
-                      <span className="spinner-border spinner-border-sm me-2"></span>
-                      Procesando...
-                    </span>
-                  ) : (
-                    "Crear Reserva"
-                  )}
+                <button className="btn btn-danger w-100" disabled={loading}>
+                  {loading ? "Procesando..." : "Crear Reserva"}
                 </button>
-
               </form>
             </div>
           </div>
+
         </div>
       </div>
     </section>
   );
 }
 
-export default CreateReservaCliente;
+export default CreateReservaStaff;

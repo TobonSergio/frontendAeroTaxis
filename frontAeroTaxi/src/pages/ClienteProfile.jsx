@@ -79,7 +79,6 @@ function ClienteProfile() {
             <p><strong>Teléfono:</strong> {cliente.telefono || "No registrado"}</p>
             <p><strong>Dirección:</strong> {cliente.direccion || "No registrada"}</p>
             <p><strong>Ciudad:</strong> {cliente.ciudad || "No registrada"}</p>
-            <p><strong>Usuario:</strong> {cliente.username || "Sin usuario"}</p>
             <p><strong>Rol:</strong> {cliente.rolName || "Sin rol"}</p>
           </div>
         </header>
